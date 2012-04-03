@@ -2,5 +2,10 @@
   "name": "nervex",
   "version": "0.0.1",
   "main": "nervecenter",
-  "private": true
+  "private": true,
+  "devDependencies":{
+    "jasmine-node": "*",
+    "cucumber": "*"
+  },
+  "bin":"./bin/nerve"
 }

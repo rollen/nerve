@@ -5,4 +5,4 @@ require('./fixtures/fixtures');
 require('./stubs');
 fixturesFolderPath = __dirname + '/fixtures'
 
-require('./browser.js');
+require('./lib/browser.js');
