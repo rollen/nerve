@@ -1,1 +1,1 @@
-guard: bundex exec guard
+guard: bunder exec guard
