@@ -21,9 +21,9 @@ task :clone_angular_repo do
 end
 
 task :move_angular_files_into_framework do
-  puts "Copying angular-scenario.js to framework"
+  puts "Copying angular-scenario.js to framework ..."
   FileUtils.cp 'lib/angular/build/angular-scenario.js', 'framework/views/assets/angular-scenario.js'
-  puts "Copying angular.js to framework"
-  FileUtils.cp 'lib/angular/build/angular.js', 'framework/views/assets/angular.js'
+  puts "Copying angular.js to framework ..."
+  FileUtils.cp 'lib/angular/build/angular.js', 'framework/views/angular.js'
 end
 
