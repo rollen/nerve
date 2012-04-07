@@ -4,8 +4,7 @@
   "main": "nervecenter",
   "private": true,
   "devDependencies":{
-    "jasmine-node": "*",
-    "cucumber": "*"
+    "jasmine-node": "*"
   },
   "bin":"./bin/nerve"
 }

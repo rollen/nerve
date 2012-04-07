@@ -1,1 +1,1 @@
-guard: bunder exec guard
+guard: jasmine-node
