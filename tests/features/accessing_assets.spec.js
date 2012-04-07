@@ -12,8 +12,21 @@ describe ("Given I'm any user", function(){
 
     describe('Then I should see the file specified by the asset', function(){
       it('Then I should see the file specified by the asset', function(){
-        expect(this.browser.response._head).not.toBe(404);
-        expect(this.browser.response._body).toBe(Fixtures.file("angular-scenario.js", 'javascript'));
+        expect(this.response._head).not.toBe(404);
+        expect(this.response._body).toBe(Fixtures.file("angular-scenario.js", 'javascript'));
+      });
+    });
+  });
+
+  describe("When I visit a the angular page", function(){
+    beforeEach(function(){
+      this.response = this.browser.visit('/assets/angular.js');
+    });
+
+    describe('Then I should see the file specified by the asset', function(){
+      it('Then I should see the file specified by the asset', function(){
+        expect(this.response._head).not.toBe(404);
+        expect(this.response._body).toBe(Fixtures.file("angular.js", 'javascript'));
       });
     });
   });
