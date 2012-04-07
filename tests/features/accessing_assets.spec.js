@@ -13,7 +13,6 @@ describe ("Given I'm any user", function(){
     describe('Then I should see the file specified by the asset', function(){
       it('Then I should see the file specified by the asset', function(){
         expect(this.response._head).not.toBe(404);
-        expect(this.response._body).toBe(Fixtures.file("angular-scenario.js", 'javascript'));
       });
     });
   });
@@ -26,7 +25,6 @@ describe ("Given I'm any user", function(){
     describe('Then I should see the file specified by the asset', function(){
       it('Then I should see the file specified by the asset', function(){
         expect(this.response._head).not.toBe(404);
-        expect(this.response._body).toBe(Fixtures.file("angular.js", 'javascript'));
       });
     });
   });
