@@ -5,7 +5,7 @@ describe ("Given I'm any user", function(){
     this.browser = new Browser();
   });
 
-  describe("When I visit a page that does not exist", function(){
+  describe("When I visit a the angular-scenario page", function(){
     beforeEach(function(){
       this.response = this.browser.visit('/assets/angular-scenario.js');
     });
