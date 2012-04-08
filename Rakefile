@@ -20,10 +20,20 @@ task :clone_angular_repo do
   system("git submodule update")
 end
 
+def copy_to_framework(filename)
+  puts "Copying #{filename} to framework ..."
+  FileUtils.cp "lib/angular/build/#{filename}", "framework/views/assets/#{filename}"
+end
+
 task :move_angular_files_into_framework do
-  puts "Copying angular-scenario.js to framework ..."
-  FileUtils.cp 'lib/angular/build/angular-scenario.js', 'framework/views/assets/angular-scenario.js'
-  puts "Copying angular.js to framework ..."
-  FileUtils.cp 'lib/angular/build/angular.js', 'framework/views/angular.js'
+  path_to_angular_build = File.expand_path("../lib/angular/build", __FILE__)
+  files = []
+  Dir.chdir(path_to_angular_build) do
+    Dir.foreach(path_to_angular_build) do |item| 
+      File.file?(item) ? files << item : 'none' 
+    end
+  end
+
+  files.each { |filename| copy_to_framework(filename) }
 end
 
