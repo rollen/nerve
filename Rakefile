@@ -17,6 +17,7 @@ task :compile_angular do
 end
 
 task :clone_angular_repo do
+  puts "Cloning Angular repo"
   system("git submodule update")
 end
 
