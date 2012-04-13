@@ -1,8 +1,9 @@
 require('./../spec_helper');
 
+
 describe ("Given I'm any user", function(){
   beforeEach(function(){
-    this.browser = new Browser();
+    this.browser = new Browser(Nervebuilder);
   });
 
   describe("When I visit a the angular-scenario page", function(){
