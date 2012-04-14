@@ -11,11 +11,11 @@ describe( Router, function(){
 
   describe('hasRouteFor', function(){
     it('should return true if the router can respond to the route', function(){
-      expect(this.router.hasRouteFor('/home')).toBeTruthy();
+      expect(this.router.hasRouteFor('/home', 'GET')).toBeTruthy();
     });
 
     it('should return false if the router cannot respond to the route', function(){
-      expect(this.router.hasRouteFor('/awesomepage')).not.toBeTruthy();
+      expect(this.router.hasRouteFor('/awesomepage', 'GET')).not.toBeTruthy();
     });
   });
 
