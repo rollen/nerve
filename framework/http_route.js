@@ -9,11 +9,16 @@ HttpRoute.prototype.runAction = function(request, response, filesystem){
   (this.controllerFactory.build(request, response, filesystem))[this.action]();
 }
 
-HttpRoute.prototype.hasAMatchFor = function(path) {
+HttpRoute.prototype.hasAMatchFor = function(path, method) {
   var templateComponents = this.template.split('/');
   var pathComponents = path.split('/');
-  return (this.similarNumberOfComponents(pathComponents, templateComponents) &&
-           this.hasMatchingPathComponents(pathComponents, templateComponents))
+  return (this.hasMatchingHttpMethod(method) && 
+          this.similarNumberOfComponents(pathComponents, templateComponents) &&
+          this.hasMatchingPathComponents(pathComponents, templateComponents))
+}
+
+HttpRoute.prototype.hasMatchingHttpMethod = function(method){
+  return this.httpVerb === method;
 }
 
 HttpRoute.prototype.similarNumberOfComponents = function(pathComponents, templateComponents){

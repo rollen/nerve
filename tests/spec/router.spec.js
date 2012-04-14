@@ -1,32 +1,39 @@
 require('./../spec_helper');
 
-describe( Router, function(){
+describe( 'Router' , function(){
   beforeEach(function(){
-    this.route = HttpRouteFactory.build({'pattern':'/home'});
+    // this.route = HttpRouteFactory.build({'pattern':'/home'});
     this.request = new Request();
     this.response = new Response();
     this.filesystem = new SyncFS(require('fs'));
-    this.router = new Router([this.route], this.request, this.response, this.filesystem);
+    this.route = new HttpRoute();
   });
 
   describe('hasRouteFor', function(){
-    it('should return true if the router can respond to the route', function(){
-      expect(this.router.hasRouteFor('/home', 'GET')).toBeTruthy();
+    beforeEach(function(){
+      spyOn(this.route, 'hasAMatchFor');
+      this.router = new Router([this.route], this.request, this.response, this.filesystem);
+      this.router.hasRouteFor('/home', 'GET');
     });
 
-    it('should return false if the router cannot respond to the route', function(){
-      expect(this.router.hasRouteFor('/awesomepage', 'GET')).not.toBeTruthy();
+    it('should attempt to check if a function has a match', function(){
+      expect(this.route.hasAMatchFor).toHaveBeenCalledWith('/home', 'GET');
     });
   });
 
   describe('route', function(){
     beforeEach(function(){
+      spyOn(this.route, 'hasAMatchFor');
       spyOn(this.route, 'runAction');
+      this.router = new Router([this.route], this.request, this.response, this.filesystem);
     });
 
     it('should execute a controller action based on exact match', function(){
-      this.router.route('/home');
+      this.route.hasAMatchFor.andReturn(true);
+
+      this.router.route('/home', 'GET');
       expect(this.route.runAction).toHaveBeenCalledWith(this.request, this.response, this.filesystem);
+      expect(this.route.hasAMatchFor).toHaveBeenCalledWith('/home', 'GET');
     });
 
     it('should redirect redirect request if not possible to route', function(){

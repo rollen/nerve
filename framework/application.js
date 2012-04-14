@@ -1,7 +1,8 @@
-Application = function(routers, errorsController, urlPath){
+Application = function(routers, errorsController, urlPath, httpVerb){
   this.routers = routers || [];
   this.errorsController = errorsController;
   this.urlPath= urlPath;
+  this.httpVerb = httpVerb;
 }
 
 Application.prototype.executeRequest = function(){
@@ -9,7 +10,7 @@ Application.prototype.executeRequest = function(){
   if(router === null || router === false){
     this.errorsController.index();
   } else {
-    router.route(this.urlPath);
+    router.route(this.urlPath, this.httpVerb);
   }
 }
 
@@ -18,7 +19,7 @@ Application.prototype.findRouter = function(){
   var result = false;
 
   this.routers.forEach(function(router){
-    if( !result && router.hasRouteFor(self.urlPath) ){
+    if( !result && router.hasRouteFor(self.urlPath, self.httpVerb) ){
       result = router; 
     }
   });

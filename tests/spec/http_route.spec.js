@@ -13,29 +13,34 @@ describe('HttpRoute', function(){
 
   describe('hasAMatchFor', function(){
     describe('performs a template match', function() {
+      it('should not match a post a get request', function(){
+        this.getRoute = HttpRouteFactory.createGet(this.template, null, null);
+        expect(this.getRoute.hasAMatchFor('/home', 'POST')).not.toBeTruthy();
+      });
+
       it('should return success for exact match', function(){
         this.getRoute = HttpRouteFactory.createGet(this.template, null, null);
-        expect(this.getRoute.hasAMatchFor('/home')).toBeTruthy();
+        expect(this.getRoute.hasAMatchFor('/home', 'GET')).toBeTruthy();
       });
 
       it('should return failure for a no mactch found case', function(){
         this.getRoute = HttpRouteFactory.createGet(this.template, null, null);
-        expect(this.getRoute.hasAMatchFor('/homee')).toBeFalsy();
+        expect(this.getRoute.hasAMatchFor('/homee', 'GET')).toBeFalsy();
       });
 
       it('should perform a template match', function(){
         this.getRoute = new HttpRoute(this.httpVerb, '/home/:id', null, null);
-        expect(this.getRoute.hasAMatchFor('/home/12')).toBeTruthy();
+        expect(this.getRoute.hasAMatchFor('/home/12', 'GET')).toBeTruthy();
       });
 
       it('should perform a root match', function(){
         this.getRoute = new HttpRoute(this.httpVerb, '/', null, null);
-        expect(this.getRoute.hasAMatchFor('/')).toBeTruthy();
+        expect(this.getRoute.hasAMatchFor('/', 'GET')).toBeTruthy();
       });
 
       it('should return failure for a path having more components than a template', function(){
         this.getRoute = new HttpRoute(this.httpVerb, '/tests', null, null);
-        expect(this.getRoute.hasAMatchFor('/angular/angular-scenario.js')).toBeFalsy();
+        expect(this.getRoute.hasAMatchFor('/angular/angular-scenario.js', 'GET')).toBeFalsy();
       });
     })
   });
