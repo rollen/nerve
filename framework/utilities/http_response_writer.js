@@ -22,6 +22,6 @@ HttpFileResponseWriter.prototype.writeToResponse= function(){
 
 HttpFileResponseWriter.prototype.mimetype = function(){
   var filetype = this.filename.split('.')[1];
-  types = { 'js':'application/x-javascript', 'html':'text/html' }
+  types = { 'js':'application/x-javascript', 'html':'text/html', 'css':'text/css' }
   return types[filetype];
 }

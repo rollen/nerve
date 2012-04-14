@@ -52,6 +52,11 @@ describe('HttpFileResponseWriter', function(){
         hfrw = new HttpFileResponseWriter(null, null, null, 'runner.html');      
         expect(hfrw.mimetype()).toBe('text/html');
       });
+
+      it('tranlates css to text/html', function(){
+        hfrw = new HttpFileResponseWriter(null, null, null, 'file.css');      
+        expect(hfrw.mimetype()).toBe('text/css');
+      });
     });
   });
 });
