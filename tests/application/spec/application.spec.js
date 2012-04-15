@@ -19,7 +19,7 @@ describe('Application', function(){
 
   describe('findRouter', function(){
     it('should return the router that can route to a given query', function(){
-      this.application = new Application([this.frameworkRouter], null, this.request.url, this.request.method);
+      this.application = Application([this.frameworkRouter], null, this.request.url, this.request.method);
       spyOn(this.frameworkRouter, 'hasRouteFor');
       this.application.findRouter();
       expect(this.frameworkRouter.hasRouteFor).toHaveBeenCalledWith('/tests', this.httpVerb);
@@ -28,15 +28,15 @@ describe('Application', function(){
 
   describe('executeRequest', function(){
     it('should route the request to the framework if it cannot be handled by the application Router', function(){
-      spyOn(this.frameworkRouter, 'route');
-      this.application = new Application([this.frameworkRouter], null, this.request.url, this.request.method);
+      spyOn(this.frameworkRouter, 'route').andReturn(function(){});
+      this.application = Application([this.frameworkRouter], null, this.request.url, this.request.method);
       this.application.executeRequest();
       expect(this.frameworkRouter.route).toHaveBeenCalledWith(this.request.url, this.request.method);
     });
 
     it('should execute the errorsController if no possible route is found', function(){
       spyOn(this.errorsController, 'index');
-      this.application = new Application([new Router([])], this.errorsController, this.request.url, this.request.method);
+      this.application = Application([new Router([])], this.errorsController, this.request.url, this.request.method);
       this.application.executeRequest();
       expect(this.errorsController.index).toHaveBeenCalled();
     });

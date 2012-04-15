@@ -6,7 +6,7 @@ HttpRoute = function(httpVerb, template, controllerFactory, action) {
 }
 
 HttpRoute.prototype.runAction = function(request, response, filesystem){
-  (this.controllerFactory.build(request, response, filesystem))[this.action]();
+  return (this.controllerFactory.build(request, response, filesystem))[this.action];
 }
 
 HttpRoute.prototype.hasAMatchFor = function(path, method) {

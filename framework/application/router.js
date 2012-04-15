@@ -6,7 +6,7 @@ Router = function(routes, request, response, filesystem){
 }
 
 Router.prototype.route = function(path, method){
-  this.findRouteFor(path, method, this.onFound, this.onNotFound);
+  return this.findRouteFor(path, method, this.onFound, this.onNotFound);
 }
 
 Router.prototype.findRouteFor = function(path, method, onFound, onNotFound){
@@ -20,8 +20,9 @@ Router.prototype.findRouteFor = function(path, method, onFound, onNotFound){
 }
 
 Router.prototype.hasRouteFor = function(path, method){
+  self = this;
   var result = false;
-  this.routes.forEach(function(route){
+  this.routes.forEach(function(route, self){
     if(!result && route.hasAMatchFor(path, method)){
       result = true;
     }
@@ -30,7 +31,7 @@ Router.prototype.hasRouteFor = function(path, method){
 }
 
 Router.prototype.onFound = function(route, request, response, filesystem){
-  route.runAction(request, response, filesystem);
+  return route.runAction(request, response, filesystem);
 }
 
 Router.prototype.onNotFound= function(path){

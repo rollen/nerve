@@ -1,29 +1,34 @@
 Application = function(routers, errorsController, urlPath, httpVerb){
-  this.routers = routers || [];
-  this.errorsController = errorsController;
-  this.urlPath= urlPath;
-  this.httpVerb = httpVerb;
-}
+  routers = routers || [];
+  application = {};
 
-Application.prototype.executeRequest = function(){
-  var router = this.findRouter()
-  if(router === null || router === false){
-    this.errorsController.index();
-  } else {
-    router.route(this.urlPath, this.httpVerb);
+  application.executeRequest = function(params){
+    var action = application.findAction();
+    action(params);
   }
-}
 
-Application.prototype.findRouter = function(){
-  self = this;
-  var result = false;
-
-  this.routers.forEach(function(router){
-    if( !result && router.hasRouteFor(self.urlPath, self.httpVerb) ){
-      result = router; 
+  application.findAction = function(){
+    var router = application.findRouter()
+    var action;
+    if(router === null || router === false){
+      action = errorsController.index;
+    } else {
+      action = router.route(urlPath, httpVerb);
     }
-  });
-  return result;
-}
+    return action;
+  }
 
+  application.findRouter = function(){
+    var result = false;
+    for(var i = 0; i < routers.length; i++){
+      router = routers[i];
+      if( !result && router.hasRouteFor(urlPath, httpVerb) ){
+        result = router; 
+      }
+    }
+    return result;
+  }
+
+  return application;
+}
 
