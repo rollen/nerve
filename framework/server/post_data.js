@@ -1,13 +1,14 @@
 PostData = function(json_parser, cache){
-  this.cache = cache || '';
-  this.json_parser = json_parser;
+  var postdata = {};
+  cache = cache || '';
+  postdata.accept = function(data){
+    cache = cache + data;
+    return cache
+  }
+
+  postdata.json = function(){
+    return cache === '' ? json_parser.parse('{}') : json_parser.parse(cache);
+  }
+  return postdata;
 }
 
-PostData.prototype.accept = function(data){
-  this.cache = this.cache + data;
-  return this.cache
-}
-
-PostData.prototype.json = function(){
-  return this.cache === '' ? this.json_parser.parse('{}') : this.json_parser.parse(this.cache);
-}
