@@ -1,6 +1,6 @@
 Nervebuilder.config = 
 { 'paths':
   {
-    'viewsFolder': [Nervebuilder.root, 'application/views'].join('/')
+    'viewsFolder': [Nervebuilder.root, 'views'].join('/')
   }
 }
