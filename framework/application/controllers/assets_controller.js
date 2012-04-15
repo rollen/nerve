@@ -1,8 +1,10 @@
 AssetsController = function(httpFileResponseWriter){
-  this.httpFileResponseWriter= httpFileResponseWriter;
+  assets_controller = {};
+  assets_controller.show = function(){
+    httpFileResponseWriter.writeToResponse();
+  }
+  return assets_controller;
 }
 
-AssetsController.prototype.show = function(){
-  this.httpFileResponseWriter.writeToResponse();
-}
+
 

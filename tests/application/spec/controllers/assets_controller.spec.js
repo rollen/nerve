@@ -5,7 +5,7 @@ describe('AssetsController', function(){
     beforeEach(function(){
       this.httpFileResponseWriter = HttpFileResponseWriterBuilder.build();
       spyOn(this.httpFileResponseWriter, 'writeToResponse');
-      this.assetsController = new AssetsController(this.httpFileResponseWriter);
+      this.assetsController = AssetsController(this.httpFileResponseWriter);
     });
 
     it('should write a static file to the response', function(){
