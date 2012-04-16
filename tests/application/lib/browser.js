@@ -1,17 +1,19 @@
 Browser = function(applicationFactory){
-  this.response = null;
-  this.applicationFactory = applicationFactory || Nervebuilder;
+  var response = null;
+
+  browser = {};
+
+  browser.visit = function(url){
+    var response = new Response();
+    var request = new Request(url);
+    request.method = 'GET';
+    var filesystem = new SyncFS(require('fs'));
+    var application = applicationFactory.createApplication(request, response, filesystem);
+    application.executeRequest();
+
+    return response;
+  }
+
+  return browser;
 }
 
-Browser.prototype.visit = function(url){
-  var response = new Response();
-  var request = new Request(url);
-  request.method = 'GET';
-  var filesystem = new SyncFS(require('fs'));
-  var application = this.applicationFactory.createApplication(request, response, filesystem);
-  application.executeRequest();
-  
-  // mumbo jumbo
-  this.response = response;
-  return response;
-}

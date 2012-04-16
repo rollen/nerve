@@ -4,7 +4,7 @@ require('./../spec_helper');
 describe ("accessing_assets.spec.js", function(){
   describe ("Given I'm any user", function(){
     beforeEach(function(){
-      this.browser = new Browser(Nervebuilder);
+      this.browser = Browser(Nervebuilder);
     });
 
     describe("When I visit a the angular-scenario page", function(){

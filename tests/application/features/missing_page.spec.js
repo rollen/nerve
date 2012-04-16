@@ -3,7 +3,7 @@ require('./../spec_helper');
 describe('missing_page.spec', function(){
   describe ("Given I'm any user", function(){
     beforeEach(function(){
-      this.browser = new Browser();
+      this.browser = Browser(Nervebuilder);
     });
 
     describe("When I visit a page that does not exist", function(){
@@ -13,7 +13,7 @@ describe('missing_page.spec', function(){
 
       describe("Then I should see the nervecenter 404 page", function(){
         it('should see the nervecenter 404 page', function(){
-          expect(this.browser.response._head).toBe(404);
+          expect(this.response._head).toBe(404);
         });
       });
     });
