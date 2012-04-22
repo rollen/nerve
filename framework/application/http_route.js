@@ -1,40 +1,43 @@
-HttpRoute = function(httpVerb, template, controllerFactory, action) {
-  this.httpVerb = httpVerb;
-  this.template= template;
-  this.controllerFactory = controllerFactory;
-  this.action = action;
-}
+HttpRoute = function(httpVerb, template, controllerFactory, action, matcher) {
+  var httpRoute = {}
 
-HttpRoute.prototype.runAction = function(request, response, filesystem){
-  return (this.controllerFactory.build(request, response, filesystem))[this.action];
-}
-
-HttpRoute.prototype.hasAMatchFor = function(path, method) {
-  var templateComponents = this.template.split('/');
-  var pathComponents = path.split('/');
-  return (this.hasMatchingHttpMethod(method) && 
-          this.similarNumberOfComponents(pathComponents, templateComponents) &&
-          this.hasMatchingPathComponents(pathComponents, templateComponents))
-}
-
-HttpRoute.prototype.hasMatchingHttpMethod = function(method){
-  return this.httpVerb === method;
-}
-
-HttpRoute.prototype.similarNumberOfComponents = function(pathComponents, templateComponents){
-  return templateComponents.length === pathComponents.length;
-}
-
-HttpRoute.prototype.hasMatchingPathComponents = function(pathComponents, templateComponents){
-  var isAMatch = true;
-  for(var index = 0; index < pathComponents.length; index++){
-    if(this.areNotMatchingComponents(pathComponents[index], templateComponents[index])){
-      isAMatch = false;
-    } 
+  httpRoute.runAction = function(request, response, filesystem){
+    return (controllerFactory.build(request, response, filesystem))[action];
   }
-  return isAMatch;
-}
 
-HttpRoute.prototype.areNotMatchingComponents= function(pathComponent, templateComponent){
-  return templateComponent.charAt(0) !== ":" && templateComponent!== pathComponent;
+  httpRoute.hasAMatchFor = function(path, method) {
+    var templateComponents = template.split('/');
+    var pathComponents = path.split('/');
+    return (httpRoute.hasMatchingHttpMethod(method) && 
+            httpRoute.similarNumberOfComponents(pathComponents, templateComponents) &&
+            httpRoute.hasMatchingPathComponents(pathComponents, templateComponents))
+  }
+
+  httpRoute.hasMatchingHttpMethod = function(method){
+    return httpVerb === method;
+  }
+
+  httpRoute.similarNumberOfComponents = function(pathComponents, templateComponents){
+    return templateComponents.length === pathComponents.length;
+  }
+
+  httpRoute.hasMatchingPathComponents = function(pathComponents, templateComponents){
+    var isAMatch = true;
+    for(var index = 0; index < pathComponents.length; index++){
+      if(httpRoute.areNotMatchingComponents(pathComponents[index], templateComponents[index])){
+        isAMatch = false;
+      } 
+    }
+    return isAMatch;
+  }
+
+  httpRoute.areNotMatchingComponents= function(pathComponent, templateComponent){
+    return templateComponent.charAt(0) !== ":" && templateComponent!== pathComponent;
+  }
+
+  httpRoute.toString = function(){
+    return ['httpVerb: ' + httpVerb, 'template: ' + template].join('  ');
+  }
+
+  return httpRoute;
 }

@@ -2,11 +2,11 @@ require('./../spec_helper');
 
 describe( 'Router' , function(){
   beforeEach(function(){
-    // this.route = HttpRouteFactory.build({'pattern':'/home'});
     this.request = new Request();
     this.response = new Response();
     this.filesystem = new SyncFS(require('fs'));
     this.route = new HttpRoute();
+    this.params = {}
   });
 
   describe('hasRouteFor', function(){
@@ -26,6 +26,10 @@ describe( 'Router' , function(){
       spyOn(this.route, 'hasAMatchFor');
       spyOn(this.route, 'runAction');
       this.router = new Router([this.route], this.request, this.response, this.filesystem);
+    });
+
+    it('should execute a controller with the given post params', function(){
+
     });
 
     it('should execute a controller action based on exact match', function(){

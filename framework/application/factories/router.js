@@ -5,5 +5,6 @@ Nervebuilder.createRouter = function(request, response, filesystem) {
     HttpRouteFactory.createGet('/assets/:filename', factories['assetsController'], 'show'),
     HttpRouteFactory.createPost('/tests', factories['testsController'], 'create')
   ];
-  return new Router(routes, request, response, filesystem);
+  r = new Router(routes, request, response, filesystem);
+  return r;
 }
