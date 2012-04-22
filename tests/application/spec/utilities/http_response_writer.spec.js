@@ -10,11 +10,11 @@ describe('HttpFileResponseWriter', function(){
   describe('writeToResponse', function(){
     beforeEach(function(){
       this.response = jasmine.createSpyObj('response', ['writeHead', 'write', 'end']);
-      this.httpFileResponseWriter = new HttpFileResponseWriter(this.response, this.filesystem, this.folderpath, this.filename);
+      this.httpFileResponseWriter = HttpFileResponseWriter(this.response, this.filesystem, this.folderpath, this.filename);
       this.filename = 'runner.html';
     });
 
-    it('should output the filej into the response', function(){
+    it('should output the file into the response', function(){
       this.httpFileResponseWriter.writeToResponse();
       expect(this.response.write).toHaveBeenCalledWith(Fixtures.file(this.filename, 'html'));
     });
@@ -27,14 +27,14 @@ describe('HttpFileResponseWriter', function(){
     context('should choose the write the appropiate mime type to the response', function(){
       it('accesses a html file', function(){
         this.filename = 'runner.html';
-        this.httpFileResponseWriter = new HttpFileResponseWriter(this.response, this.filesystem, this.folderpath, this.filename);
+        this.httpFileResponseWriter = HttpFileResponseWriter(this.response, this.filesystem, this.folderpath, this.filename);
         this.httpFileResponseWriter.writeToResponse(); 
         expect(this.response.writeHead).toHaveBeenCalledWith(200, {"Content-Type": "text/html"});
       });
 
       it('accesses a javascript file', function(){
         this.filename = 'angular.js';
-        this.httpFileResponseWriter = new HttpFileResponseWriter(this.response, this.filesystem, this.folderpath, this.filename);
+        this.httpFileResponseWriter = HttpFileResponseWriter(this.response, this.filesystem, this.folderpath, this.filename);
         this.httpFileResponseWriter.writeToResponse();
         expect(this.response.writeHead).toHaveBeenCalledWith(200, {"Content-Type": "application/x-javascript"});
       });
@@ -44,17 +44,17 @@ describe('HttpFileResponseWriter', function(){
   describe('.mimetype', function(){
     context('translates filnames to mimetypes', function(){
       it('tranlates js to application/x-javascript', function(){
-        hfrw = new HttpFileResponseWriter(null, null, null, 'file.js');      
+        hfrw = HttpFileResponseWriter(null, null, null, 'file.js');      
         expect(hfrw.mimetype()).toBe('application/x-javascript');
       });
 
       it('tranlates html to text/html', function(){
-        hfrw = new HttpFileResponseWriter(null, null, null, 'runner.html');      
+        hfrw = HttpFileResponseWriter(null, null, null, 'runner.html');      
         expect(hfrw.mimetype()).toBe('text/html');
       });
 
       it('tranlates css to text/html', function(){
-        hfrw = new HttpFileResponseWriter(null, null, null, 'file.css');      
+        hfrw = HttpFileResponseWriter(null, null, null, 'file.css');      
         expect(hfrw.mimetype()).toBe('text/css');
       });
     });

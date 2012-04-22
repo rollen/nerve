@@ -1,27 +1,33 @@
 HttpFileResponseWriter= function(response, filesystem, folderpath, filename){
-  this.response = response;
-  this.filesystem = filesystem;
-  this.folderpath = folderpath;
-  this.filename = filename;
-}
+  var httpFileResponseWriter = {};
 
-HttpFileResponseWriter.prototype.writeToResponse= function(){
-  (function writeToRes(res, filesystem, path, mimetype){
-    filesystem.readFile(path, "utf8", function onFileRead(error, data){
+  var path = function(){
+    return [folderpath, filename].join('/')
+  }
+
+  var mimetype = function(){
+    var filetype = filename.split('.')[1];
+    types = { 'js':'application/x-javascript', 'html':'text/html', 'css':'text/css' }
+    return types[filetype];
+  }
+
+
+  var writeToResponse= function(){
+    filesystem.readFile(path(), "utf8", function onFileRead(error, data){
       if(error) {
-        res.writeHead(500, {"Content-Type": "text/plain"});
-        res.write(error + "\n");
+        response.writeHead(500, {"Content-Type": "text/plain"});
+        response.write(error + "\n");
       } else {
-        res.writeHead(200, {"Content-Type": mimetype});
-        res.write(data);
+        response.writeHead(200, {"Content-Type": mimetype()});
+        response.write(data);
       } 
-      res.end();
+      response.end();
     })
-  })(this.response, this.filesystem, [this.folderpath,  this.filename].join('/'), this.mimetype());
-}
+  }
 
-HttpFileResponseWriter.prototype.mimetype = function(){
-  var filetype = this.filename.split('.')[1];
-  types = { 'js':'application/x-javascript', 'html':'text/html', 'css':'text/css' }
-  return types[filetype];
+  // public functions
+  httpFileResponseWriter.mimetype = mimetype;
+  httpFileResponseWriter.writeToResponse = writeToResponse;
+
+  return httpFileResponseWriter;
 }

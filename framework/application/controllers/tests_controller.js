@@ -1,5 +1,5 @@
 TestsController = function(request, response, filesystem, pathToView){
-  tests_controller = {}
+  var tests_controller = {}
 
   tests_controller.index = function(){
     (function(res, filesystem, path){

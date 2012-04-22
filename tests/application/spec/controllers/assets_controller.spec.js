@@ -1,16 +1,19 @@
 require('./../../spec_helper');
 
 describe('AssetsController', function(){
+  var assetsController,
+  httpFileResponseWriter;
+
   describe('show', function(){
     beforeEach(function(){
-      this.httpFileResponseWriter = HttpFileResponseWriterBuilder.build();
-      spyOn(this.httpFileResponseWriter, 'writeToResponse');
-      this.assetsController = AssetsController(this.httpFileResponseWriter);
+      httpFileResponseWriter = HttpFileResponseWriterBuilder.build();
+      spyOn(httpFileResponseWriter, 'writeToResponse');
+      assetsController = AssetsController(httpFileResponseWriter);
     });
 
     it('should write a static file to the response', function(){
-      this.assetsController.show();
-      expect(this.httpFileResponseWriter.writeToResponse).toHaveBeenCalled();
+      assetsController.show();
+      expect(httpFileResponseWriter.writeToResponse).toHaveBeenCalled();
     });
   });
 });

@@ -1,5 +1,5 @@
 AssetsController = function(httpFileResponseWriter){
-  assets_controller = {};
+  var assets_controller = {};
   assets_controller.show = function(){
     httpFileResponseWriter.writeToResponse();
   }
