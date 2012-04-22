@@ -28,7 +28,6 @@ Application = function(routers, errorsController, urlPath, httpVerb){
     }
     return result;
   }
-
   return application;
 }
 

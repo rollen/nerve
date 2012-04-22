@@ -28,10 +28,6 @@ describe( 'Router' , function(){
       this.router = new Router([this.route], this.request, this.response, this.filesystem);
     });
 
-    it('should execute a controller with the given post params', function(){
-
-    });
-
     it('should execute a controller action based on exact match', function(){
       this.route.hasAMatchFor.andReturn(true);
 

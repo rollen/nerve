@@ -2,6 +2,7 @@ fs = require('fs');
 
 require('./router');
 require('./http_route');
+require('./utilities/matchers/standard_route_matcher');
 require('./utilities/http_response_writer');
 require('./controllers/tests_controller');
 require('./controllers/errors_controller');

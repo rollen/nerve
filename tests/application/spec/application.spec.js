@@ -1,6 +1,8 @@
 require("./../spec_helper");
 
 describe('Application', function(){
+  var matcher;
+
   beforeEach(function(){
     this.filesystem = new SyncFS(require('fs'));
     this.response = new Response();
@@ -12,10 +14,14 @@ describe('Application', function(){
     this.pattern = '/tests';
     this.controller = new Controller();
     this.message = "index";
-    this.route = new HttpRoute(this.httpVerb, this.pattern, this.controller, this.message);
+
+    matcher = StandardRouteMatcher(this.pattern, this.httpVerb)
+    
+    this.route = new HttpRoute(this.controller, this.message, matcher);
     this.frameworkRouter = new Router([this.route]);
     this.errorsController = new ErrorsController(this.request, this.response);
   });
+
 
   describe('findRouter', function(){
     it('should return the router that can route to a given query', function(){
