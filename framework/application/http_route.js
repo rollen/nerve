@@ -1,17 +1,16 @@
 HttpRoute = function(controllerFactory, action, matcher) {
-  var httpRoute = {};
+  var object = {};
   
-  httpRoute.runAction = function(request, response, filesystem){
+  runAction = function(request, response, filesystem){
     return (controllerFactory.build(request, response, filesystem))[action];
   }
 
-  httpRoute.toString = function(){
-    return ['httpVerb: ' + matcher.httpVerb, 'template: ' + matcher.template].join('  ');
-  }
-
-  httpRoute.hasAMatchFor = function(path, method) {
+  hasAMatchFor = function(path, method) {
     return matcher.hasAMatchFor(path, method)
   }
 
-  return httpRoute;
+  object.runAction = runAction;
+  object.hasAMatchFor = hasAMatchFor;
+
+  return object;
 }
