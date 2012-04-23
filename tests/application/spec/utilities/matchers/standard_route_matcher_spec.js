@@ -1,7 +1,7 @@
 describe('StandardRouteMatcher', function(){
   var system_under_test;
 
-  describe('performs a template match', function() {
+  describe('.hasAMatchFor', function(){
     it('should not match a post a get request', function(){
       system_under_test = StandardRouteMatcher('/home', 'GET');
       expect(system_under_test.hasAMatchFor('/home', 'POST')).not.toBeTruthy();
@@ -31,5 +31,5 @@ describe('StandardRouteMatcher', function(){
       system_under_test = StandardRouteMatcher('/tests', 'GET');
       expect(system_under_test.hasAMatchFor('/angular/angular-scenario.js', 'GET')).toBeFalsy();
     });
-  })
+  });
 });
