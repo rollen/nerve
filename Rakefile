@@ -23,7 +23,7 @@ end
 
 def copy_to_framework(filename)
   puts "Copying #{filename} to framework ..."
-  FileUtils.cp "lib/angular/build/#{filename}", "framework/views/assets/#{filename}"
+  FileUtils.cp "lib/angular/build/#{filename}", "framework/application/views/assets/#{filename}"
 end
 
 task :move_angular_files_into_framework do
