@@ -31,5 +31,11 @@ describe('StandardRouteMatcher', function(){
       system_under_test = StandardRouteMatcher('/tests', 'GET');
       expect(system_under_test.hasAMatchFor('/angular/angular-scenario.js', 'GET')).toBeFalsy();
     });
+
+    it('should match a format in a url', function(){
+      system_under_test = StandardRouteMatcher('/jobs.json', 'GET');
+      expect(system_under_test.hasAMatchFor('/jobs.json', 'GET')).toBeTruthy();
+      expect(system_under_test.hasAMatchFor('/jobs', 'GET')).not.toBeTruthy();
+    });
   });
 });
