@@ -2,7 +2,7 @@ HttpRoute = function(controllerFactory, action, matcher) {
   var object = {};
 
   var makeAction = function(request, response, filesystem){
-    return (controllerFactory.build(request, response, filesystem))[action];
+    return (controllerFactory.build(request, response, filesystem, matcher.template))[action];
   }
 
   var hasAMatchFor = function(path, method) {

@@ -1,5 +1,6 @@
 StandardRouteMatcher = function(template, httpVerb){
   var object = {}
+  object.template = template;
 
   var hasMatchingHttpMethod = function(method){
     return httpVerb === method;

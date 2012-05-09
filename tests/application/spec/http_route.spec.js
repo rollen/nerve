@@ -29,13 +29,13 @@ describe('HttpRoute', function(){
 
   describe('makeAction', function() {
     beforeEach(function(){
-      getRoute = HttpRoute(ControllerFactory, action);
+      getRoute = HttpRoute(ControllerFactory, action, matcher);
       spyOn(ControllerFactory, 'build').andCallThrough();
     });
 
     it('should expect the factory to create a instance of its product and have it returned', function(){
       getRoute.makeAction(request, response, filesystem);
-      expect(ControllerFactory.build).toHaveBeenCalledWith(request, response, filesystem);
+      expect(ControllerFactory.build).toHaveBeenCalledWith(request, response, filesystem, matcher.template);
     });
   });
 });
