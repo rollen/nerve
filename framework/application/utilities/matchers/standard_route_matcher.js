@@ -33,13 +33,25 @@ StandardRouteMatcher = function(template, httpVerb){
 
   object.ROOT = '/';
 
+  var getPathComponents = function(path){
+    var result; 
+    var regex = /(.+)\?(.+)/;
+    if(regex.exec(path)){
+      result = regex.exec(path)[1].split('/');
+    }else{
+      result = path.split('/');
+    }
+    return result
+  }
+
   var hasAMatchFor = function(path, method) {
     var templateComponents = template.split('/');
-    var pathComponents = path.split('/');
-    
+    var pathComponents = getPathComponents(path);
+
     if(isNotRootPath(path) && hasTrailingSlash(pathComponents)){
       pathComponents.pop();
     }
+
     return (hasMatchingHttpMethod(method) && 
             similarNumberOfComponents(pathComponents, templateComponents) &&
             hasMatchingPathComponents(pathComponents, templateComponents))

@@ -18,7 +18,8 @@ describe('StandardRouteMatcher', function(){
     });
 
     it('should ignore standard params in the match', function(){
-
+      system_under_test = StandardRouteMatcher('/home', 'GET');
+      expect(system_under_test.hasAMatchFor('/home?name="superman"', 'GET')).toBeTruthy();
     });
 
     it('should return failure for a no mactch found case', function(){
