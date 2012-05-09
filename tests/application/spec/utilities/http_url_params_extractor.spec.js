@@ -26,7 +26,16 @@ describe('HttpUrlParamsExtractor', function(){
       var expected_hash_string = '{}'
       var urlstring = '/user/:id';
 
-      expect(function(){system_under_test.extract(urlstring)}).toThrow(new Error('Invalid urlstring /user/:id to match template /jobs/:id template part "jobs" did not match urlpart "user"'));
+      expect(function(){system_under_test.extract(urlstring)}).toThrow(new Error('Invalid pathstring /user/:id to match template /jobs/:id template part "jobs" did not match urlpart "user"'));
+    });
+
+    it('should get params based on url options', function(){
+      var template = '/job/:id';
+      var system_under_test = HttpUrlParamsExtractor(template); 
+      var urlstring = '/job/24?name=rollen&age=26';
+      var expected_hash_string = '{"id":"24","name":"rollen","age":"26"}'
+
+      expect(JSON.stringify(system_under_test.extract(urlstring))).toBe(expected_hash_string);
     });
   });
 });
