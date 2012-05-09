@@ -4,47 +4,46 @@ describe( 'Router' , function(){
   var request,
   response,
   filesystem,
-  route,
+  httproute,
+  router,
   params;
 
   beforeEach(function(){
     request = new Request();
     response = new Response();
     filesystem = new SyncFS(require('fs'));
-    route = new HttpRoute();
+    httproute = new HttpRoute();
     params = {}
   });
 
-  describe('hasRouteFor', function(){
+  describe('.hasRouteFor', function(){
     beforeEach(function(){
-      spyOn(route, 'hasAMatchFor');
-      router = new Router([route], request, response, filesystem);
+      spyOn(httproute, 'hasAMatchFor');
+      router = Router([httproute], request, response, filesystem);
       router.hasRouteFor('/home', 'GET');
     });
 
     it('should attempt to check if a function has a match', function(){
-      expect(route.hasAMatchFor).toHaveBeenCalledWith('/home', 'GET');
+      expect(httproute.hasAMatchFor).toHaveBeenCalledWith('/home', 'GET');
     });
   });
 
-  describe('.extractRouteParams', function(){
-    it('extract the params given in the urlstring', function(){
-    });
+  describe('.extractPrarms', function(){
   });
 
-  describe('route', function(){
+  describe('.route', function(){
     beforeEach(function(){
-      spyOn(route, 'hasAMatchFor');
-      spyOn(route, 'makeAction');
-      router = new Router([route], request, response, filesystem);
+      spyOn(httproute, 'hasAMatchFor');
+      spyOn(httproute, 'makeAction');
+      router = Router([httproute], request, response, filesystem);
     });
 
     it('should execute a controller action based on exact match', function(){
-      route.hasAMatchFor.andReturn(true);
+      httproute.hasAMatchFor.andReturn(true);
 
       router.route('/home', 'GET');
-      expect(route.makeAction).toHaveBeenCalledWith(request, response, filesystem);
-      expect(route.hasAMatchFor).toHaveBeenCalledWith('/home', 'GET');
+      expect(httproute.makeAction).toHaveBeenCalledWith(request, response, filesystem);
+      expect(httproute.hasAMatchFor).toHaveBeenCalledWith('/home', 'GET');
     });
 
     it('should redirect redirect request if not possible to route', function(){

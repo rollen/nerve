@@ -1,12 +1,16 @@
 require('./../spec_helper');
 
 describe('HttpRoute', function(){
-  beforeEach(function(){
-    this.action = "index";
+  var action,
+  request,
+  response,
+  filesystem;
 
-    this.request = new Request();
-    this.response =  new Response();
-    this.filesystem = new SyncFS(require('fs'));
+  beforeEach(function(){
+    action = "index";
+    request = new Request();
+    response =  new Response();
+    filesystem = new SyncFS(require('fs'));
   });
   
   var route,
@@ -25,13 +29,13 @@ describe('HttpRoute', function(){
 
   describe('makeAction', function() {
     beforeEach(function(){
-      this.getRoute = HttpRoute(ControllerFactory, this.action);
+      getRoute = HttpRoute(ControllerFactory, action);
       spyOn(ControllerFactory, 'build').andCallThrough();
     });
 
     it('should expect the factory to create a instance of its product and have it returned', function(){
-      this.getRoute.makeAction(this.request, this.response, this.filesystem);
-      expect(ControllerFactory.build).toHaveBeenCalledWith(this.request, this.response, this.filesystem);
+      getRoute.makeAction(request, response, filesystem);
+      expect(ControllerFactory.build).toHaveBeenCalledWith(request, response, filesystem);
     });
   });
 });
