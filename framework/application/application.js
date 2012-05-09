@@ -1,6 +1,6 @@
 Application = function(routers, errorsController, urlPath, httpVerb){
-  routers = routers || [];
-  application = {};
+  var routers = routers || [];
+  var application = {};
 
   application.executeRequest = function(params){
     var action = application.findAction();
@@ -28,6 +28,7 @@ Application = function(routers, errorsController, urlPath, httpVerb){
     }
     return result;
   }
+
   return application;
 }
 
