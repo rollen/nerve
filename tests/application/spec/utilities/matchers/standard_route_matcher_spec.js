@@ -12,6 +12,15 @@ describe('StandardRouteMatcher', function(){
       expect(system_under_test.hasAMatchFor('/home', 'GET')).toBeTruthy();
     });
 
+    it('should allow for a liberal trailing /', function(){
+      system_under_test = StandardRouteMatcher('/home', 'GET');
+      expect(system_under_test.hasAMatchFor('/home/', 'GET')).toBeTruthy();
+    });
+
+    it('should ignore standard params in the match', function(){
+
+    });
+
     it('should return failure for a no mactch found case', function(){
       system_under_test = StandardRouteMatcher('/home', 'GET');
       expect(system_under_test.hasAMatchFor('/homee', 'GET')).toBeFalsy();

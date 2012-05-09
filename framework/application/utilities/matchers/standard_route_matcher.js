@@ -23,9 +23,15 @@ StandardRouteMatcher = function(template, httpVerb){
     return templateComponent.charAt(0) !== ":" && templateComponent!== pathComponent;
   }
 
+  object.ROOT = '/';
+
   var hasAMatchFor = function(path, method) {
     var templateComponents = template.split('/');
     var pathComponents = path.split('/');
+    
+    if(path !== object.ROOT && pathComponents[pathComponents.length - 1] === ''){
+      pathComponents.pop();
+    }
     return (hasMatchingHttpMethod(method) && 
             similarNumberOfComponents(pathComponents, templateComponents) &&
             hasMatchingPathComponents(pathComponents, templateComponents))
