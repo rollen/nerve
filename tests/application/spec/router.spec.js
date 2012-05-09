@@ -1,46 +1,56 @@
 require('./../spec_helper');
 
 describe( 'Router' , function(){
+  var request,
+  response,
+  filesystem,
+  route,
+  params;
+
   beforeEach(function(){
-    this.request = new Request();
-    this.response = new Response();
-    this.filesystem = new SyncFS(require('fs'));
-    this.route = new HttpRoute();
-    this.params = {}
+    request = new Request();
+    response = new Response();
+    filesystem = new SyncFS(require('fs'));
+    route = new HttpRoute();
+    params = {}
   });
 
   describe('hasRouteFor', function(){
     beforeEach(function(){
-      spyOn(this.route, 'hasAMatchFor');
-      this.router = new Router([this.route], this.request, this.response, this.filesystem);
-      this.router.hasRouteFor('/home', 'GET');
+      spyOn(route, 'hasAMatchFor');
+      router = new Router([route], request, response, filesystem);
+      router.hasRouteFor('/home', 'GET');
     });
 
     it('should attempt to check if a function has a match', function(){
-      expect(this.route.hasAMatchFor).toHaveBeenCalledWith('/home', 'GET');
+      expect(route.hasAMatchFor).toHaveBeenCalledWith('/home', 'GET');
+    });
+  });
+
+  describe('.extractRouteParams', function(){
+    it('extract the params given in the urlstring', function(){
     });
   });
 
   describe('route', function(){
     beforeEach(function(){
-      spyOn(this.route, 'hasAMatchFor');
-      spyOn(this.route, 'makeAction');
-      this.router = new Router([this.route], this.request, this.response, this.filesystem);
+      spyOn(route, 'hasAMatchFor');
+      spyOn(route, 'makeAction');
+      router = new Router([route], request, response, filesystem);
     });
 
     it('should execute a controller action based on exact match', function(){
-      this.route.hasAMatchFor.andReturn(true);
+      route.hasAMatchFor.andReturn(true);
 
-      this.router.route('/home', 'GET');
-      expect(this.route.makeAction).toHaveBeenCalledWith(this.request, this.response, this.filesystem);
-      expect(this.route.hasAMatchFor).toHaveBeenCalledWith('/home', 'GET');
+      router.route('/home', 'GET');
+      expect(route.makeAction).toHaveBeenCalledWith(request, response, filesystem);
+      expect(route.hasAMatchFor).toHaveBeenCalledWith('/home', 'GET');
     });
 
     it('should redirect redirect request if not possible to route', function(){
-      self = this;
-      this.path = '/awesomepage';
-      this.lambda = function(){ self.router.route(self.path) }
-      expect(this.lambda).toThrow('No valid route to ' + this.path);
+      path = '/awesomepage';
+      lambda = function(){ router.route(path) }
+      expect(lambda).toThrow('No valid route to ' + path);
     });
   });
 });
