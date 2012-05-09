@@ -1,39 +1,37 @@
 Router = function(routes, request, response, filesystem){
-  this.routes = routes;
-  this.request = request;
-  this.response = response;
-  this.filesystem = filesystem;
-}
+  var object = {}
 
-Router.prototype.route = function(path, method){
-  return this.findRouteFor(path, method, this.onFound, this.onNotFound);
-}
-
-Router.prototype.findRouteFor = function(path, method, onFound, onNotFound){
-  for(var index = 0; index < this.routes.length; index++){
-    route = this.routes[index];
-    if(route.hasAMatchFor(path, method)) {
-      return onFound(route, this.request, this.response, this.filesystem);
-    }
+  object.route = function(path, method){
+    return object.findRouteFor(path, method, object.onFound, object.onNotFound);
   }
-  onNotFound(path);
-}
 
-Router.prototype.hasRouteFor = function(path, method){
-  self = this;
-  var result = false;
-  this.routes.forEach(function(route, self){
-    if(!result && route.hasAMatchFor(path, method)){
-      result = true;
+  object.findRouteFor = function(path, method, onFound, onNotFound){
+    for(var index = 0; index < routes.length; index++){
+      route = routes[index];
+      if(route.hasAMatchFor(path, method)) {
+        return onFound(route, request, response, filesystem);
+      }
     }
-  });
-  return result;
-}
+    onNotFound(path);
+  }
 
-Router.prototype.onFound = function(route, request, response, filesystem){
-  return route.makeAction(request, response, filesystem);
-}
+  object.hasRouteFor = function(path, method){
+    var result = false;
+    routes.forEach(function(route, object){
+      if(!result && route.hasAMatchFor(path, method)){
+        result = true;
+      }
+    });
+    return result;
+  }
 
-Router.prototype.onNotFound= function(path){
-  throw "No valid route to " + path
+  object.onFound = function(route, request, response, filesystem){
+    return route.makeAction(request, response, filesystem);
+  }
+
+  object.onNotFound= function(path){
+    throw "No valid route to " + path
+  }
+
+  return object;
 }
