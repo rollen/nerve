@@ -23,13 +23,21 @@ StandardRouteMatcher = function(template, httpVerb){
     return templateComponent.charAt(0) !== ":" && templateComponent!== pathComponent;
   }
 
+  var hasTrailingSlash = function(pathComponents){
+    return pathComponents[pathComponents.length - 1] ==='';
+  }
+
+  var isNotRootPath = function(path){
+    return path !== object.ROOT;
+  }
+
   object.ROOT = '/';
 
   var hasAMatchFor = function(path, method) {
     var templateComponents = template.split('/');
     var pathComponents = path.split('/');
     
-    if(path !== object.ROOT && pathComponents[pathComponents.length - 1] === ''){
+    if(isNotRootPath(path) && hasTrailingSlash(pathComponents)){
       pathComponents.pop();
     }
     return (hasMatchingHttpMethod(method) && 
