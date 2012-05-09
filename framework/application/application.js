@@ -1,14 +1,14 @@
 Application = function(routers, errorsController, urlPath, httpVerb){
-  var routers = routers || [];
-  var application = {};
+  var object = {};
 
-  application.executeRequest = function(params){
-    var action = application.findAction();
+  object.executeRequest = function(params){
+    var action = object.findAction();
     action(params);
   }
 
-  application.findAction = function(){
-    var router = application.findRouter()
+
+  object.findAction = function(){
+    var router = object.findRouter()
     var action;
     if(router === null || router === false){
       action = errorsController.index;
@@ -18,7 +18,7 @@ Application = function(routers, errorsController, urlPath, httpVerb){
     return action;
   }
 
-  application.findRouter = function(){
+  object.findRouter = function(){
     var result = false;
     for(var i = 0; i < routers.length; i++){
       router = routers[i];
@@ -29,6 +29,6 @@ Application = function(routers, errorsController, urlPath, httpVerb){
     return result;
   }
 
-  return application;
+  return object;
 }
 

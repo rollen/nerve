@@ -1,7 +1,7 @@
 HttpRoute = function(controllerFactory, action, matcher) {
   var object = {};
 
-  var runAction = function(request, response, filesystem){
+  var makeAction = function(request, response, filesystem){
     return (controllerFactory.build(request, response, filesystem))[action];
   }
 
@@ -9,7 +9,7 @@ HttpRoute = function(controllerFactory, action, matcher) {
     return matcher.hasAMatchFor(path, method)
   }
 
-  object.runAction = runAction;
+  object.makeAction = makeAction;
   object.hasAMatchFor = hasAMatchFor;
 
   return object;

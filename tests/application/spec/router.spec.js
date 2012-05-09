@@ -24,7 +24,7 @@ describe( 'Router' , function(){
   describe('route', function(){
     beforeEach(function(){
       spyOn(this.route, 'hasAMatchFor');
-      spyOn(this.route, 'runAction');
+      spyOn(this.route, 'makeAction');
       this.router = new Router([this.route], this.request, this.response, this.filesystem);
     });
 
@@ -32,7 +32,7 @@ describe( 'Router' , function(){
       this.route.hasAMatchFor.andReturn(true);
 
       this.router.route('/home', 'GET');
-      expect(this.route.runAction).toHaveBeenCalledWith(this.request, this.response, this.filesystem);
+      expect(this.route.makeAction).toHaveBeenCalledWith(this.request, this.response, this.filesystem);
       expect(this.route.hasAMatchFor).toHaveBeenCalledWith('/home', 'GET');
     });
 

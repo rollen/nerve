@@ -31,7 +31,7 @@ Router.prototype.hasRouteFor = function(path, method){
 }
 
 Router.prototype.onFound = function(route, request, response, filesystem){
-  return route.runAction(request, response, filesystem);
+  return route.makeAction(request, response, filesystem);
 }
 
 Router.prototype.onNotFound= function(path){
