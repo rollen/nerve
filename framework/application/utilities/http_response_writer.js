@@ -24,7 +24,7 @@ HttpFileResponseWriter= function(response, filesystem, folderpath, filename){
   }
 
   var writeToResponse= function(){
-    filesystem.readFile(path(), "utf8", function onFileRead(error, data){
+    filesystem.readFile(path(), encoding(), function onFileRead(error, data){
       if(error) {
         response.writeHead(500, {"Content-Type": "text/plain"});
         response.write(error + "\n");

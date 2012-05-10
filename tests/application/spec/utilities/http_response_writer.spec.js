@@ -14,6 +14,10 @@ describe('HttpFileResponseWriter', function(){
       this.filename = 'runner.html';
     });
 
+    it('should call readFile with the correct encoding', function(){
+
+    });
+
     it('should output the file into the response', function(){
       this.httpFileResponseWriter.writeToResponse();
       expect(this.response.write).toHaveBeenCalledWith(Fixtures.file(this.filename, 'html'));
