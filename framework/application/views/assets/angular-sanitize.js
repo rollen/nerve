@@ -1,9 +1,9 @@
 /**
- * @license AngularJS v1.0.0rc6
+ * @license AngularJS v1.0.0rc9-4e65635f
  * (c) 2010-2012 Google, Inc. http://angularjs.org
  * License: MIT
  */
-(function(angular) {
+(function(window, angular, undefined) {
 'use strict';
 
 /**
@@ -400,18 +400,15 @@ function htmlSanitizeWriter(buf){
 // define ngSanitize module and register $sanitize service
 angular.module('ngSanitize', []).value('$sanitize', $sanitize);
 
-
-
 /**
  * @ngdoc directive
  * @name angular.module.ngSanitize.directive.ngBindHtml
  *
  * @description
  * Creates a binding that will sanitize the result of evaluating the `expression` with the
- * {@link angular.module.ng.$sanitize $sanitize} service and innerHTML the result into the current
- * element.
+ * {@link angular.module.ngSanitize.$sanitize $sanitize} service and innerHTML the result into the current element.
  *
- * See {@link angular.module.ng.$sanitize $sanitize} docs for examples.
+ * See {@link angular.module.ngSanitize.$sanitize $sanitize} docs for examples.
  *
  * @element ANY
  * @param {expression} ngBindHtml {@link guide/dev_guide.expressions Expression} to evaluate.
@@ -532,4 +529,4 @@ angular.module('ngSanitize').filter('linky', function() {
   };
 });
 
-})(window.angular);
+})(window, window.angular);
