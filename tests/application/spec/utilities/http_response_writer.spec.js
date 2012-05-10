@@ -43,6 +43,15 @@ describe('HttpFileResponseWriter', function(){
 
   describe('.encoding', function(){
     it('encodes as utf8 if its a js,css,html file', function(){
+      var filetypes = ['file.js', 'file.css', 'file.html'];
+
+      for(var i = 0; i < filetypes; i++){
+        hfrw = HttpFileResponseWriter(null, null, null, filetypes[i]);      
+        expect(hfrw.encoding()).toBe('utf8');
+      }
+    });
+
+    it('encodes as utf8 if its a js,css,html file', function(){
       hfrw = HttpFileResponseWriter(null, null, null, 'file.js');      
       expect(hfrw.encoding()).toBe('utf8');
     });
