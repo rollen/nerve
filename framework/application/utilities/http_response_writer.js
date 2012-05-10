@@ -1,5 +1,5 @@
 HttpFileResponseWriter= function(response, filesystem, folderpath, filename){
-  var httpFileResponseWriter = {};
+  var object = {};
 
   var path = function(){
     return [folderpath, filename].join('/')
@@ -11,6 +11,9 @@ HttpFileResponseWriter= function(response, filesystem, folderpath, filename){
     return types[filetype];
   }
 
+  var encoding = function(){
+    return 'utf8'
+  }
 
   var writeToResponse= function(){
     filesystem.readFile(path(), "utf8", function onFileRead(error, data){
@@ -26,8 +29,9 @@ HttpFileResponseWriter= function(response, filesystem, folderpath, filename){
   }
 
   // public functions
-  httpFileResponseWriter.mimetype = mimetype;
-  httpFileResponseWriter.writeToResponse = writeToResponse;
+  object.mimetype = mimetype;
+  object.writeToResponse = writeToResponse;
+  object.encoding = encoding;
 
-  return httpFileResponseWriter;
+  return object;
 }

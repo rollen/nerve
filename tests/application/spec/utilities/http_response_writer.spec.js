@@ -41,6 +41,13 @@ describe('HttpFileResponseWriter', function(){
     });
   });
 
+  describe('.encoding', function(){
+    it('encodes as utf8 if its a js,css,html file', function(){
+      hfrw = HttpFileResponseWriter(null, null, null, 'file.js');      
+      expect(hfrw.encoding()).toBe('utf8');
+    });
+  });
+
   describe('.mimetype', function(){
     context('translates filnames to mimetypes', function(){
       it('tranlates js to application/x-javascript', function(){
