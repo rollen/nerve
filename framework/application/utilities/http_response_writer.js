@@ -5,14 +5,22 @@ HttpFileResponseWriter= function(response, filesystem, folderpath, filename){
     return [folderpath, filename].join('/')
   }
 
+  function filetype(){
+    return filename.split('.')[1];
+  }
+
+  function isWebFile(){
+    var cacheFileType = filetype();
+    var validTypes = {'js': true, 'css': true, 'html':true};
+    return validTypes[cacheFileType];
+  }
   var mimetype = function(){
-    var filetype = filename.split('.')[1];
     types = { 'js':'application/x-javascript', 'html':'text/html', 'css':'text/css' }
-    return types[filetype];
+    return types[filetype()];
   }
 
   var encoding = function(){
-    return 'utf8'
+    return isWebFile() ? 'utf8' : 'binary';
   }
 
   var writeToResponse= function(){

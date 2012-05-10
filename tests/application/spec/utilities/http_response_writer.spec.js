@@ -51,9 +51,9 @@ describe('HttpFileResponseWriter', function(){
       }
     });
 
-    it('encodes as utf8 if its a js,css,html file', function(){
-      hfrw = HttpFileResponseWriter(null, null, null, 'file.js');      
-      expect(hfrw.encoding()).toBe('utf8');
+    it('encodes as images as a raw file', function(){
+      hfrw = HttpFileResponseWriter(null, null, null, 'file.png');      
+      expect(hfrw.encoding()).toBe('binary');
     });
   });
 
