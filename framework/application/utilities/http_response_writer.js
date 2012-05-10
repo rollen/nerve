@@ -17,7 +17,7 @@ HttpFileResponseWriter= function(response, filesystem, folderpath, filename){
   var mimetype = function(){
     var types = { 'js':'application/x-javascript', 
       'html':'text/html', 
-      'png':'image/html', 
+      'png':'image/png', 
       'css':'text/css' 
     }
     return types[filetype()];
