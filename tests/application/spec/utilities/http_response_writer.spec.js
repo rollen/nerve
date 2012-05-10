@@ -15,12 +15,10 @@ describe('HttpFileResponseWriter', function(){
     });
 
     it('should call readFile with the correct encoding', function(){
-
-    });
-
-    it('should output the file into the response', function(){
+      spyOn(this.filesystem, 'readFile');
+      spyOn(this.httpFileResponseWriter, 'onFileRead');
       this.httpFileResponseWriter.writeToResponse();
-      expect(this.response.write).toHaveBeenCalledWith(Fixtures.file(this.filename, 'html'));
+      expect(this.filesystem.readFile).toHaveBeenCalledWith([this.folderpath,this.filename].join('/'), 'utf8', this.httpFileResponseWriter.onFileRead);
     });
 
     it('should close the response after writing', function(){

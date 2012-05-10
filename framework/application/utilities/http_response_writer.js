@@ -28,22 +28,25 @@ HttpFileResponseWriter= function(response, filesystem, folderpath, filename){
   }
 
   var writeToResponse= function(){
-    filesystem.readFile(path(), encoding(), function onFileRead(error, data){
-      if(error) {
-        response.writeHead(500, {"Content-Type": "text/plain"});
-        response.write(error + "\n");
-      } else {
-        response.writeHead(200, {"Content-Type": mimetype()});
-        response.write(data);
-      } 
+    filesystem.readFile(path(), encoding(), object.onFileRead);
+  }
+
+  var onFileRead = function(error, data){
+    if(error) {
+      response.writeHead(500, {"Content-Type": "text/plain"});
+      response.write(error + "\n");
       response.end();
-    })
+    } else {
+      response.writeHead(200, {"Content-Type": mimetype()});
+      response.end(data, encoding());
+    } 
   }
 
   // public functions
   object.mimetype = mimetype;
   object.writeToResponse = writeToResponse;
   object.encoding = encoding;
+  object.onFileRead = onFileRead;
 
   return object;
 }
