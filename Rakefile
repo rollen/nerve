@@ -19,6 +19,7 @@ end
 task :clone_angular_repo do
   puts "Cloning Angular repo"
   system("git submodule update")
+  system("cd lib/angular; git pull origin master")
 end
 
 def copy_to_framework(filename)
