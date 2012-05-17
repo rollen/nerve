@@ -65,6 +65,10 @@ describe('HttpFileResponseWriter', function(){
   describe('.onFileRead', function(){
     var error;
 
+    afterEach(function(){
+      error = undefined;
+    });
+
     it('should close the response if there is an error', function(){
       error = new Error("File not read");
       httpFileResponseWriter.onFileRead(error);
