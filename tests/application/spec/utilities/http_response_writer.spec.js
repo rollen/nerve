@@ -1,44 +1,49 @@
 require('./../../spec_helper');
 
 describe('HttpFileResponseWriter', function(){
+  var filesystem,
+  folderpath,
+  filename,
+  response;
+
   beforeEach(function(){
-    this.filesystem = new SyncFS(require('fs'));
-    this.folderpath = [Nervebuilder.config['paths']['viewsFolder'], 'tests'].join('/');
-    this.filename = 'runner.html';
+    filesystem = new SyncFS(require('fs'));
+    folderpath = [Nervebuilder.config['paths']['viewsFolder'], 'tests'].join('/'); //bullshit here
+    filename = 'runner.html';
   });
 
   describe('writeToResponse', function(){
     beforeEach(function(){
-      this.response = jasmine.createSpyObj('response', ['writeHead', 'write', 'end']);
-      this.httpFileResponseWriter = HttpFileResponseWriter(this.response, this.filesystem, this.folderpath, this.filename);
-      this.filename = 'runner.html';
+      response = jasmine.createSpyObj('response', ['writeHead', 'write', 'end']);
+      httpFileResponseWriter = HttpFileResponseWriter(response, filesystem, folderpath, filename);
+      filename = 'runner.html';
     });
 
     it('should call readFile with the correct encoding', function(){
-      spyOn(this.filesystem, 'readFile');
-      spyOn(this.httpFileResponseWriter, 'onFileRead');
-      this.httpFileResponseWriter.writeToResponse();
-      expect(this.filesystem.readFile).toHaveBeenCalledWith([this.folderpath,this.filename].join('/'), 'utf8', this.httpFileResponseWriter.onFileRead);
+      spyOn(filesystem, 'readFile');
+      spyOn(httpFileResponseWriter, 'onFileRead');
+      httpFileResponseWriter.writeToResponse();
+      expect(filesystem.readFile).toHaveBeenCalledWith([folderpath,filename].join('/'), 'utf8', httpFileResponseWriter.onFileRead);
     });
 
     it('should close the response after writing', function(){
-      this.httpFileResponseWriter.writeToResponse();
-      expect(this.response.end).toHaveBeenCalled();
+      httpFileResponseWriter.writeToResponse();
+      expect(response.end).toHaveBeenCalled();
     });
 
     context('should choose the write the appropiate mime type to the response', function(){
       it('accesses a html file', function(){
-        this.filename = 'runner.html';
-        this.httpFileResponseWriter = HttpFileResponseWriter(this.response, this.filesystem, this.folderpath, this.filename);
-        this.httpFileResponseWriter.writeToResponse(); 
-        expect(this.response.writeHead).toHaveBeenCalledWith(200, {"Content-Type": "text/html"});
+        filename = 'runner.html';
+        httpFileResponseWriter = HttpFileResponseWriter(response, filesystem, folderpath, filename);
+        httpFileResponseWriter.writeToResponse(); 
+        expect(response.writeHead).toHaveBeenCalledWith(200, {"Content-Type": "text/html"});
       });
 
       it('accesses a javascript file', function(){
-        this.filename = 'angular.js';
-        this.httpFileResponseWriter = HttpFileResponseWriter(this.response, this.filesystem, this.folderpath, this.filename);
-        this.httpFileResponseWriter.writeToResponse();
-        expect(this.response.writeHead).toHaveBeenCalledWith(200, {"Content-Type": "application/x-javascript"});
+        filename = 'angular.js';
+        httpFileResponseWriter = HttpFileResponseWriter(response, filesystem, folderpath, filename);
+        httpFileResponseWriter.writeToResponse();
+        expect(response.writeHead).toHaveBeenCalledWith(200, {"Content-Type": "application/x-javascript"});
       });
     });
   });
