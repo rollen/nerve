@@ -1,4 +1,4 @@
-HttpFileResponseWriter= function(response, filesystem, folderpath, filename){
+HttpFileResponseWriter= function(response, filesystem, folderpath, filename, filecreator){
   var object = {};
 
   function filetype(){
@@ -9,6 +9,14 @@ HttpFileResponseWriter= function(response, filesystem, folderpath, filename){
     var cacheFileType = filetype();
     var validTypes = {'js': true, 'css': true, 'html':true};
     return validTypes[cacheFileType];
+  }
+
+  function headers(){
+    var _headers = {"Content-Type":mimetype()}; 
+    if(!isWebFile()){
+      _headers["Cache-Control"] = "max-age=31536000";
+    }
+    return _headers;
   }
 
   var mimetype = function(){
@@ -28,7 +36,6 @@ HttpFileResponseWriter= function(response, filesystem, folderpath, filename){
     function path(){
       return [folderpath, filename].join('/')
     }
-
     filesystem.readFile(path(), encoding(), object.onFileRead);
   }
 
@@ -38,7 +45,7 @@ HttpFileResponseWriter= function(response, filesystem, folderpath, filename){
       response.write(error + "\n");
       response.end();
     } else {
-      response.writeHead(200, {"Content-Type": mimetype()});
+      response.writeHead(200, headers());
       response.end(data, encoding());
     } 
   }

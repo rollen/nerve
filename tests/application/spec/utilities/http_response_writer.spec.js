@@ -55,7 +55,7 @@ describe('HttpFileResponseWriter', function(){
   describe('.onFileRead', function(){
     var error;
     beforeEach(function(){
-      httpFileResponseWriter = HttpFileResponseWriter(response, null, folderpath, filename);
+      httpFileResponseWriter = HttpFileResponseWriter(response, null, folderpath, "text.html");
     });
 
     afterEach(function(){
@@ -63,9 +63,18 @@ describe('HttpFileResponseWriter', function(){
     });
 
     it('should choose to write the appropiate mime type to the response', function(){
-      filename = 'runner.html';
       httpFileResponseWriter.onFileRead(error); 
       expect(response.writeHead).toHaveBeenCalledWith(200, {"Content-Type": "text/html"});
+    });
+
+    it('should choose to write expiry info and a mimetype if its an image', function(){
+      var _expectedHeaders = {
+        "Content-Type":"image/png",
+        "Cache-Control":"max-age=31536000"
+      }
+      httpFileResponseWriter = HttpFileResponseWriter(response, null, folderpath, "image.png");
+      httpFileResponseWriter.onFileRead(error); 
+      expect(response.writeHead).toHaveBeenCalledWith(200, _expectedHeaders);
     });
 
     it('should close the response if there is an error', function(){
