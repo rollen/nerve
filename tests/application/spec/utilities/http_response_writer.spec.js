@@ -38,13 +38,6 @@ describe('HttpFileResponseWriter', function(){
         httpFileResponseWriter.writeToResponse(); 
         expect(response.writeHead).toHaveBeenCalledWith(200, {"Content-Type": "text/html"});
       });
-
-      it('accesses a javascript file', function(){
-        filename = 'angular.js';
-        httpFileResponseWriter = HttpFileResponseWriter(response, filesystem, folderpath, filename);
-        httpFileResponseWriter.writeToResponse();
-        expect(response.writeHead).toHaveBeenCalledWith(200, {"Content-Type": "application/x-javascript"});
-      });
     });
   });
 
