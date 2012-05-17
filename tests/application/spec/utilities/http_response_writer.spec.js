@@ -3,13 +3,22 @@ require('./../../spec_helper');
 describe('HttpFileResponseWriter', function(){
   var filesystem,
   folderpath,
+  httpFileResponseWriter,
   filename,
   response;
 
   beforeEach(function(){
     filesystem = new SyncFS(require('fs'));
-    folderpath = [Nervebuilder.config['paths']['viewsFolder'], 'tests'].join('/'); //bullshit here
+    folderpath = '/tmp';
     filename = 'runner.html';
+  });
+
+  afterEach(function(){
+    filesystem = undefined;
+    folderpath = undefined;
+    httpFileResponseWriter = undefined;
+    filename = undefined;
+    response = undefined;
   });
 
   describe('writeToResponse', function(){
@@ -26,12 +35,8 @@ describe('HttpFileResponseWriter', function(){
       expect(filesystem.readFile).toHaveBeenCalledWith([folderpath,filename].join('/'), 'utf8', httpFileResponseWriter.onFileRead);
     });
 
-    it('should close the response after writing', function(){
-      httpFileResponseWriter.writeToResponse();
-      expect(response.end).toHaveBeenCalled();
-    });
 
-    context('should choose the write the appropiate mime type to the response', function(){
+    context('should choose to write the appropiate mime type to the response', function(){
       it('accesses a html file', function(){
         filename = 'runner.html';
         httpFileResponseWriter = HttpFileResponseWriter(response, filesystem, folderpath, filename);
@@ -43,10 +48,10 @@ describe('HttpFileResponseWriter', function(){
 
   describe('.encoding', function(){
     it('encodes as utf8 if its a js,css,html file', function(){
-      var filetypes = ['file.js', 'file.css', 'file.html'];
+      var files = ['file.js', 'file.css', 'file.html'];
 
-      for(var i = 0; i < filetypes; i++){
-        hfrw = HttpFileResponseWriter(null, null, null, filetypes[i]);      
+      for(var i = 0; i < files; i++){
+        hfrw = HttpFileResponseWriter(null, null, null, files[i]);      
         expect(hfrw.encoding()).toBe('utf8');
       }
     });
@@ -54,6 +59,22 @@ describe('HttpFileResponseWriter', function(){
     it('encodes as images as a raw file', function(){
       hfrw = HttpFileResponseWriter(null, null, null, 'file.png');      
       expect(hfrw.encoding()).toBe('binary');
+    });
+  });
+
+  describe('.onFileRead', function(){
+    var error;
+
+    it('should close the response if there is an error', function(){
+      error = new Error("File not read");
+      httpFileResponseWriter.onFileRead(error);
+      expect(response.end).toHaveBeenCalled();
+    });
+
+    it('should close the response with the mime type of the file on a successful read', function(){
+      error = null;
+      httpFileResponseWriter.onFileRead(error);
+      expect(response.end).toHaveBeenCalled();
     });
   });
 

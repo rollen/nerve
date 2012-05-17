@@ -14,6 +14,7 @@ HttpFileResponseWriter= function(response, filesystem, folderpath, filename){
     var validTypes = {'js': true, 'css': true, 'html':true};
     return validTypes[cacheFileType];
   }
+
   var mimetype = function(){
     var types = { 'js':'application/x-javascript', 
       'html':'text/html', 
@@ -32,6 +33,7 @@ HttpFileResponseWriter= function(response, filesystem, folderpath, filename){
   }
 
   var onFileRead = function(error, data){
+    console.log(error);
     if(error) {
       response.writeHead(500, {"Content-Type": "text/plain"});
       response.write(error + "\n");
