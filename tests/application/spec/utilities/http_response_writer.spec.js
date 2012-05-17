@@ -31,7 +31,7 @@ describe('HttpFileResponseWriter', function(){
     it('should attempt to read the file with the correct folderpath, mimetype, callback', function(){
       spyOn(filesystem, 'readFile');
       httpFileResponseWriter.writeToResponse();
-      expect(filesystem.readFile).toHaveBeenCalledWith([folderpath,filename].join('/'), 'utf8', httpFileResponseWriter.onFileRead);
+      expect(filesystem.readFile).toHaveBeenCalledWith('/tmp/runner.html', 'utf8', httpFileResponseWriter.onFileRead);
     });
 
   });
