@@ -1,10 +1,6 @@
 HttpFileResponseWriter= function(response, filesystem, folderpath, filename){
   var object = {};
 
-  var path = function(){
-    return [folderpath, filename].join('/')
-  }
-
   function filetype(){
     return filename.split('.')[1];
   }
@@ -29,11 +25,14 @@ HttpFileResponseWriter= function(response, filesystem, folderpath, filename){
   }
 
   var writeToResponse= function(){
+    function path(){
+      return [folderpath, filename].join('/')
+    }
+
     filesystem.readFile(path(), encoding(), object.onFileRead);
   }
 
   var onFileRead = function(error, data){
-    console.log(error);
     if(error) {
       response.writeHead(500, {"Content-Type": "text/plain"});
       response.write(error + "\n");

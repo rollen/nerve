@@ -11,6 +11,7 @@ describe('HttpFileResponseWriter', function(){
     filesystem = new SyncFS(require('fs'));
     folderpath = '/tmp';
     filename = 'runner.html';
+    response = jasmine.createSpyObj('response', ['writeHead', 'write', 'end']);
   });
 
   afterEach(function(){
@@ -23,31 +24,20 @@ describe('HttpFileResponseWriter', function(){
 
   describe('writeToResponse', function(){
     beforeEach(function(){
-      response = jasmine.createSpyObj('response', ['writeHead', 'write', 'end']);
       httpFileResponseWriter = HttpFileResponseWriter(response, filesystem, folderpath, filename);
       filename = 'runner.html';
     });
 
-    it('should call readFile with the correct encoding', function(){
+    it('should attempt to read the file with the correct folderpath, mimetype, callback', function(){
       spyOn(filesystem, 'readFile');
-      spyOn(httpFileResponseWriter, 'onFileRead');
       httpFileResponseWriter.writeToResponse();
       expect(filesystem.readFile).toHaveBeenCalledWith([folderpath,filename].join('/'), 'utf8', httpFileResponseWriter.onFileRead);
     });
 
-
-    context('should choose to write the appropiate mime type to the response', function(){
-      it('accesses a html file', function(){
-        filename = 'runner.html';
-        httpFileResponseWriter = HttpFileResponseWriter(response, filesystem, folderpath, filename);
-        httpFileResponseWriter.writeToResponse(); 
-        expect(response.writeHead).toHaveBeenCalledWith(200, {"Content-Type": "text/html"});
-      });
-    });
   });
 
   describe('.encoding', function(){
-    it('encodes as utf8 if its a js,css,html file', function(){
+    it('encodes as utf8 if filname is a js,css,html file', function(){
       var files = ['file.js', 'file.css', 'file.html'];
 
       for(var i = 0; i < files; i++){
@@ -56,7 +46,7 @@ describe('HttpFileResponseWriter', function(){
       }
     });
 
-    it('encodes as images as a raw file', function(){
+    it('encodes as images if filename is a png file', function(){
       hfrw = HttpFileResponseWriter(null, null, null, 'file.png');      
       expect(hfrw.encoding()).toBe('binary');
     });
@@ -64,9 +54,18 @@ describe('HttpFileResponseWriter', function(){
 
   describe('.onFileRead', function(){
     var error;
+    beforeEach(function(){
+      httpFileResponseWriter = HttpFileResponseWriter(response, null, folderpath, filename);
+    });
 
     afterEach(function(){
       error = undefined;
+    });
+
+    it('should choose to write the appropiate mime type to the response', function(){
+      filename = 'runner.html';
+      httpFileResponseWriter.onFileRead(error); 
+      expect(response.writeHead).toHaveBeenCalledWith(200, {"Content-Type": "text/html"});
     });
 
     it('should close the response if there is an error', function(){
