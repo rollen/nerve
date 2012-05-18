@@ -3,14 +3,7 @@ describe('Injector', function(){
   func,
   dependency;
 
-  xdescribe('.factory', function(){
-    it("registers a factory for use", function(){
-      var func = function House(){} 
-      injector = Injector();    
-      injector.factory(func);
-      expect(injector.factories.length).toBe(1);
-    });
-
+  describe('.factory', function(){
     it("throws an error if a factory is already registered", function(){
       var func = function House(){} 
       injector = Injector();    
@@ -19,7 +12,7 @@ describe('Injector', function(){
     });
   });
 
-  xdescribe('.invoke', function(){
+  describe('.invoke', function(){
     it('resolves dependencies of a class', function(){
       func = function House($kitchen){
         var object = {};

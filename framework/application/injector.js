@@ -1,13 +1,14 @@
 Injector = function(){
-  function factory_already_exists(func){
-    console.log(func);
+  function factory_already_exists(name){
+    return object.factories[name] !== undefined;
   }
+
   var object={};
-  object.factories = {};
+
   object.factory = function(func){
-    var name = functionName(func);
+    var name = object.functionName(func);
     if(factory_already_exists(name)){
-    
+      throw new Error("Factory " + name + " has already been defined");
     };
     object.factories[name] = func;
   }
@@ -15,7 +16,6 @@ Injector = function(){
   object.invoke = function(objectname){
     
   }
-
 
   object.match = function(func){
     var functionstring = func.toString();
@@ -31,6 +31,8 @@ Injector = function(){
     var match = object.match(func);
     return match[2];
   }
+
+  object.factories = {};
 
   return object
 }
