@@ -19,7 +19,7 @@ Feature('injector.spec.js', function(){
         var object = {};
         object.name = function(){
           return "I am a Kitchen";
-        };
+        }
         return object;
       }
     });
@@ -30,14 +30,16 @@ Feature('injector.spec.js', function(){
 
       beforeEach(function(){
         injector = Injector();
-        injector.factory(Kitchen);
-        injector.factory(House);
-        house = injector.invoke(House);
+        injector.factory(func);
+        injector.factory(dependency);
+        house = injector.invoke('House');
       });
      
       Then('the instance and its depenencies must be resolved', function(){
         expect(house).not.toBe(undefined);
+        expect(house.name()).toBe("I am a House");
         expect(house.kitchen).not.toBe(undefined);
+        expect(house.kitchen.name()).toBe("I am a Kitchen");
       });
     });
   });

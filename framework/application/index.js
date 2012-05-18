@@ -1,5 +1,6 @@
 fs = require('fs');
 
+require('./injector');
 require('./router');
 require('./http_route');
 require('./utilities/matchers/standard_route_matcher');

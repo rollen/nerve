@@ -25,5 +25,5 @@ Then = function(msg, callback){
 }
 
 Feature = function(msg, callback){
-  it("Feature " + msg, callback);
+  describe("Feature " + msg, callback);
 }
