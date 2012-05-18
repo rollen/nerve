@@ -3,17 +3,23 @@ describe('Injector', function(){
   func,
   dependency;
 
+  afterEach(function(){
+    injector = undefined;
+    func = undefined;
+    dependency = undefined;
+  });
+
   describe('.factory', function(){
     it("throws an error if a factory is already registered", function(){
       var func = function House(){} 
       injector = Injector();    
       injector.factory(func);
-      expect(function(){injector.factory(func)}).toThrow(new Error("Factory House has already been defined"));
+      expect(function(){injector.factory(func)}).toThrow(new Error("Factory house has already been defined"));
     });
   });
 
-  describe('.invoke', function(){
-    it('resolves dependencies of a class', function(){
+  xdescribe('.instantiate()', function(){
+    beforeEach(function(){
       func = function House($kitchen){
         var object = {};
         object.kitchen = $kitchen;
@@ -30,12 +36,41 @@ describe('Injector', function(){
         }
         return object;
       }
-
+      injector = Injector();    
       injector.factory(dependency);
-      expect(injector.invoke('Kitchen')).not.toBe(undefined);
+      injector.factory(func);
+    });
+
+    it('throws an error if it cannot find the dependency mentioned', function(){
+      expect(function(){ injector.instantiate('BedRoom') }).toThrow(new Error('bedroom has not been registered'));
+    });
+
+    it('instantiates an object', function(){
+      expect(injector.instantiate('Kitchen')).not.toBe(undefined);
+    });
+
+    it('instantiates an object with the dependencies', function(){
+      var house = injector.instantiate('House');
+      expect(house).not.toBe(undefined);
+      expect(house.kitchen).not.toBe(undefined);
     });
   });
 
+  describe('.dependencies', function(){
+    it('should return the list of arguments in an array', function(){
+      function House(kitchen, bathroom) {} 
+      injector = Injector();
+      injector.factory(House);
+      expect(injector.dependencies('House')).toEqual(['kitchen', 'bathroom']);
+    });
+
+    it('should return an empty list when no args', function(){
+      function House() {} 
+      injector = Injector();
+      injector.factory(House);
+      expect(injector.dependencies('House')).toEqual([]);
+    });
+  });
   describe('.functionName()', function(){
     beforeEach(function(){
       injector = Injector();

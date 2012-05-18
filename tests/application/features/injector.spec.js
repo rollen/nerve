@@ -24,7 +24,7 @@ Feature('injector.spec.js', function(){
       }
     });
 
-    When('I regsiter the functions and invoke the injector on House', function(){
+    When('I regsiter the functions and instantiate the injector on House', function(){
       var injector,
       house;
 
@@ -32,7 +32,7 @@ Feature('injector.spec.js', function(){
         injector = Injector();
         injector.factory(func);
         injector.factory(dependency);
-        house = injector.invoke('House');
+        house = injector.instantiate('House');
       });
      
       Then('the instance and its depenencies must be resolved', function(){
