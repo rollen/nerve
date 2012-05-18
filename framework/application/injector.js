@@ -14,7 +14,7 @@ Injector = function(){
   }
 
   object.invoke = function(objectname){
-    
+    return object.factories[objectname](); 
   }
 
   object.match = function(func){

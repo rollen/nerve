@@ -31,6 +31,7 @@ describe('Injector', function(){
         return object;
       }
 
+      injector.factory(dependency);
       expect(injector.invoke('Kitchen')).not.toBe(undefined);
     });
   });
