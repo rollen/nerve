@@ -3,10 +3,30 @@ describe('Injector', function(){
   func,
   dependency;
 
+
   afterEach(function(){
     injector = undefined;
     func = undefined;
     dependency = undefined;
+  });
+
+  describe('.normalize', function(){
+    beforeEach(function(){
+      injector = Injector();
+    });
+
+    it('should change $name, to name', function(){
+      expect(injector.normalize('$kitchen')).toBe('kitchen');
+      expect(injector.normalize('$Kitchen')).toBe('kitchen');
+    });
+
+    it('should keep name as name', function(){
+      expect(injector.normalize('kitchen')).toBe('kitchen');
+    });
+
+    it('should lowercase any string', function(){
+      expect(injector.normalize('Kitchen')).toBe('kitchen'); 
+    });
   });
 
   describe('.factory', function(){
@@ -49,7 +69,7 @@ describe('Injector', function(){
       expect(injector.instantiate('Kitchen')).not.toBe(undefined);
     });
 
-    it('instantiates an object with the dependencies', function(){
+    it('instantiates an object with the objects dependencies', function(){
       var house = injector.instantiate('House');
       expect(house).not.toBe(undefined);
       expect(house.kitchen).not.toBe(undefined);
