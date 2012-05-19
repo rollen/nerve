@@ -30,8 +30,8 @@ Feature('injector.spec.js', function(){
 
       beforeEach(function(){
         injector = Injector();
-        injector.factory(func);
-        injector.factory(dependency);
+        injector.service(func);
+        injector.service(dependency);
         house = injector.instantiate('House');
       });
      

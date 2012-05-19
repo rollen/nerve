@@ -4,19 +4,28 @@ describe('Injector', function(){
   dependency;
 
   beforeEach(function(){
-    func = function House($kitchen){
+    func = function House(){
       var object = {};
-      object.kitchen = $kitchen;
-      object.name = function(){
-        return "I am a House";
+
+      object.$get = function House($kitchen){
+        var o = {};
+        o.kitchen = $kitchen;
+        o.name = function(){
+          return "I am a House";
+        }
+        return o
       }
       return object;
     }
 
     dependency = function Kitchen(){
       var object = {};
-      object.name = function(){
-        return "I am a Kitchen";
+      object.$get = function(){
+        var o = {};
+        o.name = function(){
+          return "I am a Kitchen";
+        }
+        return o;
       }
       return object;
     }
@@ -28,6 +37,41 @@ describe('Injector', function(){
     dependency = undefined;
   });
 
+  describe('.instantiate()', function(){
+    beforeEach(function(){
+      injector = Injector();    
+      injector.factory(dependency);
+      injector.factory(func);
+    });
+
+    it('throws an error if it cannot find the dependency mentioned', function(){
+      expect(function(){ injector.instantiate('BedRoom') }).toThrow(new Error('Injector: bedroom has not been registered'));
+    });
+
+    it('instantiates an object', function(){
+      expect(injector.instantiate('Kitchen')).not.toBe(undefined);
+      expect(injector.instantiate('Kitchen').name()).toBe('I am a Kitchen');
+    });
+
+    it('instantiates an object with the objects dependencies', function(){
+      var house = injector.instantiate('House');
+      expect(house).not.toBe(undefined);
+      expect(house.name()).toBe('I am a House');
+      expect(house.kitchen).not.toBe(undefined);
+      expect(house.kitchen.name()).toBe('I am a Kitchen');
+    });
+
+    it('returns the factory if the argument has a Factory at the end', function(){
+      var houseFactory = injector.instantiate('HouseFactory');
+      expect(houseFactory.$get.name).toBe('House');
+    });
+
+    it('returns the $get method if the agument has a Service at the end', function(){
+      var houseService = injector.instantiate('HouseService'); 
+      expect(houseService.name).toBe('House');
+    });
+  });
+
   describe('.normalize', function(){
     beforeEach(function(){
       injector = Injector();
@@ -35,6 +79,10 @@ describe('Injector', function(){
 
     it('should remove the word Factory from the string', function(){
       expect(injector.normalize('$kitchenFactory')).toBe('kitchen');
+    });
+
+    it('should remove the work Service from the string', function(){
+      expect(injector.normalize('$kitchenService')).toBe('kitchen');
     });
 
     it('should change $name, to name', function(){
@@ -51,14 +99,20 @@ describe('Injector', function(){
     });
   });
 
-  describe('.factory', function(){
-    it("registers the factory", function(){
-      var func = function House(){} 
+  describe('.service', function(){
+    it("registers the service", function(){
       injector = Injector();    
       injector.factory(func);
-      expect(injector.factories['house']).toBe(func);
     });
+  });
 
+  describe('.service', function(){
+    it("registers the service", function(){
+      var func = function House(){} 
+      injector = Injector();    
+      injector.service(func);
+      expect(injector.factories['house'].$get).toBe(func);
+    });
   });
 
   describe('.invoke', function(){
@@ -67,6 +121,7 @@ describe('Injector', function(){
       injector.factory(func);
       injector.factory(dependency);
     });
+
     it('should accept a callback and pass the instances of an object', function(){
       var house;
       injector.invoke(function($house){
@@ -86,43 +141,28 @@ describe('Injector', function(){
     });
   });
 
-  describe('.instantiate()', function(){
-    beforeEach(function(){
-      injector = Injector();    
-      injector.factory(dependency);
-      injector.factory(func);
-    });
-
-    it('throws an error if it cannot find the dependency mentioned', function(){
-      expect(function(){ injector.instantiate('BedRoom') }).toThrow(new Error('Injector: bedroom has not been registered'));
-    });
-
-    it('instantiates an object', function(){
-      expect(injector.instantiate('Kitchen')).not.toBe(undefined);
-    });
-
-    it('instantiates an object with the objects dependencies', function(){
-      var house = injector.instantiate('House');
-      expect(house).not.toBe(undefined);
-      expect(house.kitchen).not.toBe(undefined);
-    });
-
-    it('returns the factory if the argument has a Factory at the end', function(){
-      var houseFactory = injector.instantiate('HouseFactory')
-      expect(houseFactory).toBe(func);
-    });
-  });
-
   describe('.dependencies', function(){
     it('should return the list of arguments in an array', function(){
-      function House(kitchen, bathroom) {} 
+      function House() {
+        var object = {};
+        object.$get = function House(kitchen, bathroom){
+
+        }
+        return object;
+      } 
       injector = Injector();
       injector.factory(House);
       expect(injector.dependencies('House')).toEqual(['kitchen', 'bathroom']);
     });
 
     it('should return an empty list when no args', function(){
-      function House() {} 
+      function House() {
+        var object = {};
+        object.$get = function House(){
+
+        }
+        return object;
+      } 
       injector = Injector();
       injector.factory(House);
       expect(injector.dependencies('House')).toEqual([]);

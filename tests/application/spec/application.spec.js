@@ -2,21 +2,17 @@ require("./../spec_helper");
 
 describe('Application', function(){
   var matcher,
-  request,
-  httpVerb,
   frameworkRouter,
   applicationRouter,
   errorsController;
 
   beforeEach(function(){
-
     frameworkRouter = Router();
     applicationRouter = Router();
     errorsController = new ErrorsController();
   });
 
-
-  describe('findRouter', function(){
+  xdescribe('findRouter', function(){
     it('should return the router that can route to a given query', function(){
       application = Application([frameworkRouter], null, '/tests', 'GET');
       spyOn(frameworkRouter, 'hasRouteFor').andReturn(true);
@@ -25,7 +21,7 @@ describe('Application', function(){
     });
   });
 
-  describe('executeRequest', function(){
+  xdescribe('executeRequest', function(){
     it('should route the request to the framework if it cannot be handled by the application Router', function(){
       spyOn(frameworkRouter, 'route').andReturn(function(){});
       spyOn(frameworkRouter, 'hasRouteFor').andReturn(true);

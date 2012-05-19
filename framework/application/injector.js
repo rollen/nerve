@@ -36,8 +36,8 @@ Injector = function(){
     return  string.toLowerCase();
   }
 
-  function stripWordFactoryFromEndOfString(string){
-    var regexp = /^(.+)(F|f)actory$/
+  function stripWordFromEndOfString(string, regexSegment){
+    var regexp = new RegExp('^(.+)' + regexSegment + '$');
     var match = string.match(regexp);
     if(match){
       string = match[1];  
@@ -47,7 +47,8 @@ Injector = function(){
 
   function normalize(unNormalizedString){
     var tempstring = unNormalizedString;
-    tempstring = stripWordFactoryFromEndOfString(tempstring);
+    tempstring = stripWordFromEndOfString(tempstring, '(F|f)actory');
+    tempstring = stripWordFromEndOfString(tempstring, '(S|f)ervice');
     tempstring = makeStringLowerCase(tempstring);
     tempstring = stripDollarSignFromFrontOfString(tempstring);
     return tempstring;
@@ -58,12 +59,26 @@ Injector = function(){
     if(factory_already_exists(name)){
       throw new Error('Injector: Factory ' + name + ' has already been defined');
     };
-    object.factories[name] = func;
+    object.register(name, func);
+  }
+
+  object.service = function(func){
+    var name = normalize(object.functionName(func))
+    var factory = function(){
+      var object = {};
+      object.$get = func;
+      return object;
+    }
+    object.register(name, factory);
+  }
+
+  object.register = function(name, factory){
+    object.factories[name] = factory();
   }
 
   object.dependencies = function(objectname){
     var factoryname = normalize(objectname);
-    var factory = getFactory(factoryname);
+    var factory = getFactory(factoryname).$get;
     return functionArgs(factory);
   }
 
@@ -80,6 +95,10 @@ Injector = function(){
     return name.match(/Factory$/);
   }
 
+  function isServiceName(name){
+    return name.match(/Service/);
+  }
+
   function getFactory(factoryname){
     var factory = object.factories[factoryname];
     if(factory === undefined){
@@ -92,9 +111,11 @@ Injector = function(){
     var normalizedName = normalize(objectname);
     if(isFactoryName(objectname)){
       return getFactory(normalizedName);
+    }if(isServiceName(objectname)){
+      return getFactory(normalizedName).$get;
     }else{
       var args = argumentInstances(normalizedName);
-      return getFactory(normalizedName).apply(undefined, args); 
+      return getFactory(normalizedName).$get.apply(undefined, args); 
     }
   }
 

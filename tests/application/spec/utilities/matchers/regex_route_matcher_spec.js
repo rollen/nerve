@@ -1,16 +1,16 @@
 require("./../../../spec_helper");
 
 describe('RegexRouteMatcher', function(){
-  var regexRouteMatcherFactory;
+  var regexRouteMatcherService;
   beforeEach(function(){
-    inject(function($regexRouteMatcherFactory){
-      regexRouteMatcherFactory = $regexRouteMatcherFactory;
+    inject(function($regexRouteMatcherService){
+      regexRouteMatcherService = $regexRouteMatcherService;
     });
   });
 
   describe('.hasAMatchFor', function(){
     it('should match based on a regex', function(){
-      system_under_test = regexRouteMatcherFactory(/^\/partials/);
+      system_under_test = regexRouteMatcherService(/^\/partials/);
       expect(system_under_test.hasAMatchFor('/partials/jobs/create_job.html')).toBeTruthy();
     });
   });
