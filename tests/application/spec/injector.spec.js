@@ -57,15 +57,27 @@ describe('Injector', function(){
   });
 
   describe('.invoke', function(){
-    it('should accept a callback and pass the instances of an object', function(){
+    beforeEach(function(){
       injector = Injector();
       injector.factory(func);
       injector.factory(dependency);
+    });
+    it('should accept a callback and pass the instances of an object', function(){
       var house;
       injector.invoke(function($house){
         house = $house 
       });
       expect(house.name()).toBe('I am a House');
+    });
+
+    it('should accept a callback with multiple args', function(){
+      var house, kitchen;
+      injector.invoke(function($house, $kitchen){
+        house = $house;
+        kitchen = $kitchen;
+      });
+      expect(house.name()).toBe('I am a House');
+      expect(kitchen.name()).toBe('I am a Kitchen');
     });
   });
 
