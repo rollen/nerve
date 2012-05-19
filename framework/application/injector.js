@@ -49,9 +49,6 @@ Injector = function(){
     return object.factories[objectname].apply(undefined, instances); 
   }
 
-  object.match = function(func){
-  }
-
   object.functionName = function(func){
     var functionstring = func.toString();
     var regex = /^function\s(.+?)\(/;
