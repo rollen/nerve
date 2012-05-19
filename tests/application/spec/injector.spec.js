@@ -3,6 +3,24 @@ describe('Injector', function(){
   func,
   dependency;
 
+  beforeEach(function(){
+    func = function House($kitchen){
+      var object = {};
+      object.kitchen = $kitchen;
+      object.name = function(){
+        return "I am a House";
+      }
+      return object;
+    }
+
+    dependency = function Kitchen(){
+      var object = {};
+      object.name = function(){
+        return "I am a Kitchen";
+      }
+      return object;
+    }
+  });
 
   afterEach(function(){
     injector = undefined;
@@ -38,24 +56,21 @@ describe('Injector', function(){
     });
   });
 
+  describe('.invoke', function(){
+    it('should accept a callback and pass the instances of an object', function(){
+      injector = Injector();
+      injector.factory(func);
+      injector.factory(dependency);
+      var house;
+      injector.invoke(function($house){
+        house = $house 
+      });
+      expect(house.name()).toBe('I am a House');
+    });
+  });
+
   describe('.instantiate()', function(){
     beforeEach(function(){
-      func = function House($kitchen){
-        var object = {};
-        object.kitchen = $kitchen;
-        object.name = function(){
-          return "I am a House";
-        }
-        return object;
-      }
-
-      dependency = function Kitchen(){
-        var object = {};
-        object.name = function(){
-          return "I am a Kitchen";
-        }
-        return object;
-      }
       injector = Injector();    
       injector.factory(dependency);
       injector.factory(func);

@@ -3,8 +3,23 @@ Injector = function(){
     return object.factories[name] !== undefined;
   }
 
+  function functionArgs(func){
+    var regex = /^function.+\((.*?)\)/
+    var args = func.toString().match(regex)[1];
+    return args ? args.split(', ') : [];
+  }
+
   var object={};
   object.factories = {};
+
+  object.invoke= function(callback){
+    var args = functionArgs(callback);
+    var instances = [];
+    for(var i = 0; i < args.length; i++){
+      instances[i] = object.instantiate(args[i]);
+    }
+    callback.apply(undefined, instances); 
+  }
 
   function normalize(unNormalizedString){
     var regexp = /^\$(.+)/
@@ -33,10 +48,7 @@ Injector = function(){
     if(factory === undefined){
       throw new Error(factoryname+ ' has not been registered');
     }
-    var regex = /^function.+\((.*?)\)/
-
-    var match = factory.toString().match(regex)[1]
-    return match ? match.split(', ') : [];
+    return functionArgs(factory);
   }
 
   object.instantiate = function(objectname){
