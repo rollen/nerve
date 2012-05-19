@@ -4,10 +4,6 @@ describe('Application', function(){
   var matcher,
   request,
   httpVerb,
-  pattern,
-  controller,
-  message,
-  route,
   frameworkRouter,
   applicationRouter,
   errorsController;
