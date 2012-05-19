@@ -30,11 +30,11 @@ describe('Injector', function(){
   });
 
   describe('.factory', function(){
-    it("throws an error if a factory is already registered", function(){
+    it("registers the factory", function(){
       var func = function House(){} 
       injector = Injector();    
       injector.factory(func);
-      expect(function(){injector.factory(func)}).toThrow(new Error("Factory house has already been defined"));
+      expect(injector.factories['house']).toBe(func);
     });
   });
 
