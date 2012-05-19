@@ -1,4 +1,4 @@
-StandardRouteMatcher = function(template, httpVerb){
+StandardRouteMatcher = function StandardRouteMatcher(template, httpVerb){
   var object = {}
   object.template = template;
 

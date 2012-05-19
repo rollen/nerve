@@ -31,3 +31,4 @@ require('./config/nervebuilder');
 require('./application');
 
 nervex.injector.factory(RegexRouteMatcher);
+nervex.injector.factory(StandardRouteMatcher);
