@@ -27,3 +27,7 @@ Then = function(msg, callback){
 Feature = function(msg, callback){
   describe("Feature " + msg, callback);
 }
+
+inject = function(func){
+  nervex.injector.invoke(func);
+}

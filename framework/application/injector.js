@@ -56,17 +56,14 @@ Injector = function(){
   object.factory = function(func){
     var name = normalize(object.functionName(func))
     if(factory_already_exists(name)){
-      throw new Error('Factory ' + name + ' has already been defined');
+      throw new Error('Injector: Factory ' + name + ' has already been defined');
     };
     object.factories[name] = func;
   }
 
   object.dependencies = function(objectname){
     var factoryname = normalize(objectname);
-    var factory = object.factories[factoryname];
-    if(factory === undefined){
-      throw new Error(factoryname+ ' has not been registered');
-    }
+    var factory = getFactory(factoryname);
     return functionArgs(factory);
   }
 
@@ -82,13 +79,22 @@ Injector = function(){
   function isFactoryName(name){
     return name.match(/Factory$/);
   }
+
+  function getFactory(factoryname){
+    var factory = object.factories[factoryname];
+    if(factory === undefined){
+      throw new Error('Injector: ' + factoryname+ ' has not been registered');
+    }
+    return factory;
+  }
+
   object.instantiate = function(objectname){
     var normalizedName = normalize(objectname);
     if(isFactoryName(objectname)){
-      return object.factories[normalizedName];
+      return getFactory(normalizedName);
     }else{
       var args = argumentInstances(normalizedName);
-      return object.factories[normalizedName].apply(undefined, args); 
+      return getFactory(normalizedName).apply(undefined, args); 
     }
   }
 
@@ -97,7 +103,7 @@ Injector = function(){
     var regex = /^function\s(.+?)\(/
                                    var match = functionstring.match(regex);
                                    if(match === null){
-                                     throw new Error('Anonymous function passed');
+                                     throw new Error('Injector: Anonymous function does not have a name');
                                    }
                                    return match[1];
   }

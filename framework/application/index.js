@@ -8,6 +8,7 @@ require('./router');
 require('./http_route');
 require('./utilities/matchers/standard_route_matcher');
 require('./utilities/matchers/regex_route_matcher');
+
 require('./utilities/http_response_writer');
 require('./utilities/http_url_params_extractor');
 require('./controllers/tests_controller');
@@ -29,4 +30,4 @@ require('./config/nervebuilder');
 
 require('./application');
 
-
+nervex.injector.factory(RegexRouteMatcher);

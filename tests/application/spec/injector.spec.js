@@ -94,7 +94,7 @@ describe('Injector', function(){
     });
 
     it('throws an error if it cannot find the dependency mentioned', function(){
-      expect(function(){ injector.instantiate('BedRoom') }).toThrow(new Error('bedroom has not been registered'));
+      expect(function(){ injector.instantiate('BedRoom') }).toThrow(new Error('Injector: bedroom has not been registered'));
     });
 
     it('instantiates an object', function(){
@@ -144,7 +144,7 @@ describe('Injector', function(){
     });
 
     it('should thrown an error if the function is anon', function(){
-      expect(function(){injector.functionName(function(){})}).toThrow(new Error('Anonymous function passed'));
+      expect(function(){injector.functionName(function(){})}).toThrow(new Error('Injector: Anonymous function does not have a name'));
     });
   });
 });
