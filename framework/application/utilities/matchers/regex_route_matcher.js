@@ -8,3 +8,4 @@ RegexRouteMatcher = function(regex){
   object.hasAMatchFor = hasAMatchFor;
   return object;
 }
+

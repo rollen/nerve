@@ -4,11 +4,9 @@ describe('Application', function(){
   var matcher;
 
   beforeEach(function(){
-    this.filesystem = new SyncFS(require('fs'));
     this.response = new Response();
     this.request = new Request("/tests");
     this.request.method = 'GET';
-    this.testsController = new TestsController(this.request, this.response, this.filesystem, this.frameworkViewsPath);
 
     this.httpVerb = 'GET';
     this.pattern = '/tests';
