@@ -38,7 +38,7 @@ describe('Injector', function(){
     });
   });
 
-  xdescribe('.instantiate()', function(){
+  describe('.instantiate()', function(){
     beforeEach(function(){
       func = function House($kitchen){
         var object = {};
@@ -91,6 +91,7 @@ describe('Injector', function(){
       expect(injector.dependencies('House')).toEqual([]);
     });
   });
+
   describe('.functionName()', function(){
     beforeEach(function(){
       injector = Injector();
