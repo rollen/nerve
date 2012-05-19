@@ -50,18 +50,16 @@ Injector = function(){
   }
 
   object.match = function(func){
+  }
+
+  object.functionName = function(func){
     var functionstring = func.toString();
-    var regex = /^function(\s)(.+?)\(/;
+    var regex = /^function\s(.+?)\(/;
     var match = functionstring.match(regex);
     if(match === null){
       throw new Error('Anonymous function passed');
     }
-    return match;
-  }
-
-  object.functionName = function(func){
-    var match = object.match(func);
-    return match[2];
+    return match[1];
   }
 
   object.normalize = normalize;
