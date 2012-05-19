@@ -33,6 +33,10 @@ describe('Injector', function(){
       injector = Injector();
     });
 
+    it('should remove the word Factory from the string', function(){
+      expect(injector.normalize('$kitchenFactory')).toBe('kitchen');
+    });
+
     it('should change $name, to name', function(){
       expect(injector.normalize('$kitchen')).toBe('kitchen');
       expect(injector.normalize('$Kitchen')).toBe('kitchen');
@@ -54,6 +58,7 @@ describe('Injector', function(){
       injector.factory(func);
       expect(injector.factories['house']).toBe(func);
     });
+
   });
 
   describe('.invoke', function(){
@@ -100,6 +105,11 @@ describe('Injector', function(){
       var house = injector.instantiate('House');
       expect(house).not.toBe(undefined);
       expect(house.kitchen).not.toBe(undefined);
+    });
+
+    it('returns the factory if the argument has a Factory at the end', function(){
+      var houseFactory = injector.instantiate('HouseFactory')
+      expect(houseFactory).toBe(func);
     });
   });
 

@@ -21,17 +21,36 @@ Injector = function(){
     callback.apply(undefined, instances); 
   }
 
-  function normalize(unNormalizedString){
+
+  function stripDollarSignFromFrontOfString(string){
     var regexp = /^\$(.+)/
-    var lowerCaseString = unNormalizedString.toLowerCase();
-    var match = lowerCaseString.match(regexp);
-    var sanitizedString = '';
+    var strippedString;
+    var match =  string.match(regexp);
     if(match){
-      sanitizedString = match[1];
-    }else{
-      sanitizedString = lowerCaseString;
+      string = match[1];
     }
-    return sanitizedString;
+    return string;
+  }
+
+  function makeStringLowerCase(string){
+    return  string.toLowerCase();
+  }
+
+  function stripWordFactoryFromEndOfString(string){
+    var regexp = /^(.+)(F|f)actory$/
+    var match = string.match(regexp);
+    if(match){
+      string = match[1];  
+    }
+    return string;
+  }
+
+  function normalize(unNormalizedString){
+    var tempstring = unNormalizedString;
+    tempstring = stripWordFactoryFromEndOfString(tempstring);
+    tempstring = makeStringLowerCase(tempstring);
+    tempstring = stripDollarSignFromFrontOfString(tempstring);
+    return tempstring;
   }
 
   object.factory = function(func){
@@ -51,24 +70,36 @@ Injector = function(){
     return functionArgs(factory);
   }
 
-  object.instantiate = function(objectname){
-    objectname = normalize(objectname);
-    var dependencies = object.dependencies(objectname);
+  function argumentInstances(normalizedName){
+    var dependencies = object.dependencies(normalizedName);
     var instances = [];
     for(var i = 0; i < dependencies.length; i++){
       instances[i] = object.instantiate(dependencies[i]);
     }
-    return object.factories[objectname].apply(undefined, instances); 
+    return instances;
+  }
+
+  function isFactoryName(name){
+    return name.match(/Factory$/);
+  }
+  object.instantiate = function(objectname){
+    var normalizedName = normalize(objectname);
+    if(isFactoryName(objectname)){
+      return object.factories[normalizedName];
+    }else{
+      var args = argumentInstances(normalizedName);
+      return object.factories[normalizedName].apply(undefined, args); 
+    }
   }
 
   object.functionName = function(func){
     var functionstring = func.toString();
-    var regex = /^function\s(.+?)\(/;
-    var match = functionstring.match(regex);
-    if(match === null){
-      throw new Error('Anonymous function passed');
-    }
-    return match[1];
+    var regex = /^function\s(.+?)\(/
+                                   var match = functionstring.match(regex);
+                                   if(match === null){
+                                     throw new Error('Anonymous function passed');
+                                   }
+                                   return match[1];
   }
 
   object.normalize = normalize;
