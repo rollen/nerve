@@ -24,6 +24,7 @@ Application = function(routers, errorsController, urlPath, httpVerb){
       router = routers[i];
       if( !result && router.hasRouteFor(urlPath, httpVerb) ){
         result = router; 
+        break;
       }
     }
     return result;

@@ -1,48 +1,50 @@
 require("./../spec_helper");
 
 describe('Application', function(){
-  var matcher;
+  var matcher,
+  request,
+  httpVerb,
+  pattern,
+  controller,
+  message,
+  route,
+  frameworkRouter,
+  applicationRouter,
+  errorsController;
 
   beforeEach(function(){
-    this.response = new Response();
-    this.request = new Request("/tests");
-    this.request.method = 'GET';
 
-    this.httpVerb = 'GET';
-    this.pattern = '/tests';
-    this.controller = new Controller();
-    this.message = "index";
-
-    matcher = StandardRouteMatcher(this.pattern, this.httpVerb)
-    
-    this.route = new HttpRoute(this.controller, this.message, matcher);
-    this.frameworkRouter = new Router([this.route]);
-    this.errorsController = new ErrorsController(this.request, this.response);
+    frameworkRouter = Router();
+    applicationRouter = Router();
+    errorsController = new ErrorsController();
   });
 
 
   describe('findRouter', function(){
     it('should return the router that can route to a given query', function(){
-      this.application = Application([this.frameworkRouter], null, this.request.url, this.request.method);
-      spyOn(this.frameworkRouter, 'hasRouteFor');
-      this.application.findRouter();
-      expect(this.frameworkRouter.hasRouteFor).toHaveBeenCalledWith('/tests', this.httpVerb);
+      application = Application([frameworkRouter], null, '/tests', 'GET');
+      spyOn(frameworkRouter, 'hasRouteFor').andReturn(true);
+      application.findRouter();
+      expect(frameworkRouter.hasRouteFor).toHaveBeenCalledWith('/tests', 'GET');
     });
   });
 
   describe('executeRequest', function(){
     it('should route the request to the framework if it cannot be handled by the application Router', function(){
-      spyOn(this.frameworkRouter, 'route').andReturn(function(){});
-      this.application = Application([this.frameworkRouter], null, this.request.url, this.request.method);
-      this.application.executeRequest();
-      expect(this.frameworkRouter.route).toHaveBeenCalledWith(this.request.url, this.request.method);
+      spyOn(frameworkRouter, 'route').andReturn(function(){});
+      spyOn(frameworkRouter, 'hasRouteFor').andReturn(true);
+      spyOn(applicationRouter, 'hasRouteFor').andReturn(false);
+      application = Application([applicationRouter, frameworkRouter], null, '/tests', 'GET');
+      application.executeRequest();
+      expect(frameworkRouter.route).toHaveBeenCalledWith('/tests', 'GET');
     });
 
     it('should execute the errorsController if no possible route is found', function(){
-      spyOn(this.errorsController, 'index');
-      this.application = Application([new Router([])], this.errorsController, this.request.url, this.request.method);
-      this.application.executeRequest();
-      expect(this.errorsController.index).toHaveBeenCalled();
+      spyOn(errorsController, 'index');
+      spyOn(frameworkRouter, 'hasRouteFor').andReturn(false);
+      application = Application([frameworkRouter], errorsController, '/tests', 'GET');
+      application.executeRequest();
+      expect(errorsController.index).toHaveBeenCalled();
     });
   });
 });

@@ -1,5 +1,5 @@
 describe('StandardRouteMatcher', function(){
-  var factory;
+  var standardRouteMatcherFactory;
 
   describe('.hasAMatchFor', function(){
     beforeEach(function(){
