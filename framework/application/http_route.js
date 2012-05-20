@@ -1,16 +1,13 @@
-HttpRoute = function(controllerFactory, action, matcher) {
+HttpRoute = function HttpRoute(controller, action, matcher) {
   var object = {};
 
-  var makeAction = function(request, response, filesystem){
-    return (controllerFactory.build(request, response, filesystem, matcher.template))[action];
+  object.match = function(path, method){
+    if(matcher.hasAMatchFor(path, method)){
+      return { controller:controller,
+        action:action};
+    }else{
+      return false;
+    }
   }
-
-  var hasAMatchFor = function(path, method) {
-    return matcher.hasAMatchFor(path, method)
-  }
-
-  object.makeAction = makeAction;
-  object.hasAMatchFor = hasAMatchFor;
-
   return object;
 }

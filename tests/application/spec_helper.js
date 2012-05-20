@@ -29,5 +29,9 @@ Feature = function(msg, callback){
 }
 
 inject = function(func){
-  nervex.injector.invoke(func);
+  return function(){nervex.injector.invoke(func);};
+}
+
+injector= function(func){
+  func(nervex.injector);
 }

@@ -1,15 +1,16 @@
 Response = function(){ 
-  this._head = "";
-  this._body = "";
-}
+  var object = {};
+  object._head = "";
+  object._body = "";
+  object.writeHead = function(error_code, options){
+    object._head = error_code;
+  }
 
-Response.prototype.writeHead = function(error_code, options){
-  this._head = error_code;
-}
+  object.write = function(data){
+    object._body = data;
+  }
 
-Response.prototype.write = function(data){
-  this._body = data;
+  object.end = function(){}
+  return object;
 }
-
-Response.prototype.end = function(){}
 

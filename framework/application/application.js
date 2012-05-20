@@ -1,4 +1,4 @@
-Application = function(routers, errorsController, urlPath, httpVerb){
+Application = function Application(router, errorsControllerService){
   var object = {};
 
   object.executeRequest = function(params){

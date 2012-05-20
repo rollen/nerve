@@ -2,11 +2,9 @@ require("./../../../spec_helper");
 
 describe('RegexRouteMatcher', function(){
   var regexRouteMatcherService;
-  beforeEach(function(){
-    inject(function($regexRouteMatcherService){
-      regexRouteMatcherService = $regexRouteMatcherService;
-    });
-  });
+  beforeEach(inject(function($regexRouteMatcherService){
+    regexRouteMatcherService = $regexRouteMatcherService;
+  }));
 
   describe('.hasAMatchFor', function(){
     it('should match based on a regex', function(){

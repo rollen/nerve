@@ -32,3 +32,7 @@ require('./application');
 
 nervex.injector.service(RegexRouteMatcher);
 nervex.injector.service(StandardRouteMatcher);
+nervex.injector.service(Application);
+nervex.injector.factory(Router);
+nervex.injector.service(ErrorsController);
+nervex.injector.service(HttpRoute);

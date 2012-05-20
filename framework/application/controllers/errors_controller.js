@@ -1,4 +1,4 @@
-ErrorsController = function(request, response){
+ErrorsController = function ErrorsController(request, response){
   var errors_controller = {}
   errors_controller.index = function(){
     response.writeHead(404, {"Content-Type":"text/html"});

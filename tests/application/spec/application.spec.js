@@ -3,13 +3,18 @@ require("./../spec_helper");
 describe('Application', function(){
   var matcher,
   frameworkRouter,
+  application,
   applicationRouter,
   errorsController;
 
-  beforeEach(function(){
-    frameworkRouter = Router();
-    applicationRouter = Router();
-    errorsController = new ErrorsController();
+  beforeEach(inject(function($router, $errorsControllerService){
+    application = Application($router, $errorsControllerService); 
+  }));
+
+  xdescribe('executeRequest', function(){
+    it('should get the controller,action from the router', function(){
+
+    });
   });
 
   xdescribe('findRouter', function(){

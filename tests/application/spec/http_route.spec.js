@@ -1,41 +1,21 @@
 require('./../spec_helper');
 
 describe('HttpRoute', function(){
-  var action,
-  request,
-  response,
-  filesystem;
+  describe('match', function(){
+    var route,
+    controller,
+    matcher,
+    action;
 
-  beforeEach(function(){
-    action = "index";
-    request = new Request();
-    response =  new Response();
-    filesystem = new SyncFS(require('fs'));
-  });
-  
-  var route,
-  matcher;
+    beforeEach(inject(function($httpRouteService, $standardRouteMatcherService){
+      matcher = $standardRouteMatcherService('/login','GET');
+      route = $httpRouteService('LoginController','index', matcher);
+    }));
 
-  describe('.hasAMatchFor', function(){
-    it('delegates the match to a matcher strategy', function(){
-      matcher = StandardRouteMatcher('/home', 'GET');
-      spyOn(matcher, 'hasAMatchFor');
-
-      route = HttpRoute(null, null, matcher); 
-      route.hasAMatchFor('/home', 'GET'); 
-      expect(matcher.hasAMatchFor).toHaveBeenCalledWith('/home', 'GET');
-    });
-  });
-
-  describe('makeAction', function() {
-    beforeEach(function(){
-      getRoute = HttpRoute(ControllerFactory, action, matcher);
-      spyOn(ControllerFactory, 'build').andCallThrough();
-    });
-
-    it('should expect the factory to create a instance of its product and have it returned', function(){
-      getRoute.makeAction(request, response, filesystem);
-      expect(ControllerFactory.build).toHaveBeenCalledWith(request, response, filesystem, matcher.template);
+    it('should match a path and a method', function(){
+      expect(route.match('/login', 'GET')).toBeTruthy();
+      expect(route.match('/login', 'GET').controller).toBe('LoginController');
+      expect(route.match('/login', 'GET').action).toBe('index');
     });
   });
 });
