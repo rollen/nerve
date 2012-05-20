@@ -1,5 +1,7 @@
 Request = function(url){
-  this.url = url;
-  this.method = 'GET';
+  var object = {};
+  object.url = url;
+  object.method = 'GET';
+  return object;
 }
 

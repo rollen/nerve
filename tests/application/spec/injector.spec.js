@@ -99,7 +99,7 @@ describe('Injector', function(){
     });
   });
 
-  describe('.service', function(){
+  describe('.factory', function(){
     it("registers the service", function(){
       injector = Injector();    
       injector.factory(func);
@@ -114,6 +114,7 @@ describe('Injector', function(){
       expect(injector.factories['house'].$get).toBe(func);
     });
   });
+
 
   describe('.invoke', function(){
     beforeEach(function(){

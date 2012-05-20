@@ -2,43 +2,36 @@ Router = function Router(){
   var o = {}
   var routes = [];
 
-  o.get = function(route, controller, action){
+  o.get = function(template, controller, action){
+    o.template(template, controller, action, 'GET');
+  }
+  o.post= function(template, controller, action){
+    o.template(template, controller, action, 'POST');
+  }
+  o.del= function(template, controller, action){
+    o.template(template, controller, action, 'DELETE');
+  }
+
+  o.put= function(template, controller, action){
+    o.template(template, controller, action, 'PUT');
+  }
+
+  o.template= function(template, controller, action, method){
+    var matcher = StandardRouteMatcher(template, method);
+    var template= HttpRoute(controller, action, matcher);
+    routes.push(template);
   }
 
   o.$get = function Router(){
-    
-    var object = {}
+    var object = {};
 
     object.route = function(path, method){
-      return object.findRouteFor(path, method, object.onFound, object.onNotFound);
-    }
-
-    object.findRouteFor = function(path, method, onFound, onNotFound){
-      for(var index = 0; index < routes.length; index++){
-        route = routes[index];
-        if(route.hasAMatchFor(path, method)) {
-          return onFound(route, request, response, filesystem);
-        }
+      var controllerInfo;
+      for(var i = 0; i < routes.length; i++){
+        controllerInfo = routes[i].match(path, method);
+        if(controllerInfo) break;
       }
-      onNotFound(path);
-    }
-
-    object.hasRouteFor = function(path, method){
-      var result = false;
-      routes.forEach(function(route, object){
-        if(!result && route.hasAMatchFor(path, method)){
-          result = true;
-        }
-      });
-      return result;
-    }
-
-    object.onFound = function(route, request, response, filesystem){
-      return route.makeAction(request, response, filesystem);
-    }
-
-    object.onNotFound= function(path){
-      throw "No valid route to " + path
+      return controllerInfo;
     }
 
     return object;

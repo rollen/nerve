@@ -84,6 +84,15 @@ Injector = function Injector(){
     object.register(name, factory);
   }
 
+  object.registerService = function(name, func){
+    var factory = function(){
+      var object = {};
+      object.$get = func;
+      return object;
+    }
+    object.register(name, factory);
+  }
+
   object.register = function(name, factory){
     object.factories[name] = factory();
   }

@@ -2,46 +2,54 @@ require("./../spec_helper");
 
 describe('Application', function(){
   var matcher,
-  frameworkRouter,
+  router,
   application,
+  logincontroller,
+  requestService,
   applicationRouter,
+  injectorService,
   errorsController;
 
-  beforeEach(inject(function($router, $errorsControllerService){
-    application = Application($router, $errorsControllerService); 
-  }));
-
-  xdescribe('executeRequest', function(){
-    it('should get the controller,action from the router', function(){
-
+  beforeEach(function(){
+    var request = Request('/login');
+    var response = Response();
+    
+    injector(function($injector){
+      $injector.registerService('request', request);
+      $injector.registerService('response', request);
     });
+
+    inject(function($requestService, $responseService, $router){
+
+      function LoginController(){
+        var object = {};
+        object.index = function(){
+
+        }
+        return object;
+      }
+
+      loginController = LoginController();
+      spyOn(loginController, 'index');
+
+      router = $router;
+      spyOn(router, 'route').andReturn({controller:'LoginController', action:'index'});
+
+      injectorService = Injector();
+      spyOn(injectorService, 'instantiate').andReturn(loginController);
+      application = Application($requestService, $requestService, $router, injectorService); 
+    })();
   });
 
-  xdescribe('findRouter', function(){
-    it('should return the router that can route to a given query', function(){
-      application = Application([frameworkRouter], null, '/tests', 'GET');
-      spyOn(frameworkRouter, 'hasRouteFor').andReturn(true);
-      application.findRouter();
-      expect(frameworkRouter.hasRouteFor).toHaveBeenCalledWith('/tests', 'GET');
-    });
-  });
-
-  xdescribe('executeRequest', function(){
-    it('should route the request to the framework if it cannot be handled by the application Router', function(){
-      spyOn(frameworkRouter, 'route').andReturn(function(){});
-      spyOn(frameworkRouter, 'hasRouteFor').andReturn(true);
-      spyOn(applicationRouter, 'hasRouteFor').andReturn(false);
-      application = Application([applicationRouter, frameworkRouter], null, '/tests', 'GET');
+  describe('executeRequest', function(){
+    it('should create the controller that needs to be instantiated', function(){
       application.executeRequest();
-      expect(frameworkRouter.route).toHaveBeenCalledWith('/tests', 'GET');
+      expect(router.route).toHaveBeenCalledWith('/login','GET');
+      expect(injectorService.instantiate).toHaveBeenCalledWith('LoginController');
+      expect(loginController.index).toHaveBeenCalled();
     });
 
-    it('should execute the errorsController if no possible route is found', function(){
-      spyOn(errorsController, 'index');
-      spyOn(frameworkRouter, 'hasRouteFor').andReturn(false);
-      application = Application([frameworkRouter], errorsController, '/tests', 'GET');
-      application.executeRequest();
-      expect(errorsController.index).toHaveBeenCalled();
+    xit('should execute the errorsController if no possible route is found', function(){
     });
   });
 });
