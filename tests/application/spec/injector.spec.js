@@ -187,4 +187,16 @@ describe('Injector', function(){
       expect(function(){injector.functionName(function(){})}).toThrow(new Error('Injector: Anonymous function does not have a name'));
     });
   });
+
+  describe('.config()', function(){
+    it('should get factories without the need for the factory keyword', function(){
+      injector = Injector();
+      injector.factory(func);
+      injector.config(function($house){
+        injector.invoke(function($houseFactory){
+          expect($house).toBe($houseFactory);
+        });
+      });
+    });
+  });
 });

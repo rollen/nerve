@@ -1,4 +1,4 @@
-Injector = function(){
+Injector = function Injector(){
   function factory_already_exists(name){
     return object.factories[name] !== undefined;
   }
@@ -12,13 +12,25 @@ Injector = function(){
   var object={};
   object.factories = {};
 
-  object.invoke= function(callback){
+  object.invoke= function(callback, argsCallback){
     var args = functionArgs(callback);
+    if(argsCallback){
+      args = argsCallback(args);
+    }
     var instances = [];
     for(var i = 0; i < args.length; i++){
       instances[i] = object.instantiate(args[i]);
     }
     callback.apply(undefined, instances); 
+  }
+
+  object.config = function(callback){
+    object.invoke(callback, function(args){
+      for(var i = 0; i < args.length; i++){
+        args[i] = args[i]+'Factory';
+      }
+      return args;
+    });
   }
 
 
