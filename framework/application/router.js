@@ -1,10 +1,12 @@
 Router = function Router(){
   var o = {}
   var routes = [];
+  var defaultControllerInfo = {controller:'ErrorsController',action:'index'};
 
   o.get = function(template, controller, action){
     o.template(template, controller, action, 'GET');
   }
+
   o.post= function(template, controller, action){
     o.template(template, controller, action, 'POST');
   }
@@ -16,10 +18,20 @@ Router = function Router(){
     o.template(template, controller, action, 'PUT');
   }
 
+  o.static = function(template, controller, action){
+    var matcher = RegexRouteMatcher(regex);
+    var template= HttpRoute(controller, action, matcher);
+    routes.push(template);
+  }
+
   o.template= function(template, controller, action, method){
     var matcher = StandardRouteMatcher(template, method);
     var template= HttpRoute(controller, action, matcher);
     routes.push(template);
+  }
+
+  o.defaultController = function(params){
+    defaultController = params;
   }
 
   o.$get = function Router(){
@@ -31,7 +43,7 @@ Router = function Router(){
         controllerInfo = routes[i].match(path, method);
         if(controllerInfo) break;
       }
-      return controllerInfo;
+      return controllerInfo ? controllerInfo : defaultControllerInfo;
     }
 
     return object;
