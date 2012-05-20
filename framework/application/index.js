@@ -1,9 +1,5 @@
 fs = require('fs');
 
-nervex = {};
-require('./injector');
-nervex.injector = Injector();
-
 require('./router');
 require('./http_route');
 require('./utilities/matchers/standard_route_matcher');
@@ -30,9 +26,3 @@ require('./config/nervebuilder');
 
 require('./application');
 
-nervex.injector.service(RegexRouteMatcher);
-nervex.injector.service(StandardRouteMatcher);
-nervex.injector.service(Application);
-nervex.injector.factory(Router);
-nervex.injector.service(ErrorsController);
-nervex.injector.service(HttpRoute);

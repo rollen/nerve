@@ -1,4 +1,4 @@
-require('./../../nervecenter');
+var nervex = require('./../../nervecenter');
 
 require('./fixtures/fixtures');
 
