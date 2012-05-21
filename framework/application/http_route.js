@@ -11,7 +11,7 @@ function HttpRoute(controller, action, matcher) {
   }
   
   object.template = function(){
-    matcher.template();
+    return matcher.template();
   }
 
   return object;
