@@ -1,8 +1,18 @@
 function Path(){
-  var object = {};
-  var folders = {};
-  object.$folder = function(name, location){
-    folders[name] = location;
+  var object = {},
+  folders = {},
+  filepath;
+
+  object.$filepath = function(_filepath){
+    filepath = _filepath;
+  }
+
+  object.$folder = function(alias, location){
+    if(filepath.exists(location)){
+      folders[alias] = location;
+    }else{
+      throw new Error('Folder ' + location + ' was not found');
+    }
   }
   return object;
 }

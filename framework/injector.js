@@ -99,8 +99,7 @@ function Injector(name){
   }
 
   object.register = function(name, factory){
-    var instances = argsToInstances(functionArgs(factory));
-    object.factories[name] = factory.apply(undefined, instances);
+    object.factories[name] = factory();
   }
 
   object.dependencies = function(objectname){
