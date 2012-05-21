@@ -28,8 +28,12 @@ function FileInfo(filepath, filename){
     return _headers;
   }
 
-  var encoding = function(){
+  function encoding(){
     return isWebFile() ? 'utf8' : 'binary';
+  }
+
+  function path(){
+    return [filepath, filename].join('/')
   }
 
 
@@ -38,6 +42,7 @@ function FileInfo(filepath, filename){
   object.isWebFile = isWebFile;
   object.headers = headers;
   object.encoding = encoding;
+  object.path = path;
   return object;
 }
 

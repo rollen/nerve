@@ -82,4 +82,10 @@ describe('FileInfo',function(){
       expect(hfrw.encoding()).toBe('binary');
     });
   });
+
+  describe('.path', function(){
+    it('should return a the full relative path + filename' , function(){
+      expect(fileInfo.path()).toBe('/lib/js/file.js');
+    });
+  });
 });

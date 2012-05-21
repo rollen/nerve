@@ -1,37 +1,6 @@
 function HttpFileResponseWriter(response, filesystem){
   var object = {};
 
-  function filetype(){
-    return filename.split('.')[1];
-  }
-
-  function isWebFile(){
-    var cacheFileType = filetype();
-    var validTypes = {'js': true, 'css': true, 'html':true};
-    return validTypes[cacheFileType];
-  }
-
-  function headers(){
-    var _headers = {"Content-Type":mimetype()}; 
-    if(!isWebFile()){
-      _headers["Cache-Control"] = "max-age=31536000";
-    }
-    return _headers;
-  }
-
-  var mimetype = function(){
-    var types = { 'js':'application/x-javascript', 
-      'html':'text/html', 
-      'png':'image/png', 
-      'css':'text/css' 
-    }
-    return types[filetype()];
-  }
-
-  var encoding = function(){
-    return isWebFile() ? 'utf8' : 'binary';
-  }
-
   var writeToResponse= function(folderpath, filename){
     function path(){
       return [folderpath, filename].join('/')

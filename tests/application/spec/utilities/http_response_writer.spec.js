@@ -40,22 +40,6 @@ describe('HttpFileResponseWriter', function(){
 
   });
 
-  describe('.encoding', function(){
-    it('encodes as utf8 if filname is a js,css,html file', function(){
-      var files = ['file.js', 'file.css', 'file.html'];
-
-      for(var i = 0; i < files; i++){
-        hfrw = httpFileResponseWriterService(null, null, null, files[i]);      
-        expect(hfrw.encoding()).toBe('utf8');
-      }
-    });
-
-    it('encodes as images if filename is a png file', function(){
-      hfrw = httpFileResponseWriterService(null, null, null, 'file.png');      
-      expect(hfrw.encoding()).toBe('binary');
-    });
-  });
-
   describe('.onFileRead', function(){
     var error;
     beforeEach(function(){
@@ -91,25 +75,6 @@ describe('HttpFileResponseWriter', function(){
       error = null;
       httpFileResponseWriter.onFileRead(error);
       expect(response.end).toHaveBeenCalled();
-    });
-  });
-
-  describe('.mimetype', function(){
-    context('translates filnames to mimetypes', function(){
-      it('tranlates js to application/x-javascript', function(){
-        hfrw = httpFileResponseWriterService(null, null, null, 'file.js');      
-        expect(hfrw.mimetype()).toBe('application/x-javascript');
-      });
-
-      it('tranlates html to text/html', function(){
-        hfrw = httpFileResponseWriterService(null, null, null, 'runner.html');      
-        expect(hfrw.mimetype()).toBe('text/html');
-      });
-
-      it('tranlates css to text/html', function(){
-        hfrw = httpFileResponseWriterService(null, null, null, 'file.css');      
-        expect(hfrw.mimetype()).toBe('text/css');
-      });
     });
   });
 });
