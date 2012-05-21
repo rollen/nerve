@@ -19,6 +19,7 @@ describe('AssetsController', function(){
     it('should write a static file to the response', function(){
       assetsController.show();
       expect(request.url).toHaveBeenCalled();
+      expect(fileParamsService).toHaveBeenCalledWith(url);
     });
   });
 });

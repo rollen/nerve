@@ -1,25 +1,26 @@
-require('./../spec_helper');
+var nervex = require('./../spec_helper').nervex;
 
 describe( 'Router' , function(){
-  var router;
+  var router,
+  injector;
 
-  describe('.route', function(){
-    beforeEach(function(){
-      injector(function($injector){
-        $injector.config(function($router){
-          $router.get('/home','AppController','index');
-          $router.get('/home','LoginController','index');
-          $router.post('/home', 'LoginController', 'create');
-          $router.del('/home', 'LoginController', 'create');
-          $router.put('/home', 'LoginController', 'create');
-        });
-      });
+  beforeEach(function(){
+    injector = nervex.bootstrap();
 
-      inject(function($router){
-        router = $router;
-      })();
+    injector.config(function($router){
+      $router.get('/home','AppController','index');
+      $router.get('/home','LoginController','index');
+      $router.post('/home', 'LoginController', 'create');
+      $router.del('/home', 'LoginController', 'create');
+      $router.put('/home', 'LoginController', 'create');
     });
 
+    injector.invoke(function($router){
+      router = $router
+    });
+  });
+
+  describe('.route', function(){
     it('should return the controller name and action', function(){
       expect(router.route('/home', 'GET')).toBeTruthy();
       expect(router.route('/home', 'GET').controller).toBe('AppController');
@@ -30,6 +31,12 @@ describe( 'Router' , function(){
       expect(router.route('/homex', 'GET')).toBeTruthy();
       expect(router.route('/homex', 'GET').controller).toBe('ErrorsController');
       expect(router.route('/homex', 'GET').action).toBe('index');
+    });
+  });
+
+  describe('.template', function(){
+    it('should return the template of the matched route', function(){
+      expect(router.template('/home', 'GET')).toBe('/home');
     });
   });
 });

@@ -1,10 +1,14 @@
 describe('StandardRouteMatcher', function(){
   var standardRouteMatcherService;
 
+  beforeEach(inject(function($standardRouteMatcherService){
+    standardRouteMatcherService = $standardRouteMatcherService;
+  }));
+
+  describe('.template', function(){
+    system_under_test = standardRouteMatcherService('/home', 'GET');
+  });
   describe('.hasAMatchFor', function(){
-    beforeEach(inject(function($standardRouteMatcherService){
-      standardRouteMatcherService = $standardRouteMatcherService;
-    }));
 
     it('should not match a post a get request', function(){
       system_under_test = standardRouteMatcherService('/home', 'GET');

@@ -1,11 +1,17 @@
 function RegexRouteMatcher(regex){
   var object = {}
-  object.template = regex;
+
+  function template(){
+    return regex.toString();
+  }
 
   var hasAMatchFor = function(pattern){
     return pattern.match(regex) ? true : false
   }
+
+
   object.hasAMatchFor = hasAMatchFor;
+  object.template = template;
   return object;
 }
 

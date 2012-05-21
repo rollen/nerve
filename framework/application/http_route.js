@@ -9,6 +9,11 @@ function HttpRoute(controller, action, matcher) {
       return false;
     }
   }
+  
+  object.template = function(){
+    matcher.template();
+  }
+
   return object;
 }
 

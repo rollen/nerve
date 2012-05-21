@@ -7,6 +7,11 @@ function Router(){
   var routes = [];
   var defaultControllerInfo = {controller:'ErrorsController',action:'index'};
 
+
+  o.currentroutes = function(){
+    return routes;
+  }
+
   o.get = function(template, controller, action){
     o.template(template, controller, action, 'GET');
   }
@@ -48,6 +53,19 @@ function Router(){
         if(controllerInfo) break;
       }
       return controllerInfo ? controllerInfo : defaultControllerInfo;
+    }
+
+    object.template = function(path, method){
+      var template;
+      for(var i = 0; i < routes.length; i++){
+        controllerInfo = routes[i].match(path, method);
+        console.log(routes[i]);
+        if(controllerInfo) {
+          template = routes[i].template; 
+          break;
+        }
+      }
+      return template;
     }
 
     return object;
