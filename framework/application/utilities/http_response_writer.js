@@ -1,29 +1,26 @@
 function HttpFileResponseWriter(response, filesystem){
   var object = {};
 
-  var writeToResponse= function(folderpath, filename){
-    function path(){
-      return [folderpath, filename].join('/')
+  object.onFileRead = function(fileInfo){
+    return function(error, data){
+      if(error) {
+        response.writeHead(500, {"Content-Type": "text/plain"});
+        response.write(error + "\n");
+        response.end();
+      } else {
+        response.writeHead(200, fileInfo.headers());
+        response.end(data, fileInfo.encoding());
+      } 
     }
-    filesystem.readFile(path(), encoding(), object.onFileRead);
   }
 
-  var onFileRead = function(error, data){
-    if(error) {
-      response.writeHead(500, {"Content-Type": "text/plain"});
-      response.write(error + "\n");
-      response.end();
-    } else {
-      response.writeHead(200, headers());
-      response.end(data, encoding());
-    } 
+  function writeToResponse(fileInfo){
+    filesystem.readFile(fileInfo.path(), fileInfo.encoding(), object.onFileRead(fileInfo));
   }
+
 
   // public functions
-  object.mimetype = mimetype;
   object.writeToResponse = writeToResponse;
-  object.encoding = encoding;
-  object.onFileRead = onFileRead;
 
   return object;
 }
