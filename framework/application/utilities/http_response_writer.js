@@ -14,13 +14,13 @@ function HttpFileResponseWriter(response, filesystem){
     }
   }
 
-  function writeToResponse(fileInfo){
+  function writeToResponseAndEnd(fileInfo){
     filesystem.readFile(fileInfo.path(), fileInfo.encoding(), object.onFileRead(fileInfo));
   }
 
 
   // public functions
-  object.writeToResponse = writeToResponse;
+  object.writeToResponseAndEnd = writeToResponseAndEnd;
 
   return object;
 }

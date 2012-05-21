@@ -32,7 +32,7 @@ describe('HttpFileResponseWriter', function(){
     response = undefined;
   });
 
-  describe('writeToResponse', function(){
+  describe('writeToResponseAndEnd', function(){
     it('should attempt to read the file with the correct folderpath, mimetype, callback', function(){
       spyOn(filesystem, 'readFile');
       var callback = jasmine.createSpy('callback');
@@ -40,7 +40,7 @@ describe('HttpFileResponseWriter', function(){
       httpFileResponseWriter.onFileRead = onFileRead;
 
 
-      httpFileResponseWriter.writeToResponse(fileInfo);
+      httpFileResponseWriter.writeToResponseAndEnd(fileInfo);
       expect(filesystem.readFile).toHaveBeenCalledWith('/tmp/runner.html', 'utf8', callback);
     });
 
