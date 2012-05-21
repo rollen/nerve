@@ -2,6 +2,7 @@ var nervex = require("./../../../spec_helper").nervex;
 
 describe('Path', function(){
   var injector,
+  instance,
   filepath;
 
   beforeEach(function(){
@@ -18,20 +19,36 @@ describe('Path', function(){
   describe('.$folder', function(){
     it('accepts a key, value', function(){
       path.$filepath(filepath);
-      spyOn(filepath, 'exists').andReturn(true);
+      spyOn(filepath, 'existsSync').andReturn(true);
       path.$folder('views', '/Project/framework/application/');
     })
 
     it('throws an exception if the folder is not found', function(){
-      spyOn(filepath, 'exists').andReturn(false);
+      spyOn(filepath, 'existsSync').andReturn(false);
       expect(function(){path.$folder('views', '/Project/framework/application/')})
       .toThrow('Folder /Project/framework/application/ was not found');
     });
   });
 
-  describe('.$get', function(){
-    it('gets an instance of the the paths object', function(){
 
+  describe('.$get', function(){
+    beforeEach(function(){
+      spyOn(filepath, 'existsSync').andReturn(true);
+      path.$folder('views', '/Project/framework/application/');
+      instance = path.$get();
+    });
+
+    it('should be injectable', function(){
+      injector.invoke(function($path){
+        expect(instance.filepath('views')).toBe($path.filepath('views'));
+      });
+    });
+
+
+    describe('.filepath', function(){
+      it('returns a copy of the filepath', function(){
+        expect(instance.filepath('views')).toEqual('/Project/framework/application/');
+      });
     });
   });
 });
