@@ -1,3 +1,5 @@
+var PostData = require('./../post_data');
+
 function Server(request, response, application){
   console.log('attempting to route to ' + request.url + ' with method ' + request.method);
   request.setEncoding('utf8');
@@ -9,4 +11,4 @@ function Server(request, response, application){
   });
 }
 
-module.exports = PostData;
+module.exports = Server;

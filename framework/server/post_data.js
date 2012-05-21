@@ -1,4 +1,4 @@
-PostData = function PostData(json_parser, cache){
+function PostData(json_parser, cache){
   var postdata = {};
   cache = cache || '';
   postdata.accept = function(data){

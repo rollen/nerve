@@ -10,6 +10,8 @@ function bootstrap(){
   injector.service(nervex.Application.AssetsController);
   injector.service(nervex.Application.ErrorsController);
   injector.service(nervex.Application.HttpFileResponseWriter);
+  injector.service(nervex.Server.PostData);
+  injector.factory(nervex.Server.Request);
   injector.registerService('injector', injector);
   return injector;
 }

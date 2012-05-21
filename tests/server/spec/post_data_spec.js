@@ -1,3 +1,4 @@
+require('../../application/spec_helper');
 describe('PostData', function(){
   var data,
   postDataService;
@@ -6,7 +7,7 @@ describe('PostData', function(){
     data = '{"title":"Job","description":"Description"}'
     inject(function($postDataService){
       postDataService = $postDataService;
-    });
+    })();
   });
   describe('.accept', function(){
     it('should keep appending data', function(){

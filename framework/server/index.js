@@ -1,5 +1,4 @@
-var PostData = require('./post_data');
-var Server = require('./factories/server');
+exports.PostData = require('./post_data');
+exports.Server = require('./factories/server');
+exports.Request = require('./factories/Request');
 
-exports.PostData = PostData;
-exports.Server = Server;
