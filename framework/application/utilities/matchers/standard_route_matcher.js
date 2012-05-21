@@ -1,6 +1,5 @@
-function StandardRouteMatcher(template, httpVerb){
+function StandardRouteMatcher(_template, httpVerb){
   var object = {}
-  object.template = template;
 
   var hasMatchingHttpMethod = function(method){
     return httpVerb === method;
@@ -46,7 +45,7 @@ function StandardRouteMatcher(template, httpVerb){
   }
 
   var hasAMatchFor = function(path, method) {
-    var templateComponents = template.split('/');
+    var templateComponents = _template.split('/');
     var pathComponents = getPathComponents(path);
 
     if(isNotRootPath(path) && hasTrailingSlash(pathComponents)){
@@ -58,7 +57,12 @@ function StandardRouteMatcher(template, httpVerb){
             hasMatchingPathComponents(pathComponents, templateComponents))
   }
 
+  function template(){
+    return _template;
+  }
+
   object.hasAMatchFor = hasAMatchFor;
+  object.template = template;
 
   return object;
 }

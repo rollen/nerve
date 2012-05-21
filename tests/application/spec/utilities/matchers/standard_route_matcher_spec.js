@@ -1,13 +1,22 @@
-describe('StandardRouteMatcher', function(){
-  var standardRouteMatcherService;
+require("./../../../spec_helper");
 
-  beforeEach(inject(function($standardRouteMatcherService){
-    standardRouteMatcherService = $standardRouteMatcherService;
-  }));
+describe('StandardRouteMatcher', function(){
+  var standardRouteMatcherService,
+  system_under_test;
+
+  beforeEach(function(){
+    inject(function($standardRouteMatcherService){
+      standardRouteMatcherService = $standardRouteMatcherService;
+    })();
+  });
 
   describe('.template', function(){
-    system_under_test = standardRouteMatcherService('/home', 'GET');
+    it('should return a template', function(){
+      system_under_test = standardRouteMatcherService('/home', 'GET');
+      expect(system_under_test.template()).toBe('/home');
+    });
   });
+
   describe('.hasAMatchFor', function(){
 
     it('should not match a post a get request', function(){
