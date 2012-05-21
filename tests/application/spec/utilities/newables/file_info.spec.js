@@ -67,5 +67,19 @@ describe('FileInfo',function(){
     it('should return utf8 for webfiles', function(){
       expect(fileInfo.encoding()).toBe('utf8');
     });
+
+    it('encodes as utf8 if filname is a js,css,html file', function(){
+      var files = ['file.js', 'file.css', 'file.html'];
+
+      for(var i = 0; i < files; i++){
+        hfrw = fileInfoService(null, files[i]);      
+        expect(hfrw.encoding()).toBe('utf8');
+      }
+    });
+
+    it('encodes as images if filename is a png file', function(){
+      hfrw = fileInfoService(null, 'file.png');      
+      expect(hfrw.encoding()).toBe('binary');
+    });
   });
 });
