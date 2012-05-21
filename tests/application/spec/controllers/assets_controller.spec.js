@@ -1,19 +1,18 @@
 require('./../../spec_helper');
 
 describe('AssetsController', function(){
-  var assetsController,
-
+  var assetsController;
 
   describe('show', function(){
     beforeEach(function(){
       injector(function($injector){
-        $injector.regsiterService('request', Request());
+        $injector.registerService('request', Request());
         $injector.registerService('response', Response());
       });
 
       inject(function($assetsController){
         assetsController = $assetsController;
-      });
+      })();
     });
 
     beforeEach(function(){

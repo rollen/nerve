@@ -1,4 +1,4 @@
-require('./../spec_helper');
+var nervex = require('./../spec_helper').nervex;
 
 describe('Injector', function(){
   var injector,
@@ -200,6 +200,29 @@ describe('Injector', function(){
           expect($house).toBe($houseFactory);
         });
       });
+    });
+  });
+
+  describe('.constant()', function(){
+    var request,
+    instance;
+    beforeEach(function(){
+      injector = nervex.Injector();
+      request = {'name':'request'};
+      injector.constant('request', request);
+    });
+
+    it('should register a factory for a singleton',function(){
+      instance = injector.instantiate('request');
+      expect(request).toBe(instance);
+    });
+
+    it('should allow for that singleton to be replaced', function(){
+      injector.config(function($request){
+        $request.$set('superman');
+      });
+
+      expect(injector.instantiate('request')).toBe('superman');
     });
   });
 });

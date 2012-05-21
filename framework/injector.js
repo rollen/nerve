@@ -150,6 +150,22 @@ function Injector(name){
                                    return match[1];
   }
 
+
+  object.constant = function(name, originalvalue){
+    var factory = function(){
+      var object = {};
+      object.val = originalvalue;
+
+      object.$set = function(_val){
+        object.val = _val; 
+      }
+      object.$get = function(){
+        return object.val;  
+      }
+      return object;
+    }
+    object.register(name, factory);
+  }
   object.normalize = normalize;
   return object;
 }

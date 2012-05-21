@@ -37,3 +37,4 @@ injector= function(func){
   func(nervex.injector);
 }
 
+exports.nervex = nervex;
