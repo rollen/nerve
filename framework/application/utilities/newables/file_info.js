@@ -28,10 +28,16 @@ function FileInfo(filepath, filename){
     return _headers;
   }
 
+  var encoding = function(){
+    return isWebFile() ? 'utf8' : 'binary';
+  }
+
+
   object.filetype = filetype;
   object.mimetype = mimetype;
   object.isWebFile = isWebFile;
   object.headers = headers;
+  object.encoding = encoding;
   return object;
 }
 

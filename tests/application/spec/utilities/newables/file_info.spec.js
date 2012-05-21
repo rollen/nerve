@@ -31,6 +31,21 @@ describe('FileInfo',function(){
     it('should reutrn the mimetype of the file', function(){
       expect(fileInfo.mimetype()).toBe('application/x-javascript');
     });
+
+    it('tranlates js to application/x-javascript', function(){
+      hfrw = fileInfoService(null, 'file.js');      
+      expect(hfrw.mimetype()).toBe('application/x-javascript');
+    });
+
+    it('tranlates html to text/html', function(){
+      hfrw = fileInfoService(null, 'runner.html');      
+      expect(hfrw.mimetype()).toBe('text/html');
+    });
+
+    it('tranlates css to text/html', function(){
+      hfrw = fileInfoService(null, 'file.css');      
+      expect(hfrw.mimetype()).toBe('text/css');
+    });
   });
 
   describe('.headers', function(){
@@ -45,6 +60,12 @@ describe('FileInfo',function(){
       expect(fileInfo.headers()).toBeTruthy();
       expect(fileInfo.headers()['Content-Type']).toBe('image/png');
       expect(fileInfo.headers()['Cache-Control']).toBe('max-age=31536000');
+    });
+  });
+
+  describe('.encoding', function(){
+    it('should return utf8 for webfiles', function(){
+      expect(fileInfo.encoding()).toBe('utf8');
     });
   });
 });
