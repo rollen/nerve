@@ -1,4 +1,4 @@
-AssetsController = function(httpFileResponseWriter){
+function AssetsController(httpFileResponseWriterService){
   var assets_controller = {};
   assets_controller.show = function(){
     httpFileResponseWriter.writeToResponse();
@@ -6,5 +6,4 @@ AssetsController = function(httpFileResponseWriter){
   return assets_controller;
 }
 
-
-
+module.exports = AssetsController;

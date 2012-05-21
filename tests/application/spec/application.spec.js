@@ -37,9 +37,10 @@ describe('Application', function(){
 
       router = $router;
 
-      injectorService = Injector();
+      injectorService = nervex.Injector();
+
       spyOn(injectorService, 'instantiate').andReturn(loginController);
-      application = Application($requestService, $requestService, $router, injectorService); 
+      application = nervex.Application.Application($requestService, $requestService, $router, injectorService); 
     }));
 
     it('should create the controller that needs to be instantiated', function(){

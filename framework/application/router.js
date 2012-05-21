@@ -1,4 +1,8 @@
-Router = function Router(){
+var StandardRouteMatcher = require('./utilities/matchers/standard_route_matcher');
+var RegexRouteMatcher = require('./utilities/matchers/regex_route_matcher');
+var HttpRoute = require('./http_route');
+
+function Router(){
   var o = {}
   var routes = [];
   var defaultControllerInfo = {controller:'ErrorsController',action:'index'};
@@ -51,3 +55,5 @@ Router = function Router(){
 
   return o;
 }
+
+module.exports = Router;

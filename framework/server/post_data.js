@@ -1,4 +1,4 @@
-PostData = function(json_parser, cache){
+PostData = function PostData(json_parser, cache){
   var postdata = {};
   cache = cache || '';
   postdata.accept = function(data){
@@ -12,3 +12,4 @@ PostData = function(json_parser, cache){
   return postdata;
 }
 
+module.exports = PostData;

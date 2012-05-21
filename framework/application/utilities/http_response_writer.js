@@ -1,4 +1,4 @@
-HttpFileResponseWriter= function(response, filesystem, folderpath, filename, filecreator){
+function HttpFileResponseWriter(response, filesystem, folderpath, filename, filecreator){
   var object = {};
 
   function filetype(){
@@ -58,3 +58,6 @@ HttpFileResponseWriter= function(response, filesystem, folderpath, filename, fil
 
   return object;
 }
+
+module.exports = HttpFileResponseWriter;
+

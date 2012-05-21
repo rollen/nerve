@@ -1,28 +1,34 @@
 describe('PostData', function(){
+  var data,
+  postDataService;
+
   beforeEach(function(){
-    this.data = '{"title":"Job","description":"Description"}'
+    data = '{"title":"Job","description":"Description"}'
+    inject(function($postDataService){
+      postDataService = $postDataService;
+    });
   });
   describe('.accept', function(){
     it('should keep appending data', function(){
-      this.postdata = PostData(null);
-      expect(this.postdata.accept(this.data)).toBe(this.data);
-      expect(this.postdata.accept(this.data)).toBe(this.data + this.data);
+      postdata = postDataService(null);
+      expect(postdata.accept(data)).toBe(data);
+      expect(postdata.accept(data)).toBe(data + data);
     });
   });
 
   describe('.json', function(){
     it('should return empty accepted/cached data as json', function(){
       spyOn(JSON, 'parse');
-      this.postdata = PostData(JSON);
-      this.postdata.json();
+      postdata = postDataService(JSON);
+      postdata.json();
       expect(JSON.parse).toHaveBeenCalledWith('{}');
     });
 
     it('should return a json feed based on accpet', function(){
       spyOn(JSON, 'parse');
-      this.postdata = PostData(JSON, this.data);
-      this.postdata.json();
-      expect(JSON.parse).toHaveBeenCalledWith(this.data);
+      postdata = postDataService(JSON, data);
+      postdata.json();
+      expect(JSON.parse).toHaveBeenCalledWith(data);
     });
   });
 });

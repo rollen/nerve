@@ -1,4 +1,4 @@
-HttpRoute = function HttpRoute(controller, action, matcher) {
+function HttpRoute(controller, action, matcher) {
   var object = {};
 
   object.match = function(path, method){
@@ -11,3 +11,5 @@ HttpRoute = function HttpRoute(controller, action, matcher) {
   }
   return object;
 }
+
+module.exports = HttpRoute;

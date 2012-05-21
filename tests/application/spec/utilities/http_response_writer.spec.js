@@ -3,7 +3,7 @@ require('./../../spec_helper');
 describe('HttpFileResponseWriter', function(){
   var filesystem,
   folderpath,
-  httpFileResponseWriter,
+  httpFileResponseWriterService,
   filename,
   response;
 
@@ -12,7 +12,12 @@ describe('HttpFileResponseWriter', function(){
     folderpath = '/tmp';
     filename = 'runner.html';
     response = jasmine.createSpyObj('response', ['writeHead', 'write', 'end']);
+
+    inject(function($httpFileResponseWriterService){
+      httpFileResponseWriterService = $httpFileResponseWriterService;
+    })();
   });
+
 
   afterEach(function(){
     filesystem = undefined;
@@ -24,7 +29,7 @@ describe('HttpFileResponseWriter', function(){
 
   describe('writeToResponse', function(){
     beforeEach(function(){
-      httpFileResponseWriter = HttpFileResponseWriter(response, filesystem, folderpath, filename);
+      httpFileResponseWriter = httpFileResponseWriterService(response, filesystem, folderpath, filename);
       filename = 'runner.html';
     });
 
@@ -41,13 +46,13 @@ describe('HttpFileResponseWriter', function(){
       var files = ['file.js', 'file.css', 'file.html'];
 
       for(var i = 0; i < files; i++){
-        hfrw = HttpFileResponseWriter(null, null, null, files[i]);      
+        hfrw = httpFileResponseWriterService(null, null, null, files[i]);      
         expect(hfrw.encoding()).toBe('utf8');
       }
     });
 
     it('encodes as images if filename is a png file', function(){
-      hfrw = HttpFileResponseWriter(null, null, null, 'file.png');      
+      hfrw = httpFileResponseWriterService(null, null, null, 'file.png');      
       expect(hfrw.encoding()).toBe('binary');
     });
   });
@@ -55,7 +60,7 @@ describe('HttpFileResponseWriter', function(){
   describe('.onFileRead', function(){
     var error;
     beforeEach(function(){
-      httpFileResponseWriter = HttpFileResponseWriter(response, null, folderpath, "text.html");
+      httpFileResponseWriter = httpFileResponseWriterService(response, null, folderpath, "text.html");
     });
 
     afterEach(function(){
@@ -72,7 +77,7 @@ describe('HttpFileResponseWriter', function(){
         "Content-Type":"image/png",
         "Cache-Control":"max-age=31536000"
       }
-      httpFileResponseWriter = HttpFileResponseWriter(response, null, folderpath, "image.png");
+      httpFileResponseWriter = httpFileResponseWriterService(response, null, folderpath, "image.png");
       httpFileResponseWriter.onFileRead(error); 
       expect(response.writeHead).toHaveBeenCalledWith(200, _expectedHeaders);
     });
@@ -93,17 +98,17 @@ describe('HttpFileResponseWriter', function(){
   describe('.mimetype', function(){
     context('translates filnames to mimetypes', function(){
       it('tranlates js to application/x-javascript', function(){
-        hfrw = HttpFileResponseWriter(null, null, null, 'file.js');      
+        hfrw = httpFileResponseWriterService(null, null, null, 'file.js');      
         expect(hfrw.mimetype()).toBe('application/x-javascript');
       });
 
       it('tranlates html to text/html', function(){
-        hfrw = HttpFileResponseWriter(null, null, null, 'runner.html');      
+        hfrw = httpFileResponseWriterService(null, null, null, 'runner.html');      
         expect(hfrw.mimetype()).toBe('text/html');
       });
 
       it('tranlates css to text/html', function(){
-        hfrw = HttpFileResponseWriter(null, null, null, 'file.css');      
+        hfrw = httpFileResponseWriterService(null, null, null, 'file.css');      
         expect(hfrw.mimetype()).toBe('text/css');
       });
     });

@@ -1,4 +1,4 @@
-var nervex = require('./../../nervecenter');
+nervex = require('./../../nervecenter');
 
 require('./fixtures/fixtures');
 
@@ -6,7 +6,6 @@ require('./stubs');
 fixturesFolderPath = __dirname + '/fixtures'
 
 require('./lib/browser.js');
-
 
 //patch jasmine-node to have context
 
@@ -28,6 +27,8 @@ Feature = function(msg, callback){
   describe("Feature " + msg, callback);
 }
 
+nervex.injector = nervex.bootstrap();
+
 inject = function(func){
   return function(){nervex.injector.invoke(func);};
 }
@@ -35,3 +36,4 @@ inject = function(func){
 injector= function(func){
   func(nervex.injector);
 }
+

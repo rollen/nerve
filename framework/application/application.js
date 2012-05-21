@@ -1,4 +1,4 @@
-Application = function Application(requestService, responseSerivce, router, injectorService){
+function Application(requestService, responseSerivce, router, injectorService){
   var object = {};
 
   object.executeRequest = function(){
@@ -9,3 +9,4 @@ Application = function Application(requestService, responseSerivce, router, inje
   return object;
 }
 
+module.exports = Application;

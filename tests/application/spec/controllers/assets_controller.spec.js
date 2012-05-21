@@ -2,9 +2,20 @@ require('./../../spec_helper');
 
 describe('AssetsController', function(){
   var assetsController,
-  httpFileResponseWriter;
+
 
   describe('show', function(){
+    beforeEach(function(){
+      injector(function($injector){
+        $injector.regsiterService('request', Request());
+        $injector.registerService('response', Response());
+      });
+
+      inject(function($assetsController){
+        assetsController = $assetsController;
+      });
+    });
+
     beforeEach(function(){
       httpFileResponseWriter = HttpFileResponseWriterBuilder.build();
       spyOn(httpFileResponseWriter, 'writeToResponse');

@@ -1,4 +1,4 @@
-StandardRouteMatcher = function StandardRouteMatcher(template, httpVerb){
+function StandardRouteMatcher(template, httpVerb){
   var object = {}
   object.template = template;
 
@@ -62,3 +62,6 @@ StandardRouteMatcher = function StandardRouteMatcher(template, httpVerb){
 
   return object;
 }
+
+module.exports = StandardRouteMatcher;
+

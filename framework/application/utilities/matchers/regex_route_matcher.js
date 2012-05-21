@@ -1,4 +1,4 @@
-RegexRouteMatcher = function RegexRouteMatcher(regex){
+function RegexRouteMatcher(regex){
   var object = {}
   object.template = regex;
 
@@ -9,3 +9,4 @@ RegexRouteMatcher = function RegexRouteMatcher(regex){
   return object;
 }
 
+module.exports = RegexRouteMatcher;

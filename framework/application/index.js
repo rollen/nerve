@@ -1,15 +1,16 @@
 fs = require('fs');
 
-require('./router');
-require('./http_route');
-require('./utilities/matchers/standard_route_matcher');
-require('./utilities/matchers/regex_route_matcher');
+exports.Router = require('./router');
+exports.HttpRoute = require('./http_route');
 
-require('./utilities/http_response_writer');
-require('./utilities/http_url_params_extractor');
-require('./controllers/tests_controller');
-require('./controllers/errors_controller');
-require('./controllers/assets_controller');
+exports.HttpFileResponseWriter = require('./utilities/http_response_writer');
+exports.HttpUrlParamsExtractor = require('./utilities/http_url_params_extractor');
+exports.TestsController = require('./controllers/tests_controller');
+exports.ErrorsController = require('./controllers/errors_controller');
+exports.AssetsController = require('./controllers/assets_controller');
+exports.Application = require('./application');
+exports.StandardRouteMatcher = require('./utilities/matchers/standard_route_matcher');
+exports.RegexRouteMatcher = require('./utilities/matchers/regex_route_matcher');
 
 require('./factories/nervebuilder');
 Nervebuilder.root = __dirname;
@@ -23,6 +24,4 @@ require('./factories/router');
 require('./factories/application');
 
 require('./config/nervebuilder');
-
-require('./application');
 
