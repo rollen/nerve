@@ -1,4 +1,4 @@
-function HttpFileResponseWriter(response, filesystem, folderpath, filename, filecreator){
+function HttpFileResponseWriter(response, filesystem){
   var object = {};
 
   function filetype(){
@@ -32,7 +32,7 @@ function HttpFileResponseWriter(response, filesystem, folderpath, filename, file
     return isWebFile() ? 'utf8' : 'binary';
   }
 
-  var writeToResponse= function(){
+  var writeToResponse= function(folderpath, filename){
     function path(){
       return [folderpath, filename].join('/')
     }

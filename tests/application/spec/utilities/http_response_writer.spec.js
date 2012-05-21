@@ -18,7 +18,6 @@ describe('HttpFileResponseWriter', function(){
     })();
   });
 
-
   afterEach(function(){
     filesystem = undefined;
     folderpath = undefined;
@@ -29,13 +28,13 @@ describe('HttpFileResponseWriter', function(){
 
   describe('writeToResponse', function(){
     beforeEach(function(){
-      httpFileResponseWriter = httpFileResponseWriterService(response, filesystem, folderpath, filename);
+      httpFileResponseWriter = httpFileResponseWriterService(response, filesystem);
       filename = 'runner.html';
     });
 
     it('should attempt to read the file with the correct folderpath, mimetype, callback', function(){
       spyOn(filesystem, 'readFile');
-      httpFileResponseWriter.writeToResponse();
+      httpFileResponseWriter.writeToResponse(folderpath, filename);
       expect(filesystem.readFile).toHaveBeenCalledWith('/tmp/runner.html', 'utf8', httpFileResponseWriter.onFileRead);
     });
 

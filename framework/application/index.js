@@ -11,6 +11,7 @@ exports.AssetsController = require('./controllers/assets_controller');
 exports.Application = require('./application');
 exports.StandardRouteMatcher = require('./utilities/matchers/standard_route_matcher');
 exports.RegexRouteMatcher = require('./utilities/matchers/regex_route_matcher');
+exports.FileInfo = require('./utilities/newables/file_info');
 
 require('./factories/nervebuilder');
 Nervebuilder.root = __dirname;
