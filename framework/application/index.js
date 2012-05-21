@@ -11,11 +11,12 @@ exports.Application = require('./application');
 exports.StandardRouteMatcher = require('./utilities/matchers/standard_route_matcher');
 exports.RegexRouteMatcher = require('./utilities/matchers/regex_route_matcher');
 exports.FileInfo = require('./utilities/newables/file_info');
+exports.AssetUrlInfo = require('./utilities/newables/asset_url_info');
+exports.Path = require('./utilities/configurables/path');
 
 require('./factories/nervebuilder');
 
 Nervebuilder.root = __dirname;
-console.log(__dirname);
 require('./factories/controllers');
 require('./factories/http_file_responder_writer');
 

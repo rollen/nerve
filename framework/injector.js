@@ -12,16 +12,21 @@ function Injector(name){
   var object={};
   object.factories = {};
 
+
+  function argsToInstances(args){
+    var instances = [];
+    for(var i = 0; i < args.length; i++){
+      instances[i] = object.instantiate(args[i]);
+    }
+    return instances;
+  }
+
   object.invoke= function(callback, argsCallback){
     var args = functionArgs(callback);
     if(argsCallback){
       args = argsCallback(args);
     }
-    var instances = [];
-    for(var i = 0; i < args.length; i++){
-      instances[i] = object.instantiate(args[i]);
-    }
-    callback.apply(undefined, instances); 
+    callback.apply(undefined, argsToInstances(args)); 
   }
 
   object.config = function(callback){
@@ -94,7 +99,8 @@ function Injector(name){
   }
 
   object.register = function(name, factory){
-    object.factories[name] = factory();
+    var instances = argsToInstances(functionArgs(factory));
+    object.factories[name] = factory.apply(undefined, instances);
   }
 
   object.dependencies = function(objectname){
