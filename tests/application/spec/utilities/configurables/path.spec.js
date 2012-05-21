@@ -23,6 +23,7 @@ describe('Path', function(){
     })
 
     it('throws an exception if the folder is not found', function(){
+      spyOn(filepath, 'exists').andReturn(false);
       expect(function(){path.$folder('views', '/Project/framework/application/')})
       .toThrow('Folder /Project/framework/application/ was not found');
     });
