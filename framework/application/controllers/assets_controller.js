@@ -1,7 +1,7 @@
-function AssetsController(httpFileResponseWriterService){
+function AssetsController(request, httpFileResponseWriter, fileInfoService, fileParamsService){
   var assets_controller = {};
   assets_controller.show = function(){
-    httpFileResponseWriter.writeToResponse();
+    httpFileResponseWriter.writeToResponseAndEnd();
   }
   return assets_controller;
 }

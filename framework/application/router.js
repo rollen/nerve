@@ -22,7 +22,7 @@ function Router(){
     o.template(template, controller, action, 'PUT');
   }
 
-  o.static = function(template, controller, action){
+  o.assets = function(template, controller, action){
     var matcher = RegexRouteMatcher(regex);
     var template= HttpRoute(controller, action, matcher);
     routes.push(template);
