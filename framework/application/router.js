@@ -61,7 +61,7 @@ function Router(){
         controllerInfo = routes[i].match(path, method);
         console.log(routes[i]);
         if(controllerInfo) {
-          template = routes[i].template; 
+          template = routes[i].template(); 
           break;
         }
       }
