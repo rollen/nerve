@@ -2,22 +2,30 @@ var nervex = require('./../spec_helper').nervex;
 
 describe( 'Router' , function(){
   var router,
+  inject,
   injector;
 
   beforeEach(function(){
-    injector = nervex.bootstrap();
+    var _nervex = nervex.nerve();
+    _nervex.loadfiles();
+    inject = _nervex.inject;
+    injector = _nervex.injector;
+  });
 
-    injector.config(function($router){
-      $router.get('/home','AppController','index');
-      $router.get('/home','LoginController','index');
-      $router.post('/home', 'LoginController', 'create');
-      $router.del('/home', 'LoginController', 'create');
-      $router.put('/home', 'LoginController', 'create');
+  beforeEach(function(){
+    injector(function($injector){
+      $injector.config(function($router){
+        $router.get('/home','AppController','index');
+        $router.get('/home','LoginController','index');
+        $router.post('/home', 'LoginController', 'create');
+        $router.del('/home', 'LoginController', 'create');
+        $router.put('/home', 'LoginController', 'create');
+      });
     });
 
-    injector.invoke(function($router){
-      router = $router
-    });
+    inject(function($router){
+      router = $router;
+    })();
   });
 
   describe('.route', function(){

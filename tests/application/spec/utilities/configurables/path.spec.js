@@ -3,14 +3,23 @@ var nervex = require("./../../../spec_helper").nervex;
 describe('Path', function(){
   var injector,
   instance,
+  inject,
   filepath;
 
   beforeEach(function(){
-    filepath = require('path');
-    injector = nervex.bootstrap();  
+    var _nervex = nervex.nerve();
+    _nervex.loadfiles();
+    inject = _nervex.inject;
+    injector = _nervex.injector;
+  });
 
-    injector.config(function($path){
-      path = $path;
+  beforeEach(function(){
+    filepath = require('path');
+
+    injector(function($injector){
+      $injector.config(function($path){
+        path = $path;
+      });
     });
 
     path.$filepath(filepath);
@@ -45,7 +54,7 @@ describe('Path', function(){
     });
 
     it('should be injectable', function(){
-      injector.invoke(function($path){
+      inject(function($path){
         expect(instance.filepath('views')).toBe($path.filepath('views'));
       });
     });
