@@ -14,6 +14,7 @@ function bootstrap(){
   injector.service(nervex.Application.AssetUrlInfo);
   injector.factory(nervex.Application.Router);
   injector.factory(nervex.Application.Path);
+  injector.service(nervex.Server.Server);
   injector.constant('request', nervex.Server.Request);
   injector.constant('response', nervex.Server.Response);
   injector.constant('filesystem', require('fs'));

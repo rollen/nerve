@@ -9,6 +9,7 @@ describe('PostData', function(){
       postDataService = $postDataService;
     })();
   });
+
   describe('.accept', function(){
     it('should keep appending data', function(){
       postdata = postDataService(null);

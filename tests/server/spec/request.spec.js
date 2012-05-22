@@ -9,7 +9,7 @@ describe('Request', function(){
 
     injector(function($injector){
       $injector.config(function($request){
-        $request.set(request);
+        $request.$set(request);
       });
     });
 

@@ -1,0 +1,423 @@
+
+Nervebuilder.createRouter
+[31m  returns a non null object[0m
+
+accessing_assets.spec.js
+
+  Given I'm any user
+
+    When I visit a the angular-scenario page
+
+      Then I should see the file specified by the asset
+[31m        Then I should see the file specified by the asset[0m
+
+Feature injector.spec.js
+
+  Given a function House with a dependency Kitchen
+
+    When I regsiter the functions and instantiate the injector on House
+[31m      Then the instance and its depenencies must be resolved[0m
+
+missing_page.spec
+
+  Given I'm any user
+
+    When I visit a page that does not exist
+
+      Then I should see the nervecenter 404 page
+[31m        should see the nervecenter 404 page[0m
+
+post.spec.js
+
+  Given I have an application with a controller that receives a post request
+
+    When I send a post request to the controllers endpoint
+
+      Then the response should be the params of the post
+
+        response
+[31m          should have the json contents[0m
+
+run_tests.spec.js
+
+  Given I'm any user
+
+    When I visit the tests page
+
+      Then I should see the angular tests running
+[31m        should run the angular tests[0m
+
+Application
+
+  executeRequest
+[32m    should create the controller that needs to be instantiated[0m
+[32m    should reply with a 404 if no controller[0m
+
+HttpRoute
+
+  match
+[32m    should match a path and a method and return its controller an action[0m
+[32m    should return false if it cannot return a path[0m
+
+  .template
+[32m    should return the template used for the match[0m
+
+Injector
+
+  .instantiate()
+[32m    throws an error if it cannot find the dependency mentioned[0m
+[32m    instantiates an object[0m
+[32m    instantiates an object with the objects dependencies[0m
+[32m    returns the factory if the argument has a Factory at the end[0m
+[32m    returns the $get method if the agument has a Service at the end[0m
+
+  .normalize
+[32m    should remove the word Factory from the string[0m
+[32m    should remove the work Service from the string[0m
+[32m    should change $name, to name[0m
+[32m    should keep name as name[0m
+[32m    should lowercase any string[0m
+
+  .factory
+[32m    registers the service[0m
+
+  .service
+[32m    registers the service[0m
+
+  .invoke
+[32m    should accept a callback and pass the instances of an object[0m
+[32m    should accept a callback with multiple args[0m
+
+  .dependencies
+[32m    should return the list of arguments in an array[0m
+[32m    should return an empty list when no args[0m
+
+  .functionName()
+[32m    should gets the names of the funciton[0m
+[32m    should get the name of the function via a variable[0m
+[32m    should thrown an error if the function is anon[0m
+
+  .config()
+[32m    should get factories without the need for the factory keyword[0m
+
+  .constant()
+[32m    should register a factory for a singleton[0m
+[32m    should allow for that singleton to be replaced[0m
+
+  .registerService()
+[32m    should throw and error if the second argument is not a funciton[0m
+
+  .functionArgs()
+[32m    should be able to decipher a single line function[0m
+[32m    should be able to decipher a multi line funciton[0m
+
+Router
+
+  .route
+[32m    should return the controller name and action[0m
+[32m    should return the default controller params is no match is found[0m
+
+  .template
+[32m    should return the template of the matched route[0m
+
+AssetsController
+
+  show
+[32m    should write a static file to the response[0m
+
+ErrorsController
+
+  index
+[32m    should write 404 to the response's head[0m
+
+TestsController
+
+  index
+[32m    should write the angular scenario runner file to the http response[0m
+
+HttpFileResponseWriter
+
+  writeToResponseAndEnd
+[32m    should attempt to read the file with the correct folderpath, mimetype, callback[0m
+
+  .onFileRead
+[32m    should choose to write the appropiate mime type to the response[0m
+[32m    should choose to write expiry info and a mimetype if its an image[0m
+[32m    should close the response if there is an error[0m
+[32m    should close the response with the mime type of the file on a successful read[0m
+
+HttpUrlParamsExtractor
+
+  .extract
+[32m    should extract the params based on the standard template[0m
+[32m    should return empty if just given a slash[0m
+[32m    should throw an error if the urlstring is invalid[0m
+[32m    should get params based on url options[0m
+
+Path
+
+  .$folder
+[32m    accepts a key, value[0m
+[32m    throws an exception if the folder is not found[0m
+[32m    throws an exception if the path has a trailing slash[0m
+
+  .$get
+[32m    should be injectable[0m
+
+    .filepath
+[32m      returns a copy of the filepath[0m
+[32m      throws an error if the alias is not found[0m
+
+RegexRouteMatcher
+
+  .hasAMatchFor
+[32m    should match based on a regex[0m
+
+  .template
+[32m    should return a template[0m
+
+StandardRouteMatcher
+
+  .template
+[32m    should return a template[0m
+
+  .hasAMatchFor
+[32m    should not match a post a get request[0m
+[32m    should return success for exact match[0m
+[32m    should allow for a liberal trailing /[0m
+[32m    should ignore standard params in the match[0m
+[32m    should return failure for a no mactch found case[0m
+[32m    should perform a template match[0m
+[32m    should perform a root match[0m
+[32m    should return failure for a path having more components than a template[0m
+[32m    should match a format in a url[0m
+
+AssetUrlInfo
+
+  .filename
+[32m    returns the last part of the url as the filename[0m
+
+FileInfo
+
+  .filetype
+[32m    should parse and return the extenstion of a filetype[0m
+
+  .isWebFile
+[32m    should return true if js,css,html[0m
+[32m    should return falsy if not js,css,html[0m
+
+  .mimetype
+[32m    should reutrn the mimetype of the file[0m
+[32m    tranlates js to application/x-javascript[0m
+[32m    tranlates html to text/html[0m
+[32m    tranlates css to text/html[0m
+
+  .headers
+[32m    should only return the mimetype if a webfile[0m
+[32m    should return both mimetype and cachecontroler[0m
+
+  .encoding
+[32m    should return utf8 for webfiles[0m
+[32m    encodes as utf8 if filname is a js,css,html file[0m
+[32m    encodes as images if filename is a png file[0m
+
+  .path
+[32m    should return a the full relative path + filename[0m
+
+Failures:
+
+  1) returns a non null object
+   Message:
+     [31mReferenceError: StandardRouteMatcher is not defined[0m
+   Stacktrace:
+     ReferenceError: StandardRouteMatcher is not defined
+    at Object.createGet (/Users/rollen_gomes/newage/nerve/framework/application/factories/http_route_factory.js:4:17)
+    at Object.createRouter (/Users/rollen_gomes/newage/nerve/framework/application/factories/router.js:4:22)
+    at [object Object].<anonymous> (/Users/rollen_gomes/newage/nerve/tests/application/factories/router.spec.js:4:27)
+    at [object Object].execute (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1001:15)
+    at [object Object].next_ (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1790:31)
+    at [object Object].start (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1743:8)
+    at [object Object].execute (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:2070:14)
+    at [object Object].next_ (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1790:31)
+    at [object Object].start (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1743:8)
+    at [object Object].execute (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:2215:14)
+
+  2) Then I should see the file specified by the asset
+   Message:
+     [31mReferenceError: StandardRouteMatcher is not defined[0m
+   Stacktrace:
+     ReferenceError: StandardRouteMatcher is not defined
+    at Object.createGet (/Users/rollen_gomes/newage/nerve/framework/application/factories/http_route_factory.js:4:17)
+    at Object.createRouter (/Users/rollen_gomes/newage/nerve/framework/application/factories/router.js:4:22)
+    at Object.createApplication (/Users/rollen_gomes/newage/nerve/framework/application/factories/application.js:2:38)
+    at Object.visit (/Users/rollen_gomes/newage/nerve/tests/application/lib/browser.js:11:42)
+    at [object Object].<anonymous> (/Users/rollen_gomes/newage/nerve/tests/application/features/accessing_assets.spec.js:12:38)
+    at [object Object].execute (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1001:15)
+    at [object Object].next_ (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1790:31)
+    at [object Object].start (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1743:8)
+    at [object Object].execute (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:2070:14)
+    at [object Object].next_ (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1790:31)
+
+  3) Then I should see the file specified by the asset
+   Message:
+     [31mTypeError: Cannot read property '_head' of undefined[0m
+   Stacktrace:
+     TypeError: Cannot read property '_head' of undefined
+    at [object Object].<anonymous> (/Users/rollen_gomes/newage/nerve/tests/application/features/accessing_assets.spec.js:17:31)
+    at [object Object].execute (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1001:15)
+    at [object Object].next_ (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1790:31)
+    at [object Object].start (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1743:8)
+    at [object Object].execute (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:2070:14)
+    at [object Object].next_ (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1790:31)
+    at [object Object].start (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1743:8)
+    at [object Object].execute (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:2215:14)
+    at [object Object].next_ (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1790:31)
+    at [object Object].start (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1743:8)
+
+  4) Then the instance and its depenencies must be resolved
+   Message:
+     [31mReferenceError: Injector is not defined[0m
+   Stacktrace:
+     ReferenceError: Injector is not defined
+    at [object Object].<anonymous> (/Users/rollen_gomes/newage/nerve/tests/application/features/injector.spec.js:32:20)
+    at [object Object].execute (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1001:15)
+    at [object Object].next_ (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1790:31)
+    at [object Object].start (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1743:8)
+    at [object Object].execute (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:2070:14)
+    at [object Object].next_ (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1790:31)
+    at [object Object].start (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1743:8)
+    at [object Object].execute (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:2215:14)
+    at [object Object].next_ (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1790:31)
+    at [object Object].start (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1743:8)
+
+  5) Then the instance and its depenencies must be resolved
+   Message:
+     [31mExpected undefined not to be undefined.[0m
+   Stacktrace:
+     Error: Expected undefined not to be undefined.
+    at new <anonymous> (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:102:32)
+    at [object Object].toBe (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1171:29)
+    at [object Object].<anonymous> (/Users/rollen_gomes/newage/nerve/tests/application/features/injector.spec.js:39:27)
+    at [object Object].execute (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1001:15)
+    at [object Object].next_ (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1790:31)
+    at [object Object].start (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1743:8)
+    at [object Object].execute (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:2070:14)
+    at [object Object].next_ (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1790:31)
+    at [object Object].start (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1743:8)
+    at [object Object].execute (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:2215:14)
+
+  6) Then the instance and its depenencies must be resolved
+   Message:
+     [31mTypeError: Cannot call method 'name' of undefined[0m
+   Stacktrace:
+     TypeError: Cannot call method 'name' of undefined
+    at [object Object].<anonymous> (/Users/rollen_gomes/newage/nerve/tests/application/features/injector.spec.js:40:22)
+    at [object Object].execute (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1001:15)
+    at [object Object].next_ (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1790:31)
+    at [object Object].start (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1743:8)
+    at [object Object].execute (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:2070:14)
+    at [object Object].next_ (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1790:31)
+    at [object Object].start (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1743:8)
+    at [object Object].execute (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:2215:14)
+    at [object Object].next_ (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1790:31)
+    at [object Object].start (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1743:8)
+
+  7) should see the nervecenter 404 page
+   Message:
+     [31mReferenceError: StandardRouteMatcher is not defined[0m
+   Stacktrace:
+     ReferenceError: StandardRouteMatcher is not defined
+    at Object.createGet (/Users/rollen_gomes/newage/nerve/framework/application/factories/http_route_factory.js:4:17)
+    at Object.createRouter (/Users/rollen_gomes/newage/nerve/framework/application/factories/router.js:4:22)
+    at Object.createApplication (/Users/rollen_gomes/newage/nerve/framework/application/factories/application.js:2:38)
+    at Object.visit (/Users/rollen_gomes/newage/nerve/tests/application/lib/browser.js:11:42)
+    at [object Object].<anonymous> (/Users/rollen_gomes/newage/nerve/tests/application/features/missing_page.spec.js:11:38)
+    at [object Object].execute (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1001:15)
+    at [object Object].next_ (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1790:31)
+    at [object Object].start (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1743:8)
+    at [object Object].execute (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:2070:14)
+    at [object Object].next_ (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1790:31)
+
+  8) should see the nervecenter 404 page
+   Message:
+     [31mTypeError: Cannot read property '_head' of undefined[0m
+   Stacktrace:
+     TypeError: Cannot read property '_head' of undefined
+    at [object Object].<anonymous> (/Users/rollen_gomes/newage/nerve/tests/application/features/missing_page.spec.js:16:31)
+    at [object Object].execute (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1001:15)
+    at [object Object].next_ (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1790:31)
+    at [object Object].start (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1743:8)
+    at [object Object].execute (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:2070:14)
+    at [object Object].next_ (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1790:31)
+    at [object Object].start (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1743:8)
+    at [object Object].execute (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:2215:14)
+    at [object Object].next_ (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1790:31)
+    at [object Object].start (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1743:8)
+
+  9) should have the json contents
+   Message:
+     [31mReferenceError: StandardRouteMatcher is not defined[0m
+   Stacktrace:
+     ReferenceError: StandardRouteMatcher is not defined
+    at Object.createGet (/Users/rollen_gomes/newage/nerve/framework/application/factories/http_route_factory.js:4:17)
+    at Object.createRouter (/Users/rollen_gomes/newage/nerve/framework/application/factories/router.js:4:22)
+    at Object.createApplication (/Users/rollen_gomes/newage/nerve/framework/application/factories/application.js:2:38)
+    at Object.post (/Users/rollen_gomes/newage/nerve/tests/application/lib/browser.js:22:42)
+    at [object Object].<anonymous> (/Users/rollen_gomes/newage/nerve/tests/application/features/post.spec.js:13:28)
+    at [object Object].execute (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1001:15)
+    at [object Object].next_ (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1790:31)
+    at [object Object].start (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1743:8)
+    at [object Object].execute (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:2070:14)
+    at [object Object].next_ (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1790:31)
+
+  10) should have the json contents
+   Message:
+     [31mTypeError: Cannot read property '_body' of undefined[0m
+   Stacktrace:
+     TypeError: Cannot read property '_body' of undefined
+    at [object Object].<anonymous> (/Users/rollen_gomes/newage/nerve/tests/application/features/post.spec.js:19:28)
+    at [object Object].execute (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1001:15)
+    at [object Object].next_ (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1790:31)
+    at [object Object].start (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1743:8)
+    at [object Object].execute (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:2070:14)
+    at [object Object].next_ (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1790:31)
+    at [object Object].start (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1743:8)
+    at [object Object].execute (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:2215:14)
+    at [object Object].next_ (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1790:31)
+    at [object Object].start (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1743:8)
+
+  11) should run the angular tests
+   Message:
+     [31mReferenceError: StandardRouteMatcher is not defined[0m
+   Stacktrace:
+     ReferenceError: StandardRouteMatcher is not defined
+    at Object.createGet (/Users/rollen_gomes/newage/nerve/framework/application/factories/http_route_factory.js:4:17)
+    at Object.createRouter (/Users/rollen_gomes/newage/nerve/framework/application/factories/router.js:4:22)
+    at Object.createApplication (/Users/rollen_gomes/newage/nerve/framework/application/factories/application.js:2:38)
+    at Object.visit (/Users/rollen_gomes/newage/nerve/tests/application/lib/browser.js:11:42)
+    at [object Object].<anonymous> (/Users/rollen_gomes/newage/nerve/tests/application/features/run_tests.spec.js:11:38)
+    at [object Object].execute (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1001:15)
+    at [object Object].next_ (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1790:31)
+    at [object Object].start (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1743:8)
+    at [object Object].execute (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:2070:14)
+    at [object Object].next_ (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1790:31)
+
+  12) should run the angular tests
+   Message:
+     [31mTypeError: Cannot read property '_body' of undefined[0m
+   Stacktrace:
+     TypeError: Cannot read property '_body' of undefined
+    at [object Object].<anonymous> (/Users/rollen_gomes/newage/nerve/tests/application/features/run_tests.spec.js:16:31)
+    at [object Object].execute (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1001:15)
+    at [object Object].next_ (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1790:31)
+    at [object Object].start (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1743:8)
+    at [object Object].execute (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:2070:14)
+    at [object Object].next_ (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1790:31)
+    at [object Object].start (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1743:8)
+    at [object Object].execute (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:2215:14)
+    at [object Object].next_ (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1790:31)
+    at [object Object].start (/usr/local/lib/node_modules/jasmine-node/lib/jasmine-node/jasmine-2.0.0.rc1.js:1743:8)
+
+Finished in 0.043 seconds
+[31m83 tests, 107 assertions, 12 failures
+[0m

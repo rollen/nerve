@@ -9,7 +9,7 @@ describe('Reponse', function(){
 
     injector(function($injector){
       $injector.config(function($response){
-        $response.set(response);
+        $response.$set(response);
       });
     });
 

@@ -1,7 +1,7 @@
 function Response(){
   var object = {};
   var response;
-  object.set = function(_response){
+  object.$set = function(_response){
     response = _response; 
   }
 

@@ -1,7 +1,6 @@
 Browser = function(applicationFactory){
   var response = null;
-
-  browser = {};
+  var browser = {};
 
   browser.visit = function(url){
     var response = new Response();
