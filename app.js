@@ -1,11 +1,15 @@
 var http = require('http');
-require('./nervecenter.js');
+var nerve = require('./nervecenter.js').nerve;
 
 var port = process.env.PORT || 8888;
 
 http.createServer(function onRequestReceived(request, response){
-  var app = Nervebuilder.createApplication(request, response, require('fs'));
-  Server(request, response, app)
+  var injector = nerve(request, response, require('fs')).
+    bootstrap();
+
+  injector.invoke(function($server){
+    $server.run();
+  });
 }).listen(port);
 
 console.log('Listening on port ' + port);
