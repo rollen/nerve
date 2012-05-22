@@ -27,7 +27,7 @@ function Router(){
     o.template(template, controller, action, 'PUT');
   }
 
-  o.assets = function(template, controller, action){
+  o.assets = function(regex, controller, action){
     var matcher = RegexRouteMatcher(regex);
     var template= HttpRoute(controller, action, matcher);
     routes.push(template);

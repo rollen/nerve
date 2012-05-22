@@ -4,7 +4,6 @@ exports.Router = require('./router');
 exports.HttpRoute = require('./http_route');
 exports.HttpFileResponseWriter = require('./utilities/http_response_writer');
 exports.HttpUrlParamsExtractor = require('./utilities/http_url_params_extractor');
-exports.TestsController = require('./controllers/tests_controller');
 exports.ErrorsController = require('./controllers/errors_controller');
 exports.AssetsController = require('./controllers/assets_controller');
 exports.Application = require('./application');

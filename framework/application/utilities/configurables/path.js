@@ -1,7 +1,16 @@
 function Path(){
   var object = {},
   folders = {},
-  filepath = require('path');
+  filepath = require('fs');
+  path = require('path');
+
+  object.$path = function(){
+    return path;
+  }
+
+  object.$setPath = function(_path){
+    path = _path;
+  }
 
   object.$filepath = function(_filepath){
     filepath = _filepath;
@@ -42,6 +51,11 @@ function Path(){
       } else { 
         throw new Error('alias ' + key + ' was not found');
       }
+      return o;
+    }
+
+    o.join = function(first, second){
+      return path.join(first, second);      
     }
     return o;
   }

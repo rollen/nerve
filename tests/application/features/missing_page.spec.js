@@ -1,19 +1,22 @@
-require('./../spec_helper');
+var nerve = require('./../spec_helper').nervex.nerve;
 
 describe('missing_page.spec', function(){
+  var browser,
+  response;
+
   describe ("Given I'm any user", function(){
     beforeEach(function(){
-      this.browser = Browser(Nervebuilder);
+      browser = Browser(nerve);
     });
 
     describe("When I visit a page that does not exist", function(){
       beforeEach(function(){
-        this.response = this.browser.visit('/awesomepage');
+        response = browser.visit('/awesomepage');
       });
 
       describe("Then I should see the nervecenter 404 page", function(){
         it('should see the nervecenter 404 page', function(){
-          expect(this.response._head).toBe(404);
+          expect(response._head).toBe(404);
         });
       });
     });

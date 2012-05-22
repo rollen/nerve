@@ -18,7 +18,6 @@ function HttpFileResponseWriter(response, filesystem){
     filesystem.readFile(fileInfo.path(), fileInfo.encoding(), object.onFileRead(fileInfo));
   }
 
-
   // public functions
   object.writeToResponseAndEnd = writeToResponseAndEnd;
 

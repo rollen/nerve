@@ -1,4 +1,4 @@
-require('./../../spec_helper');
+var nervex = require("./../../spec_helper").nervex;
 
 describe('AssetsController', function(){
   var assetsControllerService,
@@ -7,8 +7,18 @@ describe('AssetsController', function(){
   assetUrlInfoService,
   fileInfoService,
   fileInfo,
+  inject,
+  injector,
   path,
   assetsController;
+
+  beforeEach(function(){
+    var _nervex = nervex.nerve();
+    _nervex.loadfiles();
+    inject = _nervex.inject;
+    injector = _nervex.injector;
+  });
+
 
   describe('show', function(){
     beforeEach(function(){
@@ -18,7 +28,7 @@ describe('AssetsController', function(){
       injector(function($injector){
         $injector.config(function($request, $path, $fileInfo){
           spyOn($path.$getfilepath(), 'existsSync').andReturn(true);
-          $path.$folder('assets', '/app/client/js');
+          $path.$folder('views', '/app/client/js');
           spyOn($request, '$get').andReturn({url:'/lib/assets/js/file.js'});
           spyOn($fileInfo, '$get').andReturn(fileInfo);
         });

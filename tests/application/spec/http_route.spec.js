@@ -1,15 +1,27 @@
-require('./../spec_helper');
+var nervex = require("./../spec_helper").nervex;
 
 describe('HttpRoute', function(){
   var route,
   controller,
   matcher,
-  action;
+  action,
+  inject,
+  injector;
 
-  beforeEach(inject(function($httpRouteService, $standardRouteMatcherService){
-    matcher = $standardRouteMatcherService('/login','GET');
-    route = $httpRouteService('LoginController','index', matcher);
-  }));
+  beforeEach(function(){
+    var _nervex = nervex.nerve();
+    _nervex.loadfiles();
+    inject = _nervex.inject;
+    injector = _nervex.injector;
+  });
+
+
+  beforeEach(function(){
+    inject(function($httpRouteService, $standardRouteMatcherService){
+      matcher = $standardRouteMatcherService('/login','GET');
+      route = $httpRouteService('LoginController','index', matcher);
+    })();
+  });
 
   describe('match', function(){
 

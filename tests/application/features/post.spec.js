@@ -1,11 +1,11 @@
-require('./../spec_helper');
+var nerve = require('./../spec_helper').nervex.nerve;
 
 describe('post.spec.js', function(){
   describe ("Given I have an application with a controller that receives a post request", function(){
     var response, browser;
 
     beforeEach(function(){
-      browser = Browser(Nervebuilder);
+      browser = Browser(nerve);
     });
 
     describe("When I send a post request to the controllers endpoint", function(){

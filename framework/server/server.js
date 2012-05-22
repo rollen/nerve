@@ -4,7 +4,7 @@ function Server(request, application, postDataService){
   object.run = function(){
     var postData = postDataService(JSON, '');
 
-    //console.log('attempting to route to ' + request.url + ' with method ' + request.method);
+    console.log('attempting to route to ' + request.url + ' with method ' + request.method);
     request.setEncoding('utf8');
     request.on('data', postData.accept);
     request.on('end', object.executeRequest(postData));

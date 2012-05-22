@@ -1,20 +1,23 @@
-require('./../spec_helper');
+var nerve = require('./../spec_helper').nervex.nerve;
 
 
 describe ("accessing_assets.spec.js", function(){
+  var browser,
+  response;
+
   describe ("Given I'm any user", function(){
     beforeEach(function(){
-      this.browser = Browser(Nervebuilder);
+      browser = Browser(nerve);
     });
 
     describe("When I visit a the angular-scenario page", function(){
       beforeEach(function(){
-        this.response = this.browser.visit('/assets/angular-scenario.js');
+        response = browser.visit('/assets/angular-scenario.js');
       });
 
       describe('Then I should see the file specified by the asset', function(){
         it('Then I should see the file specified by the asset', function(){
-          expect(this.response._head).not.toBe(404);
+          expect(response._head).not.toBe(404);
         });
       });
     });

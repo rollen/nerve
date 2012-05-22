@@ -1,8 +1,18 @@
-require("./../../../spec_helper");
+var nervex = require("./../../../spec_helper").nervex;
 
 describe('StandardRouteMatcher', function(){
   var standardRouteMatcherService,
+  inject,
+  injector,
   system_under_test;
+
+  beforeEach(function(){
+    var _nervex = nervex.nerve();
+    _nervex.loadfiles();
+    inject = _nervex.inject;
+    injector = _nervex.injector;
+  });
+
 
   beforeEach(function(){
     inject(function($standardRouteMatcherService){

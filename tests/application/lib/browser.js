@@ -1,14 +1,19 @@
-Browser = function(applicationFactory){
+Browser = function(nerve){
   var response = null;
   var browser = {};
 
   browser.visit = function(url){
-    var response = new Response();
-    var request = new Request(url);
+    var response = Response();
+    var request = Request(url);
     request.method = 'GET';
     var filesystem = new SyncFS(require('fs'));
-    var application = applicationFactory.createApplication(request, response, filesystem);
-    application.executeRequest();
+    
+    var injector = nerve(request, response, filesystem).
+      bootstrap();
+
+    injector.invoke(function($server){
+      $server.run();
+    });
 
     return response;
   }
@@ -18,6 +23,14 @@ Browser = function(applicationFactory){
     var request = new Request(url);
     request.method = 'POST';
     var filesystem = new SyncFS(require('fs'));
+
+    var injector = nerve(request, response, filesystem).
+      bootstrap();
+
+    injector.invoke(function($server){
+      $server.run();
+    });
+
     var application = applicationFactory.createApplication(request, response, filesystem);
     application.executeRequest(json);
     return response;

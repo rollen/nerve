@@ -1,8 +1,17 @@
-require('./../../../spec_helper');
+var nervex = require("./../../../spec_helper").nervex;
 
 describe('FileInfo',function(){
   var fileInfoService,
-  fileInfo;
+  fileInfo,
+  inject,
+  injector;
+
+  beforeEach(function(){
+    var _nervex = nervex.nerve();
+    _nervex.loadfiles();
+    inject = _nervex.inject;
+    injector = _nervex.injector;
+  });
 
   beforeEach(function(){
     inject(function($fileInfoService){

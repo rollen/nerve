@@ -1,10 +1,24 @@
-require("./../../../spec_helper");
+var nervex = require("./../../../spec_helper").nervex;
 
 describe('RegexRouteMatcher', function(){
-  var regexRouteMatcherService;
-  beforeEach(inject(function($regexRouteMatcherService){
-    regexRouteMatcherService = $regexRouteMatcherService;
-  }));
+  var regexRouteMatcherService,
+  inject,
+  injector,
+  name;
+
+  beforeEach(function(){
+    var _nervex = nervex.nerve();
+    _nervex.loadfiles();
+    inject = _nervex.inject;
+    injector = _nervex.injector;
+  });
+
+  beforeEach(function(){
+
+    inject(function($regexRouteMatcherService){
+      regexRouteMatcherService = $regexRouteMatcherService;
+    })();
+  });
 
   describe('.hasAMatchFor', function(){
     it('should match based on a regex', function(){

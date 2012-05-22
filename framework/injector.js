@@ -34,9 +34,11 @@ function Injector(name){
 
   object.invoke= function(callback, argsCallback){
     var args = functionArgs(callback);
+    var instances;
     if(argsCallback){
       args = argsCallback(args);
     }
+    instances = argsToInstances(args);
     callback.apply(undefined, argsToInstances(args)); 
   }
 

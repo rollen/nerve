@@ -1,4 +1,4 @@
-require('./../../spec_helper');
+var nervex = require("./../../spec_helper").nervex;
 
 describe('HttpFileResponseWriter', function(){
   var filesystem,
@@ -6,7 +6,17 @@ describe('HttpFileResponseWriter', function(){
   fileInfoService,
   fileInfo,
   callback,
+  inject,
+  injector,
   response;
+
+  beforeEach(function(){
+    var _nervex = nervex.nerve();
+    _nervex.loadfiles();
+    inject = _nervex.inject;
+    injector = _nervex.injector;
+  });
+
 
   beforeEach(function(){
     filesystem = new SyncFS(require('fs'));

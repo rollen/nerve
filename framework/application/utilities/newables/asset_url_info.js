@@ -4,6 +4,12 @@ function AssetUrlInfo(url){
     return url.split('/').pop();
   }
 
+  object.path = function(){
+    var segments = url.split('/');
+    segments.pop();
+    return segments.join('/');
+  }
+
   return object;
 }
 
