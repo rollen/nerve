@@ -225,4 +225,23 @@ describe('Injector', function(){
       expect(injector.instantiate('request')).toBe('superman');
     });
   });
+
+  describe('.functionArgs()', function(){
+    beforeEach(function(){
+      injector = nervex.Injector();
+    });
+
+    it('should be able to decipher a single line function', function(){
+      function name(a, b, c, d){}
+      expect(injector.functionArgs(name)).toEqual(['a','b','c','d']);
+    });
+
+    it('should be able to decipher a multi line funciton', function(){
+      function name(a, 
+                    b, 
+                    c, 
+                    d){}
+      expect(injector.functionArgs(name)).toEqual(['a','b','c','d']);
+    });
+  });
 });

@@ -1,8 +1,8 @@
-function Application(requestService, responseSerivce, router, injectorService){
+function Application(request, response, router, injectorService){
   var object = {};
 
   object.executeRequest = function(){
-    var controllerinfo = router.route(requestService.url, requestService.method); 
+    var controllerinfo = router.route(request.url, request.method); 
     injectorService.instantiate(controllerinfo.controller)[controllerinfo.action]();
   }
 

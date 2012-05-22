@@ -7,12 +7,11 @@ describe('Application', function(){
   response,
   application,
   logincontroller,
-  requestService,
   injectorService,
   errorsController;
 
   beforeEach(function(){
-    request = Request('/login');
+    request = {url:'/login', method:'GET'};
     response = Response();
 
     function LoginController(){
@@ -25,14 +24,14 @@ describe('Application', function(){
 
     loginController = LoginController();
     injector(function($injector){
-      $injector.registerService('request', request);
-      $injector.registerService('response', request);
+      $injector.constant('request', request);
+      $injector.constant('response', response);
     });
 
   });
 
   describe('executeRequest', function(){
-    beforeEach(inject(function($requestService, $responseService, $router){
+    beforeEach(inject(function($request, $response, $router){
       spyOn(loginController, 'index');
 
       router = $router;
@@ -40,7 +39,7 @@ describe('Application', function(){
       injectorService = nervex.Injector();
 
       spyOn(injectorService, 'instantiate').andReturn(loginController);
-      application = nervex.Application.Application($requestService, $requestService, $router, injectorService); 
+      application = nervex.Application.Application($request, $response, $router, injectorService); 
     }));
 
     it('should create the controller that needs to be instantiated', function(){

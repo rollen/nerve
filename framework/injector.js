@@ -3,10 +3,21 @@ function Injector(name){
     return object.factories[name] !== undefined;
   }
 
+  function stripWhiteSpace(string){
+    return string.replace(/\s/g, '');
+  }
+
   function functionArgs(func){
-    var regex = /^function.+\((.*?)\)/
-    var args = func.toString().match(regex)[1];
-    return args ? args.split(', ') : [];
+    var s = stripWhiteSpace(func.toString());
+    var args;
+    var match = s.match(/\((.*?)\)/);
+    if(match){
+      var args = match[1];
+    }else{
+      console.log(func);
+      throw new Error('unable to decipher args ' + s);
+    }
+    return args ? args.split(',') : [];
   }
 
   var object={};
@@ -172,6 +183,7 @@ function Injector(name){
     object.register(name, factory);
   }
   object.normalize = normalize;
+  object.functionArgs = functionArgs;
   return object;
 }
 

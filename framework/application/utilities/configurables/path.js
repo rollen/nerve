@@ -7,6 +7,20 @@ function Path(){
     filepath = _filepath;
   }
 
+  object.$getfilepath = function(){
+    return filepath;
+  }
+
+  object.$folder = function(alias, location){
+    assertNoTrailingSlash(location);
+    assertExistingPath(location);
+    folders[alias] = location;
+  }
+
+  object.$getfolders = function(){
+    return folders;
+  }
+
   function assertNoTrailingSlash(location){
     if(location[location.length - 1] === '/' ){
       throw new Error('The path ' + location + ' should not have a trailing slash');
@@ -19,11 +33,6 @@ function Path(){
     }
   }
 
-  object.$folder = function(alias, location){
-    assertNoTrailingSlash(location);
-    assertExistingPath(location);
-    folders[alias] = location;
-  }
 
   object.$get = function(){
     var o = {};

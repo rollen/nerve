@@ -1,41 +1,53 @@
-var nervex = require('./../../spec_helper').nervex;
+require('./../../spec_helper');
 
 describe('AssetsController', function(){
   var assetsControllerService,
   request,
   httpFileResponseWriter,
-  assetsUrlInfoService,
+  assetUrlInfoService,
   fileInfoService,
+  fileInfo,
   path,
-  injector,
   assetsController;
 
   describe('show', function(){
     beforeEach(function(){
-      injector = nervex.bootstrap();
 
-      var _request = {url:'/lib/assets/js/file.js'}
-      injector.constant('request', _request);
+      fileInfo = function(){};
 
-      injector.invoke(function($assetsControllerService, $request, $httpFileResponseWriter, $path, $assetUrlInfoService, $fileInfoService){
-        assetsControllerService = $assetsControllerService;
-        request = $request;
-        httpFileResponseWriter = $httpFileResponseWriter;
-        path = $path;
-        assetsUrlInfoService = $assetUrlInfoService;
-        fileInfoService = $fileInfoService;
+      injector(function($injector){
+        $injector.config(function($request, $path, $fileInfo){
+          spyOn($path.$getfilepath(), 'existsSync').andReturn(true);
+          $path.$folder('assets', '/app/client/js');
+          spyOn($request, '$get').andReturn({url:'/lib/assets/js/file.js'});
+          spyOn($fileInfo, '$get').andReturn(fileInfo);
+        });
       });
+
+      inject(function($assetsControllerService
+                      ,$request
+                      ,$httpFileResponseWriter
+                      ,$path
+                      ,$assetUrlInfoService
+                      ,$fileInfoService
+                     ){
+        assetsController = $assetsControllerService($request,
+                                                   $httpFileResponseWriter,
+                                                   $path,
+                                                   $assetUrlInfoService,
+                                                   $fileInfoService
+                                                  );
+        httpFileResponseWriter = $httpFileResponseWriter;
+      })();
+
+        spyOn(httpFileResponseWriter, 'writeToResponseAndEnd');
 
     });
 
     it('should write a static file to the response', function(){
-      spyOn(path, filepath).andReturn('/lib/assets')
-      var filename = assetsUrlInfoService(request.url).filename();
-      var filepath = path.filepath('assets') + request.url;
-      var fileInfo = fileInfoService(filepath, filename);
-      console.log(filename);
-      console.log(filepath);
-      console.log(fileInfo);
+      assetsController.show();
+      expect(httpFileResponseWriter.writeToResponseAndEnd).
+        toHaveBeenCalledWith(fileInfo);
     });
   });
 });

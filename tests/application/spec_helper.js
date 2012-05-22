@@ -29,11 +29,11 @@ Feature = function(msg, callback){
 
 nervex.injector = nervex.bootstrap();
 
-inject = function(func){
+inject = function inject(func){
   return function(){nervex.injector.invoke(func);};
 }
 
-injector= function(func){
+injector= function injector(func){
   func(nervex.injector);
 }
 

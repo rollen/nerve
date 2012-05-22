@@ -1,9 +1,9 @@
-function AssetsController(request, httpFileResponseWriter, path, assetsUrlInfoService, fileInfoService){
+function AssetsController(request, httpFileResponseWriter, path, assetUrlInfoService, fileInfoService){
   var object = {};
 
   object.show = function(){
-    var filename = assetsUrlInfoService(request.url).filename();
-    var filepath = path('assets') + request.url;
+    var filename = assetUrlInfoService(request.url).filename();
+    var filepath = [path.filepath('assets'),request.url].join('/');
     var fileInfo = fileInfoService(filepath, filename);
     httpFileResponseWriter.writeToResponseAndEnd(fileInfo);
   }
