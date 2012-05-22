@@ -6,6 +6,12 @@ describe('Injector', function(){
   dependency;
 
   beforeEach(function(){
+    var _nervex = nervex.nerve();
+    _nervex.loadfiles();
+    injector = _nervex._injector;
+  });
+
+  beforeEach(function(){
     func = function House(){
       var object = {};
 
@@ -41,7 +47,6 @@ describe('Injector', function(){
 
   describe('.instantiate()', function(){
     beforeEach(function(){
-      injector = nervex.Injector();    
       injector.factory(dependency);
       injector.factory(func);
     });
@@ -76,7 +81,6 @@ describe('Injector', function(){
 
   describe('.normalize', function(){
     beforeEach(function(){
-      injector = nervex.Injector();
     });
 
     it('should remove the word Factory from the string', function(){
@@ -103,7 +107,6 @@ describe('Injector', function(){
 
   describe('.factory', function(){
     it("registers the service", function(){
-      injector = nervex.Injector();    
       injector.factory(func);
     });
   });
@@ -111,7 +114,6 @@ describe('Injector', function(){
   describe('.service', function(){
     it("registers the service", function(){
       var func = function House(){} 
-      injector = nervex.Injector();    
       injector.service(func);
       expect(injector.factories['house'].$get).toBe(func);
     });
@@ -120,7 +122,6 @@ describe('Injector', function(){
 
   describe('.invoke', function(){
     beforeEach(function(){
-      injector = nervex.Injector();
       injector.factory(func);
       injector.factory(dependency);
     });
@@ -153,7 +154,6 @@ describe('Injector', function(){
         }
         return object;
       } 
-      injector = nervex.Injector();
       injector.factory(House);
       expect(injector.dependencies('House')).toEqual(['kitchen', 'bathroom']);
     });
@@ -166,7 +166,6 @@ describe('Injector', function(){
         }
         return object;
       } 
-      injector = nervex.Injector();
       injector.factory(House);
       expect(injector.dependencies('House')).toEqual([]);
     });
@@ -174,7 +173,6 @@ describe('Injector', function(){
 
   describe('.functionName()', function(){
     beforeEach(function(){
-      injector = nervex.Injector();
     });
     it('should gets the names of the funciton', function(){
       function Name(){}
@@ -193,7 +191,6 @@ describe('Injector', function(){
 
   describe('.config()', function(){
     it('should get factories without the need for the factory keyword', function(){
-      injector = nervex.Injector();
       injector.factory(func);
       injector.config(function($house){
         injector.invoke(function($houseFactory){
@@ -207,7 +204,6 @@ describe('Injector', function(){
     var request,
     instance;
     beforeEach(function(){
-      injector = nervex.Injector();
       request = {'name':'request'};
       injector.constant('request', request);
     });
@@ -228,7 +224,6 @@ describe('Injector', function(){
 
   describe('.registerService()', function(){
     it('should throw and error if the second argument is not a funciton', function(){
-      injector = nervex.Injector();
       expect(function(){injector.registerService('name', {})}).
         toThrow(new Error('Expected function got [object Object]'));
     });
@@ -236,7 +231,6 @@ describe('Injector', function(){
 
   describe('.functionArgs()', function(){
     beforeEach(function(){
-      injector = nervex.Injector();
     });
 
     it('should be able to decipher a single line function', function(){
