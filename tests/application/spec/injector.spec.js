@@ -226,6 +226,14 @@ describe('Injector', function(){
     });
   });
 
+  describe('.registerService()', function(){
+    it('should throw and error if the second argument is not a funciton', function(){
+      injector = nervex.Injector();
+      expect(function(){injector.registerService('name', {})}).
+        toThrow(new Error('Expected function got [object Object]'));
+    });
+  });
+
   describe('.functionArgs()', function(){
     beforeEach(function(){
       injector = nervex.Injector();

@@ -101,6 +101,13 @@ function Injector(name){
   }
 
   object.registerService = function(name, func){
+    function isFunction(obj) {
+      return !!(obj && obj.constructor && obj.call && obj.apply);
+    };
+
+    if(!isFunction(func)){
+      throw('Expected function got ' + func);
+    }
     var factory = function(){
       var object = {};
       object.$get = func;
@@ -133,7 +140,7 @@ function Injector(name){
   }
 
   function isServiceName(name){
-    return name.match(/Service/);
+    return name.match(/Service$/);
   }
 
   function getFactory(factoryname){

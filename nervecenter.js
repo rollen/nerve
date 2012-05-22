@@ -17,7 +17,7 @@ function bootstrap(){
   injector.constant('request', nervex.Server.Request);
   injector.constant('response', nervex.Server.Response);
   injector.constant('filesystem', require('fs'));
-  injector.registerService('injector', injector);
+  injector.constant('injector', injector);
   return injector;
 }
 
