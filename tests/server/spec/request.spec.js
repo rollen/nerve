@@ -1,8 +1,17 @@
-require('./../../application/spec_helper')
+var nervex = require("./../../application/spec_helper").nervex;
 
 describe('Request', function(){
   var request,
-  instance;
+  instance,
+  inject,
+  injector;
+
+  beforeEach(function(){
+    var _nervex = nervex.nerve();
+    _nervex.loadfiles();
+    inject = _nervex.inject;
+    injector = _nervex.injector;
+  });
 
   beforeEach(function(){
     request = {};

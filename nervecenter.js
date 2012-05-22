@@ -34,6 +34,7 @@ function Nervex(request, response, filesystem){
     _injector.service(nervex.Application.HttpRoute);
     _injector.service(nervex.Application.AssetsController);
     _injector.service(nervex.Application.ErrorsController);
+    _injector.service(nervex.Application.TestsController);
     _injector.service(nervex.Application.HttpFileResponseWriter);
     _injector.service(nervex.Application.FileInfo);
     _injector.service(nervex.Server.PostData);

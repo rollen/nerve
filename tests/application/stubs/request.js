@@ -3,7 +3,10 @@ Request = function(url){
   object.url = url;
   object.method = 'GET';
   object.on = function(type, callback){
-    if(type == 'end'){
+    if(type === 'data'){
+      callback('{"name":"rollen"}');
+    }
+    if(type === 'end'){
       callback();
     }
   };

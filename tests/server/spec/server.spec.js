@@ -1,10 +1,20 @@
-require('../../application/spec_helper');
+var nervex = require("./../../application/spec_helper").nervex;
 
 describe('Server', function(){
   var server,
   postData,
+  inject,
+  injector,
   executeRequest,
   request;
+
+  beforeEach(function(){
+    var _nervex = nervex.nerve();
+    _nervex.loadfiles();
+    inject = _nervex.inject;
+    injector = _nervex.injector;
+  });
+
 
   beforeEach(function(){
     request = new Request();

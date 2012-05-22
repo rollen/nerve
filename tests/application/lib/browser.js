@@ -30,9 +30,6 @@ Browser = function(nerve){
     injector.invoke(function($server){
       $server.run();
     });
-
-    var application = applicationFactory.createApplication(request, response, filesystem);
-    application.executeRequest(json);
     return response;
   }
 

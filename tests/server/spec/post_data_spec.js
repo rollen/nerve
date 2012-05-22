@@ -1,7 +1,17 @@
-require('../../application/spec_helper');
+var nervex = require("./../../application/spec_helper").nervex;
+
 describe('PostData', function(){
   var data,
-  postDataService;
+  postDataService,
+  inject,
+  injector;
+
+  beforeEach(function(){
+    var _nervex = nervex.nerve();
+    _nervex.loadfiles();
+    inject = _nervex.inject;
+    injector = _nervex.injector;
+  });
 
   beforeEach(function(){
     data = '{"title":"Job","description":"Description"}'

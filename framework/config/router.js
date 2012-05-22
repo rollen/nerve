@@ -1,5 +1,5 @@
 function Router($router){
   $router.assets(/^\/assets/, 'AssetsController', 'show');
-  $router.post('/tests', 'TestController', 'create');
+  $router.post('/tests', 'TestsController', 'create');
 }
 module.exports = Router;
