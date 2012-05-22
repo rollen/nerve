@@ -1,9 +1,14 @@
-function AssetsController(request, httpFileResponseWriter, fileInfoService, fileParamsService){
-  var assets_controller = {};
-  assets_controller.show = function(){
-    httpFileResponseWriter.writeToResponseAndEnd();
+function AssetsController(request, httpFileResponseWriter, path, assetsUrlInfoService, fileInfoService){
+  var object = {};
+
+  object.show = function(){
+    var filename = assetsUrlInfoService(request.url).filename();
+    var filepath = path('assets') + request.url;
+    var fileInfo = fileInfoService(filepath, filename);
+    httpFileResponseWriter.writeToResponseAndEnd(fileInfo);
   }
-  return assets_controller;
+
+  return object;
 }
 
 module.exports = AssetsController;

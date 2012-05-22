@@ -20,13 +20,19 @@ describe('Path', function(){
     it('accepts a key, value', function(){
       path.$filepath(filepath);
       spyOn(filepath, 'existsSync').andReturn(true);
-      path.$folder('views', '/Project/framework/application/');
+      path.$folder('views', '/Project/framework/application');
     })
 
     it('throws an exception if the folder is not found', function(){
       spyOn(filepath, 'existsSync').andReturn(false);
+      expect(function(){path.$folder('views', '/Project/framework/application')})
+      .toThrow('Folder /Project/framework/application was not found');
+    });
+
+    it('throws an exception if the path has a trailing slash', function(){
+      spyOn(filepath, 'existsSync').andReturn(false);
       expect(function(){path.$folder('views', '/Project/framework/application/')})
-      .toThrow('Folder /Project/framework/application/ was not found');
+      .toThrow('The path /Project/framework/application/ should not have a trailing slash');
     });
   });
 
@@ -34,7 +40,7 @@ describe('Path', function(){
   describe('.$get', function(){
     beforeEach(function(){
       spyOn(filepath, 'existsSync').andReturn(true);
-      path.$folder('views', '/Project/framework/application/');
+      path.$folder('views', '/Project/framework/application');
       instance = path.$get();
     });
 
@@ -47,7 +53,11 @@ describe('Path', function(){
 
     describe('.filepath', function(){
       it('returns a copy of the filepath', function(){
-        expect(instance.filepath('views')).toEqual('/Project/framework/application/');
+        expect(instance.filepath('views')).toEqual('/Project/framework/application');
+      });
+
+      it('throws an error if the alias is not found', function(){
+        expect(function(){instance.filepath('folder')}).toThrow('alias folder was not found');
       });
     });
   });

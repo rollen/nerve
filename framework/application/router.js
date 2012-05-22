@@ -59,7 +59,6 @@ function Router(){
       var template;
       for(var i = 0; i < routes.length; i++){
         controllerInfo = routes[i].match(path, method);
-        console.log(routes[i]);
         if(controllerInfo) {
           template = routes[i].template(); 
           break;
