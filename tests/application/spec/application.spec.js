@@ -17,6 +17,7 @@ describe('Application', function(){
     _nervex.loadfiles();
     inject = _nervex.inject;
     injector = _nervex.injector;
+    _injector = _nervex._injector;
   });
 
   beforeEach(function(){
@@ -41,15 +42,13 @@ describe('Application', function(){
 
   describe('executeRequest', function(){
     beforeEach(function(){
-      inject(function($request, $response, $router){
+      inject(function($applicationService, $request, $response, $router){
         spyOn(loginController, 'index');
         router = $router;
 
-        injector = nervex.Injector();
-
-        spyOn(injector, 'instantiate').andReturn(loginController);
-        spyOn(injector, 'constant');
-        application = nervex.Application.Application($request, $response, $router, injector); 
+        spyOn(_injector, 'instantiate').andReturn(loginController);
+        spyOn(_injector, 'constant');
+        application = $applicationService($request, $response, $router, _injector); 
       })();
     });
 
@@ -57,14 +56,14 @@ describe('Application', function(){
       spyOn(router, 'route').andReturn({controller:'ErrorsController', action:'index'});
       var json = {name:'Rollen'};
       application.executeRequest(json);
-      expect(injector.constant).toHaveBeenCalledWith('postparams', json);
+      expect(_injector.constant).toHaveBeenCalledWith('postparams', json);
     });
 
     it('should create the controller that needs to be instantiated', function(){
       spyOn(router, 'route').andReturn({controller:'LoginController', action:'index'});
       application.executeRequest();
       expect(router.route).toHaveBeenCalledWith('/login','GET');
-      expect(injector.instantiate).toHaveBeenCalledWith('LoginController');
+      expect(_injector.instantiate).toHaveBeenCalledWith('LoginController');
       expect(loginController.index).toHaveBeenCalled();
     });
 
@@ -72,7 +71,7 @@ describe('Application', function(){
       spyOn(router, 'route').andReturn({controller:'ErrorsController', action:'index'});
       application.executeRequest();
       expect(router.route).toHaveBeenCalledWith('/login','GET');
-      expect(injector.instantiate).toHaveBeenCalledWith('ErrorsController');
+      expect(_injector.instantiate).toHaveBeenCalledWith('ErrorsController');
     });
   });
 });
