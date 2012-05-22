@@ -14,17 +14,3 @@ exports.FileInfo = require('./utilities/newables/file_info');
 exports.AssetUrlInfo = require('./utilities/newables/asset_url_info');
 exports.Path = require('./utilities/configurables/path');
 
-require('./factories/nervebuilder');
-
-Nervebuilder.root = __dirname;
-require('./factories/controllers');
-require('./factories/http_file_responder_writer');
-
-require('./factories/tests_controller');
-require('./factories/assets_controller');
-require('./factories/http_route_factory');
-require('./factories/router');
-require('./factories/application');
-
-require('./config/nervebuilder');
-
