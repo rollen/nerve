@@ -1,7 +1,7 @@
 require 'fileutils'
 
-task :angular => :update_angular
-task :update_angular => [:clone_angular_repo, :compile_angular, :move_angular_files_into_framework] do
+task :angular => [:clone_angular_repo, :compile_angular, :move_angular_files_into_framework] do
+
 
 end
 
@@ -18,6 +18,7 @@ end
 
 task :clone_angular_repo do
   puts "Cloning Angular repo"
+  system("git submodule init")
   system("git submodule update")
   system("cd lib/angular; git pull origin master")
 end
