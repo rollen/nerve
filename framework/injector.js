@@ -7,39 +7,49 @@ function Injector(name){
     return string.replace(/\s/g, '');
   }
 
-  function functionArgs(func){
-    var s = stripWhiteSpace(func.toString());
-    var args;
-    var match = s.match(/\((.*?)\)/);
-    if(match){
-      var args = match[1];
-    }else{
-      console.log(func);
-      throw new Error('unable to decipher args ' + s);
-    }
-    return args ? args.split(',') : [];
-  }
-
   var object={};
   object.factories = {};
 
 
-  function argsToInstances(args){
-    var instances = [];
-    for(var i = 0; i < args.length; i++){
-      instances[i] = object.instantiate(args[i]);
+  function initDependencies(listOfDependencies, onAllDependenciesInstantiated){
+    var instances = {};
+    var count = 0;
+
+    function onSingleArgInstantiated(object, name){
+      instances[name] = object;
+      count++;
+      if(count === listOfDependencies.length){
+        var orderedInstances = orderObject(listOfDependencies, instances);
+        onAllDependenciesInstantiated(orderedInstances);
+      }
     }
-    return instances;
+
+    if(listOfDependencies.length === 0){
+      onAllDependenciesInstantiated([]);
+    }else{
+      for(var i = 0; i < listOfDependencies.length; i++){
+        object.instantiate(listOfDependencies[i],
+                           onSingleArgInstantiated);
+      }
+    }
   }
 
-  object.invoke= function(callback, argsCallback){
-    var args = functionArgs(callback);
+  function initObjectFromInjector(normalizedName, onAllArgumentsInstantiated){
+    var dependencies = object.dependencies(normalizedName);
+    initDependencies(dependencies, function(instances){
+      onAllArgumentsInstantiated(instances);
+    });
+  }
+
+  object.invoke= function(functionToInstantiate, argsCallback){
+    var args = argumentList(functionToInstantiate);
     var instances;
     if(argsCallback){
       args = argsCallback(args);
     }
-    instances = argsToInstances(args);
-    callback.apply(undefined, argsToInstances(args)); 
+    initDependencies(args, function(instances){
+      functionToInstantiate.apply(undefined, instances); 
+    });
   }
 
   object.config = function(callback){
@@ -122,20 +132,7 @@ function Injector(name){
     object.factories[name] = factory();
   }
 
-  object.dependencies = function(objectname){
-    var factoryname = normalize(objectname);
-    var factory = getFactory(factoryname).$get;
-    return functionArgs(factory);
-  }
 
-  function argumentInstances(normalizedName){
-    var dependencies = object.dependencies(normalizedName);
-    var instances = [];
-    for(var i = 0; i < dependencies.length; i++){
-      instances[i] = object.instantiate(dependencies[i]);
-    }
-    return instances;
-  }
 
   function isFactoryName(name){
     return name.match(/Factory$/);
@@ -153,17 +150,51 @@ function Injector(name){
     return factory;
   }
 
-  object.instantiate = function(objectname){
+  object.instantiate = function(objectname, onInstantiated){
     var normalizedName = normalize(objectname);
+    var constructedobject = '';
     if(isFactoryName(objectname)){
-      return getFactory(normalizedName);
-    }if(isServiceName(objectname)){
-      return getFactory(normalizedName).$get;
+      constructedobject = getFactory(normalizedName);
+    }else if(isServiceName(objectname)){
+      constructedobject = getFactory(normalizedName).$get;
     }else{
-      var args = argumentInstances(normalizedName);
-      return getFactory(normalizedName).$get.apply(undefined, args); 
+      initObjectFromInjector(normalizedName, function(arguments){
+        constructedobject = getFactory(normalizedName).$get.apply(undefined, arguments); 
+      });
     }
+
+    onInstantiated(constructedobject, objectname);
   }
+
+
+  function orderObject(dependencies, hash){
+    var instances = [];
+    for(var i = 0; i < dependencies.length; i++){
+      instances[i] = hash[dependencies[i]]; 
+    }
+    return instances;
+  }
+
+
+  object.dependencies = function(objectname){
+    var factoryname = normalize(objectname);
+    var factory = getFactory(factoryname).$get;
+    return argumentList(factory);
+  }
+
+  function argumentList(func){
+    var s = stripWhiteSpace(func.toString());
+    var args;
+    var match = s.match(/\((.*?)\)/);
+    if(match){
+      var args = match[1];
+    }else{
+      console.log(func);
+      throw new Error('unable to decipher args ' + s);
+    }
+    return args ? args.split(',') : [];
+  }
+
 
   object.functionName = function(func){
     var functionstring = func.toString();
@@ -192,7 +223,7 @@ function Injector(name){
     object.register(name, factory);
   }
   object.normalize = normalize;
-  object.functionArgs = functionArgs;
+  object.argumentList = argumentList;
   return object;
 }
 
