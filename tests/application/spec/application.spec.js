@@ -9,7 +9,6 @@ describe('Application', function(){
   injector,
   application,
   logincontroller,
-  injector,
   errorsController;
 
   beforeEach(function(){
@@ -52,26 +51,49 @@ describe('Application', function(){
       })();
     });
 
+
     it('should create a params object whith postparams', function(){
       spyOn(router, 'route').andReturn({controller:'ErrorsController', action:'index'});
       var json = {name:'Rollen'};
+
       application.executeRequest(json);
-      expect(_injector.constant).toHaveBeenCalledWith('postparams', json);
+
+      expect(_injector.constant).
+        toHaveBeenCalledWith('postparams', json);
     });
+
 
     it('should create the controller that needs to be instantiated', function(){
-      spyOn(router, 'route').andReturn({controller:'LoginController', action:'index'});
+      spyOn(router, 'route').
+        andReturn({controller:'LoginController', action:'index'});
+
+      spyOn(application, 'onControllerCreated').
+        andReturn('executed');
+
       application.executeRequest();
-      expect(router.route).toHaveBeenCalledWith('/login','GET');
-      expect(_injector.instantiate).toHaveBeenCalledWith('LoginController');
-      expect(loginController.index).toHaveBeenCalled();
+
+      expect(router.route).
+        toHaveBeenCalledWith('/login','GET');
+
+      expect(_injector.instantiate).
+        toHaveBeenCalledWith('LoginController', 'executed');
     });
 
+
     it('should reply with a 404 if no controller', function(){
-      spyOn(router, 'route').andReturn({controller:'ErrorsController', action:'index'});
+      spyOn(router, 'route').
+        andReturn({controller:'ErrorsController', action:'index'});
+
+      spyOn(application, 'onControllerCreated').
+        andReturn('executed');
+
       application.executeRequest();
-      expect(router.route).toHaveBeenCalledWith('/login','GET');
-      expect(_injector.instantiate).toHaveBeenCalledWith('ErrorsController');
+
+      expect(router.route).
+        toHaveBeenCalledWith('/login','GET');
+
+      expect(_injector.instantiate).
+        toHaveBeenCalledWith('ErrorsController', 'executed');
     });
   });
 });

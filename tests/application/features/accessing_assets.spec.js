@@ -1,6 +1,5 @@
 var nerve = require('./../spec_helper').nervex.nerve;
 
-
 describe ("accessing_assets.spec.js", function(){
   var browser,
   response;

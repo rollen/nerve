@@ -159,7 +159,7 @@ describe('Injector', function(){
     });
   });
 
-  xdescribe('.dependencies', function(){
+  describe('.dependencies', function(){
     it('should return the list of arguments in an array', function(){
       function House() {
         var object = {};
@@ -185,7 +185,7 @@ describe('Injector', function(){
     });
   });
 
-  xdescribe('.functionName()', function(){
+  describe('.functionName()', function(){
     beforeEach(function(){
     });
     it('should gets the names of the funciton', function(){
@@ -203,7 +203,7 @@ describe('Injector', function(){
     });
   });
 
-  xdescribe('.config()', function(){
+  describe('.config()', function(){
     it('should get factories without the need for the factory keyword', function(){
       injector.factory(func);
       injector.config(function($house){
@@ -229,7 +229,7 @@ describe('Injector', function(){
       expect(request).toBe(instance);
     });
 
-    xit('should allow for that singleton to be replaced', function(){
+    it('should allow for that singleton to be replaced', function(){
       injector.config(function($request){
         $request.$set('superman');
       });

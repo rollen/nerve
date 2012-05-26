@@ -162,7 +162,6 @@ function Injector(name){
         constructedobject = getFactory(normalizedName).$get.apply(undefined, arguments); 
       });
     }
-
     onInstantiated(constructedobject, objectname);
   }
 

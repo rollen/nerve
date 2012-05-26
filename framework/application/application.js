@@ -2,10 +2,16 @@ function Application(request, response, router, injector){
   var object = {};
 
   object.executeRequest = function(postparams){
-    var controllerinfo = router.route(request.url, request.method); 
+    var info= router.route(request.url, request.method); 
     injector.constant('postparams', postparams);
-    var controller = injector.instantiate(controllerinfo.controller)
-    controller[controllerinfo.action]();
+    injector.instantiate(info.controller,
+                         object.onControllerCreated(info.action));
+  }
+
+  object.onControllerCreated = function(action){
+    return function(controller){
+      controller[action](); 
+    }
   }
 
   return object;
