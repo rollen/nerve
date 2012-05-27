@@ -19,7 +19,7 @@ describe('HttpUrlParamsExtractor', function(){
   });
 
   describe('.extract', function(){
-    xit('should extract the params based on the standard template', function(){
+    it('should extract the params based on the standard template', function(){
       var template = '/jobs/:id';
       var system_under_test = httpUrlParamsExtractorService(template); 
       var expected_hash_string = '{"id":"42"}'
@@ -28,7 +28,7 @@ describe('HttpUrlParamsExtractor', function(){
       expect(JSON.stringify(system_under_test.extract(urlstring))).toBe(expected_hash_string);
     });
 
-    xit('should return empty if just given a slash', function(){
+    it('should return empty if just given a slash', function(){
       var template = '/';
       var system_under_test = httpUrlParamsExtractorService(template); 
       var expected_hash_string = '{}'
@@ -37,7 +37,7 @@ describe('HttpUrlParamsExtractor', function(){
       expect(JSON.stringify(system_under_test.extract(urlstring))).toBe(expected_hash_string);
     })
 
-    xit('should throw an error if the urlstring is invalid', function(){
+    it('should throw an error if the urlstring is invalid', function(){
       var template = '/jobs/:id';
       var system_under_test = httpUrlParamsExtractorService(template); 
       var expected_hash_string = '{}'
@@ -46,7 +46,7 @@ describe('HttpUrlParamsExtractor', function(){
       expect(function(){system_under_test.extract(urlstring)}).toThrow(new Error('Invalid pathstring /user/:id to match template /jobs/:id template part "jobs" did not match urlpart "user"'));
     });
 
-    xit('should get params based on url options', function(){
+    it('should get params based on url options', function(){
       var template = '/job/:id';
       var system_under_test = httpUrlParamsExtractorService(template); 
       var urlstring = '/job/24?name=rollen&age=26';
