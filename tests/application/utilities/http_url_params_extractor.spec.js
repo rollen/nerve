@@ -1,10 +1,27 @@
-require('./../../spec_helper.js');
+var nervex = require("./../../spec_helper").nervex;
 
 describe('HttpUrlParamsExtractor', function(){
+  var httpParamsExtractorService,
+  inject,
+  injector;
+
+  beforeEach(function(){
+    var _nervex = nervex.nerve();
+    _nervex.loadfiles();
+    inject = _nervex.inject;
+    injector = _nervex.injector;
+  });
+
+  beforeEach(function(){
+    inject(function($httpUrlParamsExtractorService){
+      httpUrlParamsExtractorService = $httpUrlParamsExtractorService;
+    })();
+  });
+
   describe('.extract', function(){
     it('should extract the params based on the standard template', function(){
       var template = '/jobs/:id';
-      var system_under_test = HttpUrlParamsExtractor(template); 
+      var system_under_test = httpUrlParamsExtractorService(template); 
       var expected_hash_string = '{"id":"42"}'
       var urlstring = '/jobs/42';
 
@@ -13,7 +30,7 @@ describe('HttpUrlParamsExtractor', function(){
 
     it('should return empty if just given a slash', function(){
       var template = '/';
-      var system_under_test = HttpUrlParamsExtractor(template); 
+      var system_under_test = httpUrlParamsExtractorService(template); 
       var expected_hash_string = '{}'
       var urlstring = '/';
 
@@ -22,7 +39,7 @@ describe('HttpUrlParamsExtractor', function(){
 
     it('should throw an error if the urlstring is invalid', function(){
       var template = '/jobs/:id';
-      var system_under_test = HttpUrlParamsExtractor(template); 
+      var system_under_test = httpUrlParamsExtractorService(template); 
       var expected_hash_string = '{}'
       var urlstring = '/user/:id';
 
@@ -31,7 +48,7 @@ describe('HttpUrlParamsExtractor', function(){
 
     it('should get params based on url options', function(){
       var template = '/job/:id';
-      var system_under_test = HttpUrlParamsExtractor(template); 
+      var system_under_test = httpUrlParamsExtractorService(template); 
       var urlstring = '/job/24?name=rollen&age=26';
       var expected_hash_string = '{"id":"24","name":"rollen","age":"26"}'
 

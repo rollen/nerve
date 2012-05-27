@@ -126,7 +126,8 @@ describe('Injector', function(){
     it("registers the service", function(){
       var func = function House(){} 
       injector.service(func);
-      expect(injector.factories['house'].$get).toBe(func);
+      // Law violation here
+      expect(injector.factories['house'].object.$get).toBe(func);
     });
   });
 
@@ -253,7 +254,7 @@ describe('Injector', function(){
 
       injector.patch('params', function(params, done){
         params.name = 'patched';
-        done($params);
+        done(params);
       });
     });
 

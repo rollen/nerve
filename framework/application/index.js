@@ -13,4 +13,6 @@ exports.RegexRouteMatcher = require('./utilities/matchers/regex_route_matcher');
 exports.FileInfo = require('./utilities/newables/file_info');
 exports.AssetUrlInfo = require('./utilities/newables/asset_url_info');
 exports.Path = require('./utilities/configurables/path');
+exports.HttpUrlParamsExtractor = require('./utilities/http_url_params_extractor');
+exports.Params = require('./services/params');
 

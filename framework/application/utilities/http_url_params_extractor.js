@@ -1,4 +1,4 @@
-HttpUrlParamsExtractor = function(template){
+function HttpUrlParamsExtractor(template){
   var object = {};
 
   function parsePath(pathstring){
@@ -58,5 +58,9 @@ HttpUrlParamsExtractor = function(template){
 
     return combinehashes(pathhash, paramshash);
   }
+  object.combinehashes = combinehashes;
   return object;
 }
+
+module.exports = HttpUrlParamsExtractor;
+

@@ -13,6 +13,7 @@ function Nervex(request, response, filesystem){
     _injector.service(nervex.Application.ErrorsController);
     _injector.service(nervex.Application.TestsController);
     _injector.service(nervex.Application.HttpFileResponseWriter);
+    _injector.service(nervex.Application.HttpUrlParamsExtractor);
     _injector.service(nervex.Application.FileInfo);
     _injector.service(nervex.Server.PostData);
     _injector.service(nervex.Application.AssetUrlInfo);
@@ -22,7 +23,9 @@ function Nervex(request, response, filesystem){
     _injector.constant('request', nervex.Server.Request);
     _injector.constant('response', nervex.Server.Response);
     _injector.constant('filesystem', require('fs'));
+    _injector.constant('json', JSON);
     _injector.constant('injector', _injector);
+    _injector.service(nervex.Application.Params);
     return _injector;
   }
   object.bootstrap = function(){

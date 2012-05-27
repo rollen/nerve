@@ -95,7 +95,7 @@ function Injector(name){
   }
 
   object.factory = function(func){
-    var name = normalize(object.functionName(func))
+    var name = object.functionName(func)
     if(factory_already_exists(name)){
       throw new Error('Injector: Factory ' + name + ' has already been defined');
     };
@@ -103,7 +103,7 @@ function Injector(name){
   }
 
   object.service = function(func){
-    var name = normalize(object.functionName(func))
+    var name = object.functionName(func);
     var factory = function(){
       var object = {};
       object.$get = func;
@@ -128,7 +128,8 @@ function Injector(name){
     object.register(name, factory);
   }
 
-  object.register = function(name, factory){
+  object.register = function(unnormalizedName, factory){
+    var name = normalize(unnormalizedName);
     object.factories[name] = { 
       'object':factory(),
       'patches':[]
@@ -145,27 +146,59 @@ function Injector(name){
     return name.match(/Service$/);
   }
 
-  function getFactory(factoryname){
+  function getFactory(name){
+    var factoryname = normalize(name);
     var factory = object.factories[factoryname];
     if(factory === undefined){
-      throw new Error('Injector: ' + factoryname+ ' has not been registered');
+      throw new Error('Injector: ' + factoryname + ' has not been registered');
     }
-    return factory.object;
+    return factory;
+  }
+
+  function getFactoryObject(objectname){
+    return getFactory(objectname).object;
+  }
+
+  function getFactoryPatches(objectname){
+    return getFactory(objectname).patches;
+  }
+
+
+  function attemptPatch(patches, constructedobject, onAllPatchesApplied){
+    var currentPatch = -1;      
+    function onPatchComplete(patchedObject){
+      currentPatch++;
+      if(currentPatch === patches.length){
+        onAllPatchesApplied(patchedObject);
+      } else {
+        patches[currentPatch](patchedObject, onPatchComplete);
+      }
+    }
+    if(patches.length == 0){
+      onAllPatchesApplied(constructedobject);
+    }else{
+      onPatchComplete(constructedobject);
+    }
+  }
+
+  function constructObject(objectname){
+    var constructedobject = '';
+    if(isFactoryName(objectname)){
+      constructedobject = getFactoryObject(objectname);
+    }else if(isServiceName(objectname)){
+      constructedobject = getFactoryObject(objectname).$get;
+    }else{
+      initObjectFromInjector(objectname, function(arguments){
+        constructedobject = getFactoryObject(objectname).$get.apply(undefined, arguments); 
+      });
+    }
+    return constructedobject;
   }
 
   object.instantiate = function(objectname, onInstantiated){
-    var normalizedName = normalize(objectname);
-    var constructedobject = '';
-    if(isFactoryName(objectname)){
-      constructedobject = getFactory(normalizedName);
-    }else if(isServiceName(objectname)){
-      constructedobject = getFactory(normalizedName).$get;
-    }else{
-      initObjectFromInjector(normalizedName, function(arguments){
-        constructedobject = getFactory(normalizedName).$get.apply(undefined, arguments); 
-      });
-    }
-    onInstantiated(constructedobject, objectname);
+    attemptPatch(getFactoryPatches(objectname), constructObject(objectname), function(patchedobject){
+      onInstantiated(patchedobject, objectname);            
+    });
   }
 
 
@@ -179,8 +212,7 @@ function Injector(name){
 
 
   object.dependencies = function(objectname){
-    var factoryname = normalize(objectname);
-    var factory = getFactory(factoryname).$get;
+    var factory = getFactoryObject(objectname).$get;
     return argumentList(factory);
   }
 
@@ -225,8 +257,8 @@ function Injector(name){
     object.register(name, factory);
   }
 
-  object.patch = function(){
-    factory = get
+  object.patch = function(name, func){
+    getFactoryPatches(name).push(func);
   }
 
   object.normalize = normalize;
