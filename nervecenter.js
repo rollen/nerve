@@ -27,11 +27,19 @@ function Nervex(request, response, fs){
     _injector.constant('request', nervex.Server.Request);
     _injector.constant('response', nervex.Server.Response);
     _injector.constant('fs', require('fs'));
+    _injector.constant('path', require('path'));
+    _injector.constant('console', console);
+    _injector.constant('buffer', require('buffer'));
     _injector.constant('json', JSON);
     _injector.constant('injector', _injector);
     _injector.service(nervex.Application.Params);
     return _injector;
   }
+
+  object.configurenodeapi = function(){
+  
+  }
+
   object.bootstrap = function(){
     object.loadfiles();
     object.configure();
