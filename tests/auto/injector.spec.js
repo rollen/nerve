@@ -55,7 +55,7 @@ describe('Injector', function(){
       expect(function(){ injector.instantiate('BedRoom', function(){}) }).toThrow(new Error('Injector: bedroom has not been registered'));
     });
 
-    xit('instantiates an object', function(){
+    it('instantiates an object', function(){
       var kitchen;
       injector.instantiate('Kitchen', function($kitchen, name){
         kitchen = $kitchen;
@@ -90,6 +90,12 @@ describe('Injector', function(){
       });
 
       expect(houseService.name).toBe('House');
+    });
+
+    it('should return a raw class', function(){
+      injector.instantiate('HouseClass', function($class){
+        expect($class).toBe(func);
+      });
     });
   });
 

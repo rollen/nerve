@@ -89,6 +89,7 @@ function Injector(name){
     var tempstring = unNormalizedString;
     tempstring = stripWordFromEndOfString(tempstring, '(F|f)actory');
     tempstring = stripWordFromEndOfString(tempstring, '(S|f)ervice');
+    tempstring = stripWordFromEndOfString(tempstring, '(C|c)lass');
     tempstring = makeStringLowerCase(tempstring);
     tempstring = stripDollarSignFromFrontOfString(tempstring);
     return tempstring;
@@ -132,12 +133,16 @@ function Injector(name){
     var name = normalize(unnormalizedName);
     object.factories[name] = { 
       'object':factory(),
+      'class':factory,
       'patches':[]
     };
   }
 
 
 
+  function isClassName(name){
+    return name.match(/Class$/);
+  }
   function isFactoryName(name){
     return name.match(/Factory$/);
   }
@@ -163,6 +168,9 @@ function Injector(name){
     return getFactory(objectname).patches;
   }
 
+  function getFactoryClass(objectname){
+    return getFactory(objectname).class;
+  }
 
   function attemptPatch(patches, constructedobject, onAllPatchesApplied){
     var currentPatch = -1;      
@@ -187,6 +195,8 @@ function Injector(name){
       constructedobject = getFactoryObject(objectname);
     }else if(isServiceName(objectname)){
       constructedobject = getFactoryObject(objectname).$get;
+    }else if(isClassName(objectname)){
+      constructedobject = getFactoryClass(objectname);
     }else{
       initObjectFromInjector(objectname, function(arguments){
         constructedobject = getFactoryObject(objectname).$get.apply(undefined, arguments); 
