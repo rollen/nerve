@@ -2,7 +2,7 @@ var nervex = require('./framework/index.js');
 
 function Nervex(request, response, filesystem){
   var object = {};
-  _injector = nervex.Injector();
+  _injector = nervex.Auto.Injector();
 
   object.loadfiles = function(){
     _injector.service(nervex.Application.Application);
