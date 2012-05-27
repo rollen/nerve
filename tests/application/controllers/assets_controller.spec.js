@@ -9,7 +9,7 @@ describe('AssetsController', function(){
   fileInfo,
   inject,
   injector,
-  path,
+  folderpath,
   assetsController;
 
   beforeEach(function(){
@@ -26,9 +26,9 @@ describe('AssetsController', function(){
       fileInfo = function(){};
 
       injector(function($injector){
-        $injector.config(function($request, $path, $fileInfo){
-          spyOn($path.$getfilepath(), 'existsSync').andReturn(true);
-          $path.$folder('views', '/app/client/js');
+        $injector.config(function($request, $folderpath, $fileInfo){
+          spyOn($folderpath.$getfilepath(), 'existsSync').andReturn(true);
+          $folderpath.$folder('views', '/app/client/js');
           spyOn($request, '$get').andReturn({url:'/lib/assets/js/file.js'});
           spyOn($fileInfo, '$get').andReturn(fileInfo);
         });
@@ -37,13 +37,13 @@ describe('AssetsController', function(){
       inject(function($assetsControllerService
                       ,$request
                       ,$httpFileResponseWriter
-                      ,$path
+                      ,$folderpath
                       ,$assetUrlInfoService
                       ,$fileInfoService
                      ){
         assetsController = $assetsControllerService($request,
                                                    $httpFileResponseWriter,
-                                                   $path,
+                                                   $folderpath,
                                                    $assetUrlInfoService,
                                                    $fileInfoService
                                                   );

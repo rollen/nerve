@@ -18,7 +18,7 @@ function Nervex(request, response, fs){
     _injector.service(nervex.Server.PostData);
     _injector.service(nervex.Application.AssetUrlInfo);
     _injector.factory(nervex.Application.Router);
-    _injector.factory(nervex.Application.Path);
+    _injector.factory(nervex.Application.Folderpath);
     _injector.service(nervex.Server.Server);
   }
 
@@ -46,7 +46,7 @@ function Nervex(request, response, fs){
 
   object.configure = function(){
     _injector.config(nervex.Config.Router);
-    _injector.config(nervex.Config.Path);
+    _injector.config(nervex.Config.Folderpath);
 
     if(request) _injector.constant('request', request);
     if(response) _injector.constant('response', response);

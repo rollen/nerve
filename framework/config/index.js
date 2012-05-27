@@ -1,2 +1,2 @@
 exports.Router = require('./router');
-exports.Path= require('./path');
+exports.Folderpath = require('./folderpath');
