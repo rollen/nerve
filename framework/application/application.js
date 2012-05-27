@@ -1,9 +1,8 @@
-function Application(request, response, router, injector){
+function Application(request, router, injector){
   var object = {};
 
-  object.executeRequest = function(postparams){
+  object.executeRequest = function(){
     var info= router.route(request.url, request.method); 
-    injector.constant('postparams', postparams);
     injector.instantiate(info.controller,
                          object.onControllerCreated(info.action));
   }

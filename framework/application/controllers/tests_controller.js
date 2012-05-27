@@ -1,8 +1,9 @@
-function TestsController(response, postparams){
+function TestsController(response, params){
   var object = {};
   object.create = function(){
     response.writeHead(200, {"Content-Type": "application/json"});
-    response.write(JSON.stringify(postparams));
+    console.log(params);
+    response.write(JSON.stringify(params));
     response.end();
   }
   return object;

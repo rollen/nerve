@@ -10,13 +10,13 @@ describe('post.spec.js', function(){
 
     describe("When I send a post request to the controllers endpoint", function(){
       beforeEach(function(){
-        response = browser.post('/tests', {"name":"rollen"});
+        response = browser.post('/tests?age=26&syle=ninjitsu', {"name":"rollen"});
       });
 
       describe("Then the response should be the params of the post", function(){
         context("response", function(){
           it('should have the json contents', function(){
-            expect(response._body).toBe('{"name":"rollen"}');
+            expect(response._body).toBe('{"age":"26","syle":"ninjitsu","name":"rollen"}');
           });
         });
       });

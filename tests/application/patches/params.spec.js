@@ -1,6 +1,6 @@
 var nervex = require('./../../spec_helper').nervex;
 
-xdescribe('params', function(){
+describe('params', function(){
   var params,
   inject,
   injector;
@@ -8,6 +8,7 @@ xdescribe('params', function(){
   beforeEach(function(){
     var _nervex = nervex.nerve();
     _nervex.loadfiles();
+    _nervex.patches();
     inject = _nervex.inject;
     injector = _nervex.injector;
   });
@@ -18,9 +19,9 @@ xdescribe('params', function(){
     request.datastring = '{"name":"rollen"}';
 
     injector(function($injector){
-      $injector.constant('request', Request('/users/rollen'));
+      $injector.constant('request', request);
       $injector.config(function($router){
-        $router.post('/users/rollen');
+        $router.post('/users/rollen', 'UsersController', 'index');
       });
     });
 

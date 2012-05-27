@@ -31,7 +31,13 @@ function Nervex(request, response, filesystem){
   object.bootstrap = function(){
     object.loadfiles();
     object.configure();
+    object.patches();
     return _injector;
+  }
+
+
+  object.patches = function(){
+    _injector.patch('params', nervex.Patches.Params);
   }
 
   object.configure = function(){

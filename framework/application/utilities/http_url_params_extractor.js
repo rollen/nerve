@@ -53,7 +53,7 @@ function HttpUrlParamsExtractor(template){
       paramshash = parseOptions(match[2]);
     } else {
       pathhash =  parsePath(urlstring);
-      paramshash = parseOptions(urlstring);
+      paramshash = {};
     }
 
     return combinehashes(pathhash, paramshash);
