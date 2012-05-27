@@ -1,10 +1,10 @@
 var nervex = require('./framework/index.js');
 
-function Nervex(request, response, filesystem){
+function Nervex(request, response, fs){
   var object = {};
   _injector = nervex.Auto.Injector();
 
-  object.loadfiles = function(){
+  function loadFrameworkFiles(){
     _injector.service(nervex.Application.Application);
     _injector.service(nervex.Application.RegexRouteMatcher);
     _injector.service(nervex.Application.StandardRouteMatcher);
@@ -20,9 +20,13 @@ function Nervex(request, response, filesystem){
     _injector.factory(nervex.Application.Router);
     _injector.factory(nervex.Application.Path);
     _injector.service(nervex.Server.Server);
+  }
+
+  object.loadfiles = function(){
+    loadFrameworkFiles();
     _injector.constant('request', nervex.Server.Request);
     _injector.constant('response', nervex.Server.Response);
-    _injector.constant('filesystem', require('fs'));
+    _injector.constant('fs', require('fs'));
     _injector.constant('json', JSON);
     _injector.constant('injector', _injector);
     _injector.service(nervex.Application.Params);
@@ -46,7 +50,7 @@ function Nervex(request, response, filesystem){
 
     if(request) _injector.constant('request', request);
     if(response) _injector.constant('response', response);
-    if(filesystem) _injector.constant('filesystem', filesystem);
+    if(fs) _injector.constant('fs', fs);
   }
 
   object.inject = function inject(func){

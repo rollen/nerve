@@ -1,4 +1,4 @@
-function HttpFileResponseWriter(response, filesystem){
+function HttpFileResponseWriter(response, fs){
   var object = {};
 
   object.onFileRead = function(fileInfo){
@@ -15,7 +15,7 @@ function HttpFileResponseWriter(response, filesystem){
   }
 
   function writeToResponseAndEnd(fileInfo){
-    filesystem.readFile(fileInfo.path(), fileInfo.encoding(), object.onFileRead(fileInfo));
+    fs.readFile(fileInfo.path(), fileInfo.encoding(), object.onFileRead(fileInfo));
   }
 
   // public functions

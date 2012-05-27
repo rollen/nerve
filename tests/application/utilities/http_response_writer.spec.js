@@ -1,7 +1,7 @@
 var nervex = require("./../../spec_helper").nervex;
 
 describe('HttpFileResponseWriter', function(){
-  var filesystem,
+  var fs,
   httpFileResponseWriter,
   fileInfoService,
   fileInfo,
@@ -19,12 +19,12 @@ describe('HttpFileResponseWriter', function(){
 
 
   beforeEach(function(){
-    filesystem = new SyncFS(require('fs'));
+    fs = new SyncFS(require('fs'));
     response = jasmine.createSpyObj('response', ['writeHead', 'write', 'end']);
 
     injector(function($injector){
       $injector.constant('response', response);
-      $injector.constant('filesystem', filesystem);
+      $injector.constant('fs', fs);
     });
 
     inject(function($httpFileResponseWriter, $fileInfoService){
@@ -35,7 +35,7 @@ describe('HttpFileResponseWriter', function(){
   });
 
   afterEach(function(){
-    filesystem = undefined;
+    fs = undefined;
     folderpath = undefined;
     httpFileResponseWriter = undefined;
     filename = undefined;
@@ -44,14 +44,14 @@ describe('HttpFileResponseWriter', function(){
 
   describe('writeToResponseAndEnd', function(){
     it('should attempt to read the file with the correct folderpath, mimetype, callback', function(){
-      spyOn(filesystem, 'readFile');
+      spyOn(fs, 'readFile');
       var callback = jasmine.createSpy('callback');
       var onFileRead = jasmine.createSpy('onFileRead').andReturn(callback);
       httpFileResponseWriter.onFileRead = onFileRead;
 
 
       httpFileResponseWriter.writeToResponseAndEnd(fileInfo);
-      expect(filesystem.readFile).toHaveBeenCalledWith('/tmp/runner.html', 'utf8', callback);
+      expect(fs.readFile).toHaveBeenCalledWith('/tmp/runner.html', 'utf8', callback);
     });
 
   });
