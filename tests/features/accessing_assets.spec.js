@@ -11,7 +11,7 @@ describe ("accessing_assets.spec.js", function(){
 
     describe("When I visit a the angular-scenario page", function(){
       beforeEach(function(){
-        response = browser.visit('/assets/angular-scenario.js');
+        response = browser.visit('/assets/angular/angular-scenario.js');
       });
 
       describe('Then I should see the file specified by the asset', function(){
@@ -23,7 +23,7 @@ describe ("accessing_assets.spec.js", function(){
 
     xdescribe("When I visit a the angular page", function(){
       beforeEach(function(){
-        this.response = this.browser.visit('/assets/angular.js');
+        this.response = this.browser.visit('/assets/angular/angular.js');
       });
 
       describe('Then I should see the file specified by the asset', function(){
