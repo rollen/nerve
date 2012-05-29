@@ -1,16 +1,16 @@
 function Folderpath(){
   var object = {},
   folders = {},
-  filepath = require('fs');
-  path = require('path');
+  filepath = require('path');
+ // path = require('path');
 
-  object.$path = function(){
-    return path;
-  }
+  //object.$path = function(){
+  //  return path;
+  //}
 
-  object.$setPath = function(_path){
-    path = _path;
-  }
+ // object.$setPath = function(_path){
+ //   path = _path;
+ // }
 
   object.$filepath = function(_filepath){
     filepath = _filepath;
@@ -21,7 +21,7 @@ function Folderpath(){
   }
 
   object.$resolve = function(arg1, arg2){
-    return object.$path().resolve(arg1, arg2);
+    return filepath.resolve(arg1, arg2);
   }
 
   object.$folder = function(alias, location){
@@ -59,7 +59,7 @@ function Folderpath(){
     }
 
     o.join = function(first, second){
-      return path.join(first, second);      
+      return filepath.join(first, second);      
     }
     return o;
   }

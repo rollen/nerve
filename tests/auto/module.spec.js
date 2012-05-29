@@ -1,6 +1,6 @@
 var nervex = require("./../spec_helper").nervex;
 
-describe('Module', function(){
+xdescribe('Module', function(){
   var module,
   func,
   dependency;
