@@ -2,15 +2,6 @@ function Folderpath(){
   var object = {},
   folders = {},
   filepath = require('path');
- // path = require('path');
-
-  //object.$path = function(){
-  //  return path;
-  //}
-
- // object.$setPath = function(_path){
- //   path = _path;
- // }
 
   object.$filepath = function(_filepath){
     filepath = _filepath;
