@@ -1,4 +1,4 @@
-function Server(request, application){
+function Server(request, application, console){
   var object = {};
 
   object.run = function(){

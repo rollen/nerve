@@ -3,6 +3,7 @@ var nervex = require("./../spec_helper").nervex;
 describe('Server', function(){
   var server,
   application,
+  console,
   inject,
   injector,
   request;
@@ -16,8 +17,8 @@ describe('Server', function(){
 
 
   beforeEach(function(){
-    request = new Request();
-
+    request = Request('/users/rollen');
+    request.method = 'GET';
 
     injector(function($injector){
       $injector.config(function($request){
@@ -28,13 +29,17 @@ describe('Server', function(){
     inject(function($serverService, $request, $application ){
       application = $application;
       spyOn(application, 'executeRequest');
-      server = $serverService($request, $application);
+
+      console = jasmine.createSpyObj('console', ['log']);
+
+      server = $serverService($request, $application, console);
     })();
   });
   
   describe('run', function(){
     it('logs the request', function(){
-
+      server.run();
+      expect(console.log).toHaveBeenCalledWith('attempting to route to /users/rollen with method GET');
     });
 
     it('runs the application', function(){

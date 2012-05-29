@@ -1,1 +1,1 @@
-guard: jasmine-node
+web: node app.js
