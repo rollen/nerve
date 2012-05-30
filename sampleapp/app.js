@@ -1,5 +1,5 @@
 var http = require('http');
-var nerve = require('./nervecenter.js').nerve;
+var nerve = require('./nervex').nerve;
 
 var port = process.env.PORT || 8888;
 
