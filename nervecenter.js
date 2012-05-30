@@ -36,17 +36,36 @@ function Nervex(request, response, fs){
     return _injector;
   }
 
-  object.configurenodeapi = function(){
-  
-  }
-
-  object.bootstrap = function(){
+  function bootstrapFramework(){
     object.loadfiles();
     object.configure();
     object.patches();
+  }
+  
+  function bootstrapApp(app){
+    if(app){
+      object.loadApplicationControllers(app.Controllers);
+      object.loadApplicationConfiguration(app.Configurables);
+    }
+  }
+
+  object.bootstrap = function(app){
+    bootstrapFramework();
+    bootstrapApp(app);
     return _injector;
   }
 
+  object.loadApplicationControllers = function(controllers){
+    for(key in controllers){
+      _injector.service(controllers[key]);
+    }
+  }
+
+  object.loadApplicationConfiguration = function(configs){
+    for(key in configs){
+      _injector.config(configs[key]);
+    }
+  }
 
   object.patches = function(){
     _injector.patch('params', nervex.Patches.Params);
