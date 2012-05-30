@@ -1,1 +1,1 @@
-web: node sampleapp/app.js
+web: sampleapp/start.sh
