@@ -1,1 +1,1 @@
-web: sampleapp/start.sh
+web: ./sampleapp/start.sh
