@@ -1,6 +1,6 @@
 var nervex = require("./../../../spec_helper").nervex;
 
-describe('Path', function(){
+describe('FolderPath', function(){
   var injector,
   instance,
   inject,
@@ -21,7 +21,6 @@ describe('Path', function(){
         folderpath = $folderpath;
       });
     });
-
     folderpath.$filepath(filepath);
   });
 
@@ -58,7 +57,6 @@ describe('Path', function(){
         expect(instance.filepath('views')).toBe($folderpath.filepath('views'));
       });
     });
-
 
     describe('.filepath', function(){
       it('returns a copy of the filepath', function(){

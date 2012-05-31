@@ -17,8 +17,6 @@ function Nervex(request, response, fs){
     _injector.service(nervex.Application.FileInfo);
     _injector.service(nervex.Server.PostData);
     _injector.service(nervex.Application.AssetUrlInfo);
-    _injector.factory(nervex.Application.Router);
-    _injector.factory(nervex.Application.Folderpath);
     _injector.service(nervex.Server.Server);
   }
 
@@ -33,6 +31,7 @@ function Nervex(request, response, fs){
     _injector.constant('json', JSON);
     _injector.constant('injector', _injector);
     _injector.service(nervex.Application.Params);
+    object.load(nervex.Application.Configurables, _injector.factory);
     return _injector;
   }
 
@@ -44,8 +43,8 @@ function Nervex(request, response, fs){
   
   function bootstrapApp(app){
     if(app){
-      object.loadApplicationControllers(app.Controllers);
-      object.loadApplicationConfiguration(app.Configurables);
+      object.load(app.Controllers, object.service);
+      object.load(app.Configuration, object.config);
     }
   }
 
@@ -55,15 +54,9 @@ function Nervex(request, response, fs){
     return _injector;
   }
 
-  object.loadApplicationControllers = function(controllers){
-    for(key in controllers){
-      _injector.service(controllers[key]);
-    }
-  }
-
-  object.loadApplicationConfiguration = function(configs){
-    for(key in configs){
-      _injector.config(configs[key]);
+  object.load = function(collection, callback){
+    for(key in collection){
+      callback(collection[key]);
     }
   }
 
@@ -72,8 +65,7 @@ function Nervex(request, response, fs){
   }
 
   object.configure = function(){
-    _injector.config(nervex.Config.Router);
-    _injector.config(nervex.Config.Folderpath);
+    object.load(nervex.Config, _injector.config);
 
     if(request) _injector.constant('request', request);
     if(response) _injector.constant('response', response);
