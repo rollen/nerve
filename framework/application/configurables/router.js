@@ -43,7 +43,7 @@ function Router(){
     defaultController = params;
   }
 
-  o.$get = function Router(){
+  o.$get = function Router(console){
     var object = {};
 
     object.route = function(path, method){
@@ -52,6 +52,10 @@ function Router(){
         controllerInfo = routes[i].match(path, method);
         if(controllerInfo) break;
       }
+      console.log('Routing controller:' 
+                  + controllerInfo.controller 
+                  + ' action:' 
+                  + controllerInfo.action);
       return controllerInfo ? controllerInfo : defaultControllerInfo;
     }
 

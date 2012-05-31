@@ -3,6 +3,7 @@ var nervex = require('./../../spec_helper').nervex;
 describe( 'Router' , function(){
   var router,
   inject,
+  console,
   injector;
 
   beforeEach(function(){
@@ -21,6 +22,9 @@ describe( 'Router' , function(){
         $router.del('/home', 'LoginController', 'create');
         $router.put('/home', 'LoginController', 'create');
       });
+      console = jasmine.createSpyObj('console', ['log']);
+
+      $injector.constant('console', console);
     });
 
     inject(function($router){
@@ -31,8 +35,13 @@ describe( 'Router' , function(){
   describe('.route', function(){
     it('should return the controller name and action', function(){
       expect(router.route('/home', 'GET')).toBeTruthy();
+      expect(console.log).
+        toHaveBeenCalledWith('Routing controller:AppController action:index');
+
       expect(router.route('/home', 'GET').controller).toBe('AppController');
       expect(router.route('/home', 'GET').action).toBe('index');
+
+
     });
 
     it('should return the default controller params is no match is found', function(){
