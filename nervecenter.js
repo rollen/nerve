@@ -15,8 +15,8 @@ function Nervex(request, response, fs){
     _injector.service(nervex.Application.HttpFileResponseWriter);
     _injector.service(nervex.Application.HttpUrlParamsExtractor);
     _injector.service(nervex.Application.FileInfo);
-    _injector.service(nervex.Server.PostData);
     _injector.service(nervex.Application.AssetUrlInfo);
+    _injector.service(nervex.Server.PostData);
     _injector.service(nervex.Server.Server);
   }
 
@@ -48,6 +48,10 @@ function Nervex(request, response, fs){
     }
   }
 
+  object.patches = function(){
+    _injector.patch('params', nervex.Patches.Params);
+  }
+
   object.bootstrap = function(app){
     bootstrapFramework();
     bootstrapApp(app);
@@ -60,9 +64,6 @@ function Nervex(request, response, fs){
     }
   }
 
-  object.patches = function(){
-    _injector.patch('params', nervex.Patches.Params);
-  }
 
   object.configure = function(){
     object.load(nervex.Config, _injector.config);

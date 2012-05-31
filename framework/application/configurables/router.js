@@ -1,6 +1,6 @@
-var StandardRouteMatcher = require('./../matchers/standard_route_matcher');
-var RegexRouteMatcher = require('./../matchers/regex_route_matcher');
-var HttpRoute = require('./../http_route');
+var StandardRouteMatcher = require('./../utilities/matchers/standard_route_matcher');
+var RegexRouteMatcher = require('./../utilities/matchers/regex_route_matcher');
+var HttpRoute = require('./../utilities/http_route');
 
 function Router(){
   var o = {}

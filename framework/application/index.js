@@ -1,6 +1,6 @@
 fs = require('fs');
 
-exports.Configurables = require('./utilities/configurables');
+exports.Configurables = require('./configurables');
 exports.HttpRoute = require('./utilities/http_route');
 exports.HttpFileResponseWriter = require('./utilities/http_response_writer');
 exports.HttpUrlParamsExtractor = require('./utilities/http_url_params_extractor');
