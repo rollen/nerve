@@ -41,8 +41,8 @@ function Nervex(request, response, fs){
   
   function bootstrapApp(app){
     if(app){
-      object.load(app.Controllers, object.service);
-      object.load(app.Configuration, object.config);
+      object.load(app.Controllers, _injector.service);
+      object.load(app.Configuration, _injector.config);
     }
   }
 
