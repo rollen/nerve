@@ -54,7 +54,7 @@ describe('FolderPath', function(){
 
     it('should be injectable', function(){
       inject(function($folderpath){
-        expect(instance.filepath('views')).toBe($folderpath.filepath('views'));
+        expect(instance).toBe($folderpath);
       });
     });
 
