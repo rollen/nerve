@@ -4,6 +4,7 @@ describe('Application', function(){
   var matcher,
   router,
   request,
+  console,
   inject,
   injector,
   application;
@@ -38,8 +39,10 @@ describe('Application', function(){
       inject(function($applicationService, $request, $router){
         router = $router;
 
+        console = jasmine.createSpyObj('console', ['log']);
+
         spyOn(_injector, 'instantiate');
-        application = $applicationService($request, $router, _injector); 
+        application = $applicationService($request, $router, console, _injector); 
       })();
     });
 
@@ -52,6 +55,9 @@ describe('Application', function(){
 
       expect(router.route).
         toHaveBeenCalledWith('/login','GET');
+
+      expect(console.log).
+        toHaveBeenCalledWith('Routing controller:LoginController action:index');
 
       expect(_injector.instantiate).
         toHaveBeenCalledWith('LoginController', AnyFunction);
@@ -66,6 +72,9 @@ describe('Application', function(){
 
       expect(router.route).
         toHaveBeenCalledWith('/login','GET');
+
+      expect(console.log).
+        toHaveBeenCalledWith('Routing controller:ErrorsController action:index');
 
       expect(_injector.instantiate).
         toHaveBeenCalledWith('ErrorsController', AnyFunction);
