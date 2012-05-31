@@ -9,15 +9,13 @@ function Nervex(request, response, fs){
     _injector.service(nervex.Application.RegexRouteMatcher);
     _injector.service(nervex.Application.StandardRouteMatcher);
     _injector.service(nervex.Application.HttpRoute);
-    _injector.service(nervex.Application.AssetsController);
-    _injector.service(nervex.Application.ErrorsController);
-    _injector.service(nervex.Application.TestsController);
     _injector.service(nervex.Application.HttpFileResponseWriter);
     _injector.service(nervex.Application.HttpUrlParamsExtractor);
     _injector.service(nervex.Application.FileInfo);
     _injector.service(nervex.Application.AssetUrlInfo);
     _injector.service(nervex.Server.PostData);
     _injector.service(nervex.Server.Server);
+    object.load(nervex.Application.Controllers, _injector.service);
   }
 
   object.loadfiles = function(){
