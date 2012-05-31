@@ -1,4 +1,4 @@
-var nervex = require("./../../spec_helper").nervex;
+var nervex = require("./../../../spec_helper").nervex;
 
 describe('HttpFileResponseWriter', function(){
   var fs,

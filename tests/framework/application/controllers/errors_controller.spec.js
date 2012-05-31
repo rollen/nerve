@@ -1,5 +1,4 @@
-var nervex = require("./../../spec_helper").nervex;
-require('./../../spec_helper');
+var nervex = require("./../../../spec_helper").nervex;
 
 describe('ErrorsController', function(){
   var request,

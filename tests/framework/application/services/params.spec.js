@@ -1,4 +1,4 @@
-var nervex = require('./../../spec_helper').nervex;
+var nervex = require('./../../../spec_helper').nervex;
 
 describe('Service.params', function(){
   var $params,
