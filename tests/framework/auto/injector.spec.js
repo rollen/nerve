@@ -52,7 +52,7 @@ describe('Injector', function(){
 
     });
 
-    xit('throws an error if it cannot find the dependency mentioned', function(){
+    it('throws an error if it cannot find the dependency mentioned', function(){
       expect(function(){ injector.instantiate('BedRoom', function(){}) }).toThrow(new Error('Injector: bedroom has not been registered'));
     });
 
@@ -66,7 +66,7 @@ describe('Injector', function(){
       expect(function(){ injector.instantiate('FakeProvider', function(){}) }).toThrow(new Error('Injector: FakeProvider does not have a $get method'));
     });
 
-    xit('instantiates an object', function(){
+    it('instantiates an object', function(){
       var kitchen;
       injector.instantiate('Kitchen', function($kitchen, name){
         kitchen = $kitchen;
@@ -75,7 +75,7 @@ describe('Injector', function(){
       expect(kitchen.name()).toBe('I am a Kitchen');
     });
 
-    xit('instantiates an object with the objects dependencies', function(){
+    it('instantiates an object with the objects dependencies', function(){
       var house;
       injector.instantiate('House', function($house, name){
         house = $house;
@@ -86,7 +86,7 @@ describe('Injector', function(){
       expect(house.kitchen.name()).toBe('I am a Kitchen');
     });
 
-    xit('returns the factory if the argument has a Factory at the end', function(){
+    it('returns the factory if the argument has a Factory at the end', function(){
       var houseFactory;
       injector.instantiate('HouseFactory', function($houseFactory, name){
         houseFactory = $houseFactory;
@@ -94,7 +94,7 @@ describe('Injector', function(){
       expect(houseFactory.$get.name).toBe('House');
     });
 
-    xit('returns the $get method if the agument has a Service at the end', function(){
+    it('returns the $get method if the agument has a Service at the end', function(){
       var houseService;
       injector.instantiate('HouseService', function($houseService, name){
         houseService = $houseService;
@@ -103,14 +103,14 @@ describe('Injector', function(){
       expect(houseService.name).toBe('House');
     });
 
-    xit('should return a raw class', function(){
+    it('should return a raw class', function(){
       injector.instantiate('HouseClass', function($class){
         expect($class).toBe(func);
       });
     });
   });
 
-  xdescribe('.normalize', function(){
+  describe('.normalize', function(){
     it('should remove the word Factory from the string', function(){
       expect(injector.normalize('$kitchenFactory')).toBe('kitchen');
     });
@@ -133,13 +133,13 @@ describe('Injector', function(){
     });
   });
 
-  xdescribe('.factory', function(){
+  describe('.factory', function(){
     it("registers the service", function(){
       injector.factory(func);
     });
   });
 
-  xdescribe('.service', function(){
+  describe('.service', function(){
     it("registers the service", function(){
       var func = function House(){} 
       injector.service(func);
@@ -149,7 +149,7 @@ describe('Injector', function(){
   });
 
 
-  xdescribe('.invoke', function(){
+  describe('.invoke', function(){
     beforeEach(function(){
       injector.factory(func);
       injector.factory(dependency);
@@ -174,7 +174,7 @@ describe('Injector', function(){
     });
   });
 
-  xdescribe('.dependencies', function(){
+  describe('.dependencies', function(){
     it('should return the list of arguments in an array', function(){
       function House() {
         var object = {};
@@ -200,7 +200,7 @@ describe('Injector', function(){
     });
   });
 
-  xdescribe('.functionName()', function(){
+  describe('.functionName()', function(){
     beforeEach(function(){
     });
     it('should gets the names of the funciton', function(){
@@ -218,7 +218,7 @@ describe('Injector', function(){
     });
   });
 
-  xdescribe('.config()', function(){
+  describe('.config()', function(){
     it('should get factories without the need for the factory keyword', function(){
       injector.factory(func);
       injector.config(function($house){
@@ -229,7 +229,7 @@ describe('Injector', function(){
     });
   });
 
-  xdescribe('.constant()', function(){
+  describe('.constant()', function(){
     var request,
     instance;
     beforeEach(function(){
@@ -255,14 +255,14 @@ describe('Injector', function(){
     });
   });
 
-  xdescribe('.registerService()', function(){
+  describe('.registerService()', function(){
     it('should throw and error if the second argument is not a funciton', function(){
       expect(function(){injector.registerService('name', {})}).
         toThrow(new Error('Expected function got [object Object]'));
     });
   });
 
-  xdescribe('.patch()', function(){
+  describe('.patch()', function(){
     beforeEach(function(){
       injector.service(function params(){
         var hash = {'name':'unpatched'};
@@ -282,7 +282,7 @@ describe('Injector', function(){
     });
   });
 
-  xdescribe('.argumentList()', function(){
+  describe('.argumentList()', function(){
     it('should be able to decipher a single line function', function(){
       function name(a, b, c, d){}
       expect(injector.argumentList(name)).toEqual(['a','b','c','d']);

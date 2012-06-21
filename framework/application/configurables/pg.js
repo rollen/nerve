@@ -8,6 +8,9 @@ function Pg(constring){
     return constring;
   }
 
+  object.$get = function(){
+  }
+
   return object;
 }
 

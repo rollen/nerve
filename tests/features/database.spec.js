@@ -15,7 +15,10 @@ describe ("database.spec.js", function(){
 
       Then("it should connect to the database", function(){
         var connection = function() { 
-          injector.invoke(function($pg){ postgres = $pg }) 
+          injector.invoke(function($pg){ 
+            console.log($pg);
+            postgres = $pg 
+          });
         };
         expect(connection).toThrow(new Error());
         expect(postgres).toBeDefined();
