@@ -13,11 +13,13 @@ describe('PgFactory', function(){
   });
 
   beforeEach(function(){
-    injector.config(function($pg){
-      instance = $pg;
+    injector(function($injector){
+      $injector.config(function($pg){
+        instance = $pg;
+      });
     });
   });
-  
+
   describe("connectionString", function(){
     it("sets the connectionString", function(){
       var string = "tcp://localhost";

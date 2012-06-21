@@ -1,0 +1,146 @@
+{ Folderpath: [Function: Folderpath],
+  Pg: [Function: Pg],
+  Router: [Function: Router] }
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+[32m.[0m<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+factories
+{ application: 
+   { object: { '$get': [Function: Application] },
+     class: [Function],
+     patches: [] },
+  regexroutematcher: 
+   { object: { '$get': [Function: RegexRouteMatcher] },
+     class: [Function],
+     patches: [] },
+  standardroutematcher: 
+   { object: { '$get': [Function: StandardRouteMatcher] },
+     class: [Function],
+     patches: [] },
+  httproute: 
+   { object: { '$get': [Function: HttpRoute] },
+     class: [Function],
+     patches: [] },
+  httpfileresponsewriter: 
+   { object: { '$get': [Function: HttpFileResponseWriter] },
+     class: [Function],
+     patches: [] },
+  httpurlparamsextractor: 
+   { object: { '$get': [Function: HttpUrlParamsExtractor] },
+     class: [Function],
+     patches: [] },
+  fileinfo: 
+   { object: { '$get': [Function: FileInfo] },
+     class: [Function],
+     patches: [] },
+  asseturlinfo: 
+   { object: { '$get': [Function: AssetUrlInfo] },
+     class: [Function],
+     patches: [] },
+  postdata: 
+   { object: { '$get': [Function: PostData] },
+     class: [Function],
+     patches: [] },
+  server: 
+   { object: { '$get': [Function: Server] },
+     class: [Function],
+     patches: [] },
+  errorscontroller: 
+   { object: { '$get': [Function: ErrorsController] },
+     class: [Function],
+     patches: [] },
+  assetscontroller: 
+   { object: { '$get': [Function: AssetsController] },
+     class: [Function],
+     patches: [] },
+  testscontroller: 
+   { object: { '$get': [Function: TestsController] },
+     class: [Function],
+     patches: [] },
+  request: 
+   { object: 
+      { val: [Function: Request],
+        '$set': [Function],
+        '$get': [Function] },
+     class: [Function],
+     patches: [] },
+  response: 
+   { object: 
+      { val: [Function: Response],
+        '$set': [Function],
+        '$get': [Function] },
+     class: [Function],
+     patches: [] },
+  fs: 
+   { object: { val: [Object], '$set': [Function], '$get': [Function] },
+     class: [Function],
+     patches: [] },
+  path: 
+   { object: { val: [Object], '$set': [Function], '$get': [Function] },
+     class: [Function],
+     patches: [] },
+  console: 
+   { object: { val: [Object], '$set': [Function], '$get': [Function] },
+     class: [Function],
+     patches: [] },
+  buffer: 
+   { object: { val: [Object], '$set': [Function], '$get': [Function] },
+     class: [Function],
+     patches: [] },
+  json: 
+   { object: { val: {}, '$set': [Function], '$get': [Function] },
+     class: [Function],
+     patches: [] },
+  injector: 
+   { object: { val: [Object], '$set': [Function], '$get': [Function] },
+     class: [Function],
+     patches: [] },
+  params: 
+   { object: { '$get': [Function: Params] },
+     class: [Function],
+     patches: [] },
+  folderpath: 
+   { object: 
+      { '$filepath': [Function],
+        '$getfilepath': [Function],
+        '$resolve': [Function],
+        '$folder': [Function],
+        '$getfolders': [Function],
+        '$get': [Function] },
+     class: [Function: Folderpath],
+     patches: [] },
+  pg: 
+   { object: 
+      { connectionString: [Function],
+        getConnectionString: [Function] },
+     class: [Function: Pg],
+     patches: [] },
+  router: 
+   { object: 
+      { currentroutes: [Function],
+        get: [Function],
+        post: [Function],
+        del: [Function],
+        put: [Function],
+        assets: [Function],
+        template: [Function],
+        defaultController: [Function],
+        '$get': [Function: Router] },
+     class: [Function: Router],
+     patches: [] },
+  kitchen: 
+   { object: { '$get': [Function] },
+     class: [Function: Kitchen],
+     patches: [] },
+  house: 
+   { object: { '$get': [Function: House] },
+     class: [Function: House],
+     patches: [] },
+  fakeprovider: 
+   { object: undefined,
+     class: [Function: FakeProvider],
+     patches: [] } }
+[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m
+
+Finished in 0.021 seconds
+[32m28 tests, 32 assertions, 0 failures
+[0m

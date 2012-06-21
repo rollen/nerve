@@ -1,6 +1,6 @@
 var nerve = require('./../spec_helper').nervex.nerve;
 
-xdescribe ("database.spec.js", function(){
+describe ("database.spec.js", function(){
   Given("A Postgres database Connector", function(){
     var injector,
     postgres;
@@ -14,8 +14,14 @@ xdescribe ("database.spec.js", function(){
       });
 
       Then("it should connect to the database", function(){
-        var connection = function() { injector.inject(function($pg){ postgres = $pg }) };
-        expect(connection).not.toThrow(new Error());
+        var connection = function() { 
+          injector.invoke(function($pg){ postgres = $pg }) 
+        };
+        expect(connection).toThrow(new Error());
+        expect(postgres).toBeDefined();
+
+        var init = function() { postgres.connect() }
+        expect(init).toThrow(new Error());
       });
     });
   });

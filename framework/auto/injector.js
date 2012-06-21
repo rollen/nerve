@@ -189,6 +189,12 @@ function Injector(name){
     }
   }
 
+  function assertConstructor(object, objectname){
+    if(object === undefined){
+      throw new Error('Injector: ' + objectname + ' does not have a $get method');
+    }
+  }
+
   function constructObject(objectname){
     var constructedobject = '';
     if(isFactoryName(objectname)){
@@ -222,8 +228,9 @@ function Injector(name){
 
 
   object.dependencies = function(objectname){
-    var factory = getFactoryObject(objectname).$get;
-    return argumentList(factory);
+    var constructor = getFactoryObject(objectname).$get;
+    assertConstructor(constructor, objectname);
+    return argumentList(constructor);
   }
 
   function argumentList(func){

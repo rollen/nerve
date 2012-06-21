@@ -1,7 +1,6 @@
 fs = require('fs');
 
 exports.Configurables = require('./configurables');
-console.log(exports.Configurables);
 exports.Controllers = require('./controllers'); 
 
 exports.HttpRoute = require('./utilities/http_route');
