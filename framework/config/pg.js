@@ -1,6 +1,5 @@
 function Pg($pg){
-  var object = {};
-  return object;
+  $pg.client(require('pg'));
 }
 
 module.exports = Pg;

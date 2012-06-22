@@ -24,7 +24,26 @@ describe('PgFactory', function(){
     it("sets the connectionString", function(){
       var string = "tcp://localhost";
       instance.connectionString(string);
-      expect(instance.getConnectionString()).toBe(string);
+      expect(instance.connectionString()).toBe(string);
+    });
+  });
+
+  describe("client", function(){
+    it("sets the client", function(){
+      var fakepg = {};
+      fakepg.connect = function(){}
+
+      instance.client(fakepg);
+      expect(instance.client()).toBe(fakepg);
+    });
+  });
+
+  describe('.$get', function(){
+    it('should be injectable', function(){
+      inject(function($pg){
+        expect($pg).toBeDefined();
+      });
     });
   });
 });
+

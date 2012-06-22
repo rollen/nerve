@@ -9,22 +9,18 @@ describe ("database.spec.js", function(){
       beforeEach(function(){
         injector = nerve().bootstrap();
         injector.config(function($pg){
-          $pg.connectionString("tcp://postgres:1234@localhost/postgres"); 
+          $pg.connectionString("tcp://localhost/buildio"); 
         });
       });
 
       Then("it should connect to the database", function(){
-        var connection = function() { 
-          injector.invoke(function($pg){ 
-            console.log($pg);
-            postgres = $pg 
+        runs(function(){
+          injector.invoke(function($pg){
+            expect($pg).toBeDefined();
+            $pg.end();
           });
-        };
-        expect(connection).toThrow(new Error());
-        expect(postgres).toBeDefined();
-
-        var init = function() { postgres.connect() }
-        expect(init).toThrow(new Error());
+          waits(10);
+        });
       });
     });
   });

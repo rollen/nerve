@@ -211,10 +211,22 @@ function Injector(name){
     return constructedobject;
   }
 
+  function isPatchable(objectname){
+    if(isFactoryName(objectname) || isServiceName(objectname) || isClassName(objectname)){
+      return false;
+    }
+    return true;
+  }
+
   object.instantiate = function(objectname, onInstantiated){
-    attemptPatch(getFactoryPatches(objectname), constructObject(objectname), function(patchedobject){
-      onInstantiated(patchedobject, objectname);            
-    });
+    var constructedObject = constructObject(objectname)
+    if(isPatchable(objectname)) {
+      attemptPatch(getFactoryPatches(objectname), constructedObject, function(patchedobject){
+        onInstantiated(patchedobject, objectname);            
+      });
+    } else {
+      onInstantiated(constructedObject, objectname);
+    } 
   }
 
 

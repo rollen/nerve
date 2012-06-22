@@ -48,6 +48,7 @@ function Nervex(request, response, fs){
 
   object.patches = function(){
     _injector.patch('params', nervex.Patches.Params);
+    _injector.patch('pg', nervex.Patches.Pg);
   }
 
   object.bootstrap = function(app){
@@ -64,6 +65,7 @@ function Nervex(request, response, fs){
 
 
   object.configure = function(){
+
     object.load(nervex.Config, _injector.config);
 
     if(request) _injector.constant('request', request);
