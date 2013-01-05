@@ -21,6 +21,7 @@ describe( 'Router' , function(){
         $router.post('/home', 'LoginController', 'create');
         $router.del('/home', 'LoginController', 'create');
         $router.put('/home', 'LoginController', 'create');
+				$router.get('/', 'DefautlController', 'index');
       });
       console = jasmine.createSpyObj('console', ['log']);
 
@@ -41,7 +42,9 @@ describe( 'Router' , function(){
       expect(router.route('/home', 'GET').controller).toBe('AppController');
       expect(router.route('/home', 'GET').action).toBe('index');
 
-
+			expect(router.route('/', 'GET')).toBeTruthy();
+      expect(console.log).
+        toHaveBeenCalledWith('Routing controller:DefautlController action:index');
     });
 
     it('should return the default controller params is no match is found', function(){
