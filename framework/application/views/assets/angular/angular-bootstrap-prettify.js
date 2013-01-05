@@ -1,5 +1,5 @@
 /**
- * @license AngularJS v1.0.0rc10
+ * @license AngularJS v1.1.2-a3a9d4af
  * (c) 2010-2012 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -10,10 +10,10 @@ var directive = {};
 var service = { value: {} };
 
 var DEPENDENCIES = {
-  'angular.js': 'http://code.angularjs.org/angular-' + angular.version.full + '.min.js',
-  'angular-resource.js': 'http://code.angularjs.org/angular-resource-' + angular.version.full + '.min.js',
-  'angular-sanitize.js': 'http://code.angularjs.org/angular-sanitize-' + angular.version.full + '.min.js',
-  'angular-cookies.js': 'http://code.angularjs.org/angular-cookies-' + angular.version.full + '.min.js'
+  'angular.js': 'http://code.angularjs.org/' + angular.version.full + 'angular.min.js',
+  'angular-resource.js': 'http://code.angularjs.org/' + angular.version.full + 'angular-resource.min.js',
+  'angular-sanitize.js': 'http://code.angularjs.org/' + angular.version.full + 'angular-sanitize.min.js',
+  'angular-cookies.js': 'http://code.angularjs.org/' + angular.version.full + 'angular-cookies.min.js'
 };
 
 
@@ -196,10 +196,15 @@ directive.ngEmbedApp = ['$templateCache', '$browser', '$rootScope', '$location',
         $provide.value('$anchorScroll', angular.noop);
         $provide.value('$browser', $browser);
         $provide.provider('$location', function() {
-          this.$get = function() { return $location; };
+          this.$get = ['$rootScope', function($rootScope) {
+            docsRootScope.$on('$locationChangeSuccess', function(event, oldUrl, newUrl) {
+              $rootScope.$broadcast('$locationChangeSuccess', oldUrl, newUrl);
+            });
+            return $location;
+          }];
           this.html5Mode = angular.noop;
         });
-        $provide.decorator('$defer', ['$rootScope', '$delegate', function($rootScope, $delegate) {
+        $provide.decorator('$timeout', ['$rootScope', '$delegate', function($rootScope, $delegate) {
           return angular.extend(function(fn, delay) {
             if (delay && delay > 50) {
               return setTimeout(function() {
@@ -211,7 +216,7 @@ directive.ngEmbedApp = ['$templateCache', '$browser', '$rootScope', '$location',
           }, $delegate);
         }]);
         $provide.decorator('$rootScope', ['$delegate', function(embedRootScope) {
-          docsRootScope.$watch(function() {
+          docsRootScope.$watch(function embedRootScopeDigestWatch() {
             embedRootScope.$digest();
           });
           return embedRootScope;

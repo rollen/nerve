@@ -12,7 +12,7 @@ task :compile_angular do
   #cmd = "rake -f #{path_to_angular_rakefile} compile"
   #puts cmd
   Dir.chdir(path_to_angular_rakefile) do 
-    system("rake compile")
+    system("rake package")
   end
 end
 
