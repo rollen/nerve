@@ -1,2 +1,2 @@
-exports.Configurables = require('./config')
+exports.Configuration = require('./config')
 exports.Controllers = require('./controllers');
