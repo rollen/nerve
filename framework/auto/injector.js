@@ -138,11 +138,10 @@ function Injector(name){
     };
   }
 
-
-
   function isClassName(name){
     return name.match(/Class$/);
   }
+
   function isFactoryName(name){
     return name.match(/Factory$/);
   }
