@@ -14,4 +14,5 @@ exports.FileInfo = require('./utilities/newables/file_info');
 exports.AssetUrlInfo = require('./utilities/newables/asset_url_info');
 exports.HttpUrlParamsExtractor = require('./utilities/http_url_params_extractor');
 exports.Params = require('./services/params');
+exports.Template = require('./services/template');
 

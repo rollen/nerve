@@ -1,8 +1,9 @@
-function HelloWorldController(response){
+function HelloWorldController(response, $template){
   var object = {};
   object.index = function(){
-    response.write("<h1>Hello World</h1>");
-    response.end();
+		$template('helloworld/index.html', function on_file_read_complete(data){
+			response.end();
+		});
   }
   return object;
 }

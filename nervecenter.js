@@ -29,6 +29,7 @@ function Nervex(request, response, fs){
 		_injector.constant('json', JSON);
 		_injector.constant('injector', _injector);
 		_injector.service(nervex.Application.Params);
+		_injector.service(nervex.Application.Template);
 		object.load(nervex.Application.Configurables, _injector.factory);
 		return _injector;
 	}
