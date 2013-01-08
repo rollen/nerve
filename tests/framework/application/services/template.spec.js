@@ -17,8 +17,24 @@ describe('Service.template', function(){
 	
 	context('template directory has not been set', function(){
 		it('throws an error', function(){
+			var template;
 			var error = new Error('Template Directory has not been set');
-			expect(function(){ inject($template) }).toThrow(error);
+
+			injector(function($injector){
+				$injector.constant('appConfig', {}); 
+			});
+
+			var injectTemplate = function(){
+				inject(function($template){
+					$template();
+				})();
+			}
+
+			injector(function($injector){
+				$injector.constant
+			});
+
+			expect(injectTemplate).toThrow(error);
 		});
 	});
 
@@ -27,3 +43,4 @@ describe('Service.template', function(){
 		it('reads a file from the template directory', function(){});
 	});
 });
+
