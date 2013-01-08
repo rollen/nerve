@@ -43,58 +43,64 @@ describe('HttpFileResponseWriter', function(){
   });
 
   describe('writeToResponseAndEnd', function(){
-    it('should attempt to read the file with the correct folderpath, mimetype, callback', function(){
+   it('should attempt to read the file and end the response', function(){
       spyOn(fs, 'readFile');
       var callback = jasmine.createSpy('callback');
       var onFileRead = jasmine.createSpy('onFileRead').andReturn(callback);
       httpFileResponseWriter.onFileRead = onFileRead;
 
-
       httpFileResponseWriter.writeToResponseAndEnd(fileInfo);
-      expect(fs.readFile).toHaveBeenCalledWith('/tmp/runner.html', 'utf8', callback);
+
+      expect(fs.readFile).toHaveBeenCalledWith('/tmp/runner.html', 
+			 'utf8', 
+				callback);
     });
 
   });
 
   describe('.onFileRead', function(){
     var error;
+		var onFileRead;
+		var onFileReadComplete;
+
     beforeEach(function(){
-      callback = httpFileResponseWriter.onFileRead(fileInfo); 
+			onFileReadComplete = jasmine.createSpy('onFileReadComplete');
+      onFileRead = httpFileResponseWriter.onFileRead(fileInfo, onFileReadComplete); 
     });
 
     afterEach(function(){
       error = undefined;
     });
 
-    it('should choose to write the appropiate mime type to the response', function(){
-      callback(error);
+   it('should choose to write the appropiate mime type to the response', function(){
+      onFileRead(error);
       expect(response.writeHead).toHaveBeenCalledWith(200, {"Content-Type": "text/html"});
     });
 
-    it('should choose to write expiry info and a mimetype if its an image', function(){
+   it('should choose to write expiry info and a mimetype if its an image', function(){
       var _expectedHeaders = {
         "Content-Type":"image/png",
         "Cache-Control":"max-age=31536000"
       }
       fileInfo = fileInfoService('/tmp', 'image.png');
-      callback = httpFileResponseWriter.onFileRead(fileInfo);
-      callback();
+      onFileRead = httpFileResponseWriter.onFileRead(fileInfo, onFileReadComplete);
+      onFileRead();
 
       expect(response.writeHead).toHaveBeenCalledWith(200, _expectedHeaders);
     });
 
-    it('should close the response if there is an error', function(){
+   it('should close the response if there is an error', function(){
       fileInfo = fileInfoService('/tmp', 'image.png');
-      callback = httpFileResponseWriter.onFileRead(fileInfo);
+      onFileRead = httpFileResponseWriter.onFileRead(fileInfo, onFileReadComplete);
       error = new Error("File not read");
-      callback(error);
+      onFileRead(error);
       expect(response.end).toHaveBeenCalled();
     });
 
-    it('should close the response with the mime type of the file on a successful read', function(){
+   it('it should trigger the callback once the file has been read', function(){
       error = null;
-      callback(error);
-      expect(response.end).toHaveBeenCalled();
+      onFileRead(error);
+      expect(onFileReadComplete).toHaveBeenCalled();
     });
   });
 });
