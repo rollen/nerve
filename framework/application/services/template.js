@@ -8,4 +8,5 @@ function Template($appConfig, fs, httpFileResponseWriter, fileInfoService){
 		}
 	}
 }
+
 module.exports = Template;
