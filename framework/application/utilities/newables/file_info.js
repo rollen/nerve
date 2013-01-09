@@ -1,5 +1,7 @@
 function FileInfo(filepath, filename){
   var object = {};
+	object.filepath = filepath;
+	object.filename = filename;
 
   function filetype(){
     return filename.split('.')[1];
