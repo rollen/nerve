@@ -20,6 +20,12 @@ describe('FileInfo',function(){
     fileInfo = fileInfoService('/lib/js', 'file.js');
   });
 
+	describe('.toString',function(){
+		it('should print the contents of filpath and filename', function(){
+			expect(fileInfo.toString()).toBe('filepath:/lib/js, filename:file.js');
+		});
+	});
+
   describe('.filetype', function(){
     it('should parse and return the extenstion of a filetype', function(){
       expect(fileInfo.filetype()).toBe('js');

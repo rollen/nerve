@@ -20,6 +20,10 @@ function FileInfo(filepath, filename){
     return types[filetype()];
   }
 
+	function toString(){
+		return 'filepath:'+filepath+', ' + 'filename:' + filename
+	}
+
   function headers(){
     var _headers = {"Content-Type":mimetype()}; 
     if(!isWebFile()){
@@ -43,6 +47,7 @@ function FileInfo(filepath, filename){
   object.headers = headers;
   object.encoding = encoding;
   object.path = path;
+	object.toString = toString;
   return object;
 }
 
