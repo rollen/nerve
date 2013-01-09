@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html lang='en'>
+<html lang='en' ng-app>
 <head>
     <meta charset='UTF-8' />
+		<script type='text/javascript' src='/assets/angular/angular.js'></script>
+		<script type='text/javascript'>
+			function HelloWorldCtrl($scope){
+				$scope.hello_world = "Hello World with Angularjs";
+			}
+		</script>
     <title></title>
 </head>
-<body>
-	<p>Hello world!!</p>
+<body ng-controller='HelloWorldCtrl'>
+	<p>{{hello_world}}</p>
 </body>
 </html>
