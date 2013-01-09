@@ -58,6 +58,22 @@ describe('HttpFileResponseWriter', function(){
 
   });
 
+	describe('writeToResponse', function(){
+		it('should attempt to read the file and trigger the onFileReadComplete callback', function(){
+      spyOn(fs, 'readFile');
+      var callback = jasmine.createSpy('callback');
+      var onFileRead = jasmine.createSpy('onFileRead').andReturn(callback);
+      var onFileReadComplete = jasmine.createSpy('onFileReadComplete')
+      httpFileResponseWriter.onFileRead = onFileRead;
+
+      httpFileResponseWriter.writeToResponse(fileInfo, onFileReadComplete);
+
+      expect(fs.readFile).toHaveBeenCalledWith('/tmp/runner.html',
+			 'utf8', 
+				callback);
+    });
+	});
+
   describe('.onFileRead', function(){
     var error;
 		var onFileRead;
