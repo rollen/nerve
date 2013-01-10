@@ -1,5 +1,5 @@
 {
-	"name": "nervex",
+	"name": "ncenter",
 	"version": "0.0.1",
 	"main": "nervecenter",
 	"engines":{
@@ -7,14 +7,16 @@
 		"node": "0.8.x"
 	},
 	"dependencies" : {
-		"pg": "latest"
+		"pg": "latest",
+		"commander" :"latest",
+		"mkdirp": "latest"
 	},
 	"devDependencies" : {
 		"jasmine-node": "latest"
 	},
 	"scripts" : {
-		"test" : "jasmine-node tests"
+		"test" : "jasmine-node tests",
+		"new" : "./bin/nervecenter"
 	},
-
 	"private": true
 }
