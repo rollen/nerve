@@ -58,6 +58,7 @@ function createApplicationAt(path) {
   
 	var source = __dirname + '/../sampleapp'
 	var destination = path
+  console.log('Copying files from folder ' + source + ' to ' + destination);
 
 	 var filter = function(name){
 		return !(new RegExp('\/node_modules').test(name));
