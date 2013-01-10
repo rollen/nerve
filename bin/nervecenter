@@ -51,7 +51,7 @@ function createApplicationAt(path) {
     console.log('     $ cd %s && npm install', path);
     console.log();
     console.log('   run the app:');
-    console.log('     $ node app');
+    console.log('     $ node server.js');
     console.log();
   });
 
