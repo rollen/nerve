@@ -7,8 +7,14 @@
 		"node": "0.8.x"
 	},
 	"dependencies" : {
-		"pg": "latest",
+		"pg": "latest"
+	},
+	"devDependencies" : {
 		"jasmine-node": "latest"
 	},
+	"scripts" : {
+		"test" : "jasmine-node tests"
+	},
+
 	"private": true
 }
