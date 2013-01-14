@@ -4,6 +4,16 @@ require('./fixtures/fixtures');
 
 require('./stubs');
 fixturesFolderPath = __dirname + '/fixtures'
+function Fixtures(){
+	this.readFile = function(relaive_folder_path, filename, onFileRead){
+		var fs = require('fs');	
+		var path = require('path');
+		var filepath = path.join(fixturesFolderPath, relaive_folder_path, filename);
+		fs.readFile(filepath, 'utf8', onFileRead);
+	}
+}
+
+$fixtures = new Fixtures();
 
 require('./lib/browser.js');
 
