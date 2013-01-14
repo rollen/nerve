@@ -9,6 +9,7 @@
   "dependencies": {
     "nervex":"git://github.com/rollen/nerve.git",
     "simplefactory" : "git://github.com/rollen/simplefactory.git",
-    "pg": "latest"
+    "pg": "latest",
+		"testacular": "latest"
   }
 }
