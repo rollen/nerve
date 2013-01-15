@@ -10,6 +10,13 @@ function AppConfig(){
 		return context[key]
 	}
 
+	object.push = function(key, value){
+		if(context[key] === undefined ){
+			context[key] = [];	
+		} 
+		context[key].push(value);		
+	}
+
 	object.$get = function(){
 		return function(key){
 			return context[key];

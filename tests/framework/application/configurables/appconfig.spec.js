@@ -27,4 +27,20 @@ describe('AppConfig', function(){
 		expect(value).toBe(fixturesFolderPath);
 	});
 
+	describe('.push', function(){
+		it('should allow multiple values to be assigned to a key', function(){
+			injector(function($injector){
+				$injector.config(function($appConfig){
+					$appConfig.push('key', '/hello');
+					$appConfig.push('key', '/hi');
+				});
+			});
+
+			inject(function($appConfig){
+				value = $appConfig('key');	
+			})();
+			
+			expect(value).toEqual(['/hello','/hi']);
+		});
+	});
 });
