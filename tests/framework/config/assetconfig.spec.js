@@ -23,7 +23,7 @@ describe('AppConfig', function(){
 
 				expected_path = path.join(project_root, 'framework/application/views/assets');
 				expect($appConfig.get('asset_path')).toBeDefined();
-				expect($appConfig.get('asset_path')).toBe(expected_path);
+				expect($appConfig.get('asset_path')).toEqual([expected_path]);
       });
     });
   });
