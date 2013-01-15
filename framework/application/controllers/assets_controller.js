@@ -1,11 +1,15 @@
-function AssetsController(request, httpFileResponseWriter, folderpath, assetUrlInfoService, fileInfoService){
+function AssetsController($asset, $request, $response){
   var object = {};
 
+	function extract_filepath(url){
+		var p = url.split('/');
+		return p.slice(2, p.length).join('/');
+	}
+
   object.show = function(){
-    var urlInfo = assetUrlInfoService(request.url);
-    var filepath = folderpath.join(folderpath.filepath('views'), urlInfo.path());
-    var fileInfo = fileInfoService(filepath, urlInfo.filename());
-    httpFileResponseWriter.writeToResponseAndEnd(fileInfo);
+		$asset(extract_filepath($request.url), function onFileReadComplete(){
+			$response.end();
+		});
   }
 
   return object;

@@ -6,6 +6,10 @@ function AppConfig(){
 		context[key] = value;
 	}
 
+	object.get = function(key){
+		return context[key]
+	}
+
 	object.$get = function(){
 		return function(key){
 			return context[key];

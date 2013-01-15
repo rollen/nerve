@@ -3,7 +3,11 @@ exports.nervex = require('./../nervecenter');
 require('./fixtures/fixtures');
 
 require('./stubs');
+
 fixturesFolderPath = __dirname + '/fixtures'
+
+project_root = __dirname + '/..'
+
 function Fixtures(){
 	this.readFile = function(relaive_folder_path, filename, onFileRead){
 		var fs = require('fs');	

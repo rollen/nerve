@@ -19,8 +19,21 @@ describe('AssetsController', function(){
     injector = _nervex.injector;
   });
 
+	describe('show', function(){
+		it('interfaces with asset service to write file to request', function(){
+			inject(function($assetsControllerService){
+				asset = jasmine.createSpy('asset');
+				request = {url:'/assets/js/file.js'}
+				assetsController = $assetsControllerService(asset, request);
+			})();
 
-  describe('show', function(){
+			assetsController.show();
+			var expected_filepath = 'js/file.js';
+			expect(asset).toHaveBeenCalledWith(expected_filepath, jasmine.any(Function));
+		});
+	});
+
+  xdescribe('show', function(){
     beforeEach(function(){
 
       fileInfo = function(){};
