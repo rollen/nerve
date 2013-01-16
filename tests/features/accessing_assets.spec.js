@@ -51,7 +51,6 @@ describe ("accessing_assets.spec.js", function(){
 					emitter.emit('file_downloaded');
 				});
 			});
-
 		}
 	}
 

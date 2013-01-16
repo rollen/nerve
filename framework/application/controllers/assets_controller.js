@@ -7,7 +7,7 @@ function AssetsController($asset, $request, $response){
 	}
 
   object.show = function(){
-		$asset(extract_filepath($request.url), function onFileReadComplete(){
+		$asset.findAndWriteToResponse(extract_filepath($request.url), function onFileReadComplete(){
 			$response.end();
 		});
   }

@@ -9,7 +9,8 @@
 	"dependencies" : {
 		"pg": "latest",
 		"commander" :"latest",
-		"ncp":"latest"
+		"ncp":"latest",
+		"q": "latest"
 	},
 	"devDependencies" : {
 		"jasmine-node": "latest"

@@ -11,32 +11,42 @@ describe('Asset', function(){
 		injector = _nervex.injector;
 	});
 
-	it('should allow any file in the specified directory to be read', function(){
-		var onFileWriteComplete = jasmine.createSpy('onFileWriteComplete');
-		var writeToResponseSpy = jasmine.createSpy('writeToResponse');
-		var expected_filename = 'test.js';
-		var expected_filepath = fixturesFolderPath + '/assets';
+	describe('.findAndWriteToResponse', function(){
+		it('should resolve all the file read promises', function(){
+			var writeToResponseSpy = jasmine.createSpy('writeToResponse');
+			var expected_filename = 'test.js';
+			var expected_filepath = fixturesFolderPath + '/assets';
+			var then;
 
-		injector(function($injector){
-			$injector.config(function($appConfig){
-				$appConfig.set('asset_path', fixturesFolderPath + '/assets');
+			injector(function($injector){
+				$injector.config(function($appConfig){
+					$appConfig.push('asset_path', fixturesFolderPath + '/assets/javascript');
+					$appConfig.push('asset_path', fixturesFolderPath + '/html');
+					$injector.constant('q', require('q'));
+				});
 			});
+
+			inject(function($assetService, $q){
+
+				q = $q;
+				asset = $assetService(undefined, undefined, undefined, undefined, $q, undefined);
+				
+				then = jasmine.createSpy('then');
+				spyOn($q, 'allResolved')
+					.andReturn({then: then});
+				spyOn(asset, 'createfileCheckPromises')
+					.andReturn(function(){})
+				spyOn(asset, 'onAllPromisesResolved')
+					.andReturn(function(){});
+			})();
+
+			var onFileWriteComplete = jasmine.createSpy('onFileWriteComplete');
+			var relative_filename = 'assets/javascript';
+			asset.findAndWriteToResponse(relative_filename, onFileWriteComplete);
+			expect(asset.createfileCheckPromises).toHaveBeenCalledWith(relative_filename);
+			expect(asset.onAllPromisesResolved).toHaveBeenCalledWith(onFileWriteComplete);
+			expect(q.allResolved).toHaveBeenCalledWith(jasmine.any(Function));
+			expect(then).toHaveBeenCalledWith(jasmine.any(Function));
 		});
-
-		inject(function($assetService, 
-				$httpFileResponseWriter, 
-				$appConfig,
-				$path,
-				$fileInfoService){
-			httpFileResponseWriter = $httpFileResponseWriter;
-			httpFileResponseWriter.writeToResponse = writeToResponseSpy;
-			asset = $assetService(httpFileResponseWriter, $appConfig, $path, $fileInfoService);
-		})();
-
-		asset('test.js', onFileWriteComplete);
-
-		args = httpFileResponseWriter.writeToResponse.mostRecentCall.args;
-		expect(args[0].filename).toBe(expected_filename);
-		expect(args[0].filepath).toBe(expected_filepath);
 	});
 });

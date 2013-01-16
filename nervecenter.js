@@ -27,6 +27,7 @@ function Nervex(request, response, fs){
 		_injector.constant('console', console);
 		_injector.constant('buffer', require('buffer'));
 		_injector.constant('json', JSON);
+		_injector.constant('q', require('q'));
 		_injector.constant('injector', _injector);
 		_injector.service(nervex.Application.Params);
 		_injector.service(nervex.Application.Template);
