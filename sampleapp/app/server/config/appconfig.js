@@ -3,7 +3,7 @@ function AppConfig($appConfig, $path){
 			$path.$get().join(__dirname, '../views/templates'));
 
 	$appConfig.push('asset_path', 
-			$path.$get().join(__dirname, '../../../client/assets'));
+			$path.$get().join(__dirname + '../../../client/assets'));
 }
 
 module.exports = AppConfig;

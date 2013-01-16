@@ -3,10 +3,16 @@
 <head>
     <meta charset='UTF-8' />
 		<script type='text/javascript' src='/assets/angular/angular.js'></script>
-		<script type='text/javascript' src='/javascript/controller.js'></script>
+		<script type='text/javascript' src='/assets/javascript/controllers.js'></script>
     <title></title>
 </head>
-<body ng-controller='HelloWorldCtrl'>
-	<p>{{hello_world}}</p>
+<body ng-controller='ToDoListCtrl'>
+	<header>ToDoList</header>
+	<br />
+	<input type='text' ng-model='name' />
+	<input type='button' class='button' value='Add Item' ng-click='add_item(name)'/>
+	<ul ng-repeat='item in items'>
+		<li>{{item.name}}</li>
+	</ul>
 </body>
 </html>
