@@ -29,7 +29,7 @@ function Asset(){
 		o.onAllPromisesResolved = function(onFileWriteComplete){
 			return function(promises){
 				var possible = []
-				, exceptions
+				, exceptions = []
 				, picked_path
 				, fileInfo;
 			
