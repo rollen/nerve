@@ -1,4 +1,4 @@
-exports.nervex = require('./../nervecenter');
+exports.nervex = require('./../framework/nervecenter');
 
 require('./fixtures/fixtures');
 
