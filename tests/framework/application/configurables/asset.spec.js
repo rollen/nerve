@@ -1,4 +1,5 @@
-var nervex = require('./../../../spec_helper').nervex;
+var nervex = require('./../../../spec_helper').nervex
+,	fixtures= require('./../../../spec_helper').fixtures;
 
 describe('Asset', function(){
 	var asset
@@ -15,13 +16,13 @@ describe('Asset', function(){
 		it('should resolve all the file read promises', function(){
 			var writeToResponseSpy = jasmine.createSpy('writeToResponse');
 			var expected_filename = 'test.js';
-			var expected_filepath = fixturesFolderPath + '/assets';
+			var expected_filepath = fixtures.folderPath + '/assets';
 			var then;
 
 			injector(function($injector){
 				$injector.config(function($appConfig){
-					$appConfig.push('asset_path', fixturesFolderPath + '/assets/javascript');
-					$appConfig.push('asset_path', fixturesFolderPath + '/html');
+					$appConfig.push('asset_path', fixtures.folderPath + '/assets/javascript');
+					$appConfig.push('asset_path', fixtures.folderPath + '/html');
 					$injector.constant('q', require('q'));
 				});
 			});

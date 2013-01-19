@@ -1,4 +1,4 @@
-var nerve = require('./../spec_helper').nervex.nerve
+var fixtures = require('./../spec_helper').fixtures
 , exec = require('child_process').exec
 , spawn = require('child_process').spawn
 , EventEmitter = require('events').EventEmitter
@@ -46,7 +46,7 @@ describe ("accessing_assets.spec.js", function(){
 		} else {
 			exec(cmd['download_file'], function(error, stdout, stderr){
 				received_file = stdout;
-				$fixtures.readFile('javascript', 't.js', function(error, read_file_from_fixtures_folder){
+				fixtures.readFile('javascript', 't.js', function(error, read_file_from_fixtures_folder){
 					expected_file = read_file_from_fixtures_folder;
 					emitter.emit('file_downloaded');
 				});

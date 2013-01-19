@@ -1,4 +1,5 @@
-var nervex = require("./../../../spec_helper").nervex;
+var nervex = require("./../../../spec_helper").nervex
+, fixtures = require("./../../../spec_helper").fixtures
 
 describe('AppConfig', function(){
   var injector,
@@ -16,7 +17,7 @@ describe('AppConfig', function(){
 
 		injector(function($injector){
 			$injector.config(function($appConfig){
-				$appConfig.set('templatefolder_path', fixturesFolderPath);
+				$appConfig.set('templatefolder_path', fixtures.folderPath);
 			});
 		});
 
@@ -24,7 +25,7 @@ describe('AppConfig', function(){
 			value = $appConfig('templatefolder_path');	
 		})();
 
-		expect(value).toBe(fixturesFolderPath);
+		expect(value).toBe(fixtures.folderPath);
 	});
 
 	describe('.push', function(){

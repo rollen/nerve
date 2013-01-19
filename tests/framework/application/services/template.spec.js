@@ -44,7 +44,7 @@ describe('Service.template', function(){
 
 			injector(function($injector){
 				$injector.config(function($appConfig){
-					$appConfig.set('templatefolder_path', fixturesFolderPath + '/fake');
+					$appConfig.set('templatefolder_path', fixtures.folderPath + '/fake');
 				});
 			});
 
@@ -58,7 +58,7 @@ describe('Service.template', function(){
 
 			template('index.html', onFileReadComplete);
 
-			fileInfoValue = fileInfoService(fixturesFolderPath + '/fake', 'index.html');
+			fileInfoValue = fileInfoService(fixtures.folderPath + '/fake', 'index.html');
 
 			// Equality operator does not work with my object defintion
 			args = httpFileResponseWriter.writeToResponse.mostRecentCall.args;
