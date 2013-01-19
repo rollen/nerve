@@ -12,8 +12,7 @@ function Nervex(request, response, fs){
 		_injector.service(Application.Application);
 		_injector.service(Application.Params);
 		_injector.service(Application.Template);
-		_injector.service(Server.PostData);
-		_injector.service(Server.Server);
+		object.load(Server, _injector.service);
 		object.load(Application.Utilities, _injector.service);
 		object.load(Application.Controllers, _injector.service);
 	}
