@@ -1,4 +1,5 @@
 function Application(request, router, console, injector){
+
   var object = {};
 
   object.executeRequest = function(){

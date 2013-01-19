@@ -1,5 +1,5 @@
-var StandardRouteMatcher = require('./../utilities/matchers/standard_route_matcher');
-var RegexRouteMatcher = require('./../utilities/matchers/regex_route_matcher');
+var StandardRouteMatcher = require('./../utilities/standard_route_matcher');
+var RegexRouteMatcher = require('./../utilities/regex_route_matcher');
 var HttpRoute = require('./../utilities/http_route');
 
 function Router(){

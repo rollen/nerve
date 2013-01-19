@@ -1,8 +1,8 @@
 var Application = require('./application')
-var Server = require('./server')
-var Config = require('./config')
-var Patches = require('./patches')
-var Auto = require('./auto')
+, Server = require('./server')
+, Config = require('./config')
+, Patches = require('./patches')
+, Auto = require('./auto')
 
 function Nervex(request, response, fs){
 	var object = {};
@@ -10,15 +10,11 @@ function Nervex(request, response, fs){
 
 	function loadFrameworkFiles(){
 		_injector.service(Application.Application);
-		_injector.service(Application.RegexRouteMatcher);
-		_injector.service(Application.StandardRouteMatcher);
-		_injector.service(Application.HttpRoute);
-		_injector.service(Application.HttpFileResponseWriter);
-		_injector.service(Application.HttpUrlParamsExtractor);
-		_injector.service(Application.FileInfo);
-		_injector.service(Application.AssetUrlInfo);
+		_injector.service(Application.Params);
+		_injector.service(Application.Template);
 		_injector.service(Server.PostData);
 		_injector.service(Server.Server);
+		object.load(Application.Utilities, _injector.service);
 		object.load(Application.Controllers, _injector.service);
 	}
 
@@ -33,8 +29,6 @@ function Nervex(request, response, fs){
 		_injector.constant('json', JSON);
 		_injector.constant('q', require('q'));
 		_injector.constant('injector', _injector);
-		_injector.service(Application.Params);
-		_injector.service(Application.Template);
 		object.load(Application.Configurables, _injector.factory);
 		return _injector;
 	}
@@ -68,7 +62,6 @@ function Nervex(request, response, fs){
 			callback(collection[key]);
 		}
 	}
-
 
 	object.configure = function(){
 		object.load(Config, _injector.config);
