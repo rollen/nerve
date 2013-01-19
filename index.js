@@ -1,1 +1,1 @@
-module.exports = require('./nervecenter');
+module.exports = require('./framework/nervecenter');
