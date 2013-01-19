@@ -12,8 +12,6 @@ function createFixturesApi(){
 }
 exports.fixtures = createFixturesApi()
 
-
-
 project_root = __dirname + '/..'
 
 context = describe
