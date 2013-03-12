@@ -6,11 +6,12 @@ files = [
   'e2e/**/*.js'
 ];
 
+runnerPort = 9101
+
 autoWatch = false;
 
 browsers = ['Chrome'];
 
-singleRun = true;
 
 proxies = {
   '/': 'http://localhost:8888/'
@@ -20,4 +21,5 @@ junitReporter = {
   outputFile: 'test_out/e2e.xml',
   suite: 'e2e'
 };
+
 

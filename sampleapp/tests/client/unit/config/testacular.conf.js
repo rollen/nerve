@@ -1,12 +1,12 @@
-basePath = '../../../';
+basePath = '../../../../';
 
 
 // list of files / patterns to load in the browser
 files = [
   JASMINE,
   JASMINE_ADAPTER,
-	'app/client/javascript/**/*.js',
-  'tests/unit/client/javascript/**/*Spec.js'
+	'app/client/assets/javascript/**/*.js',
+  'tests/client/unit/assets/javascript/**/*Spec.js'
 ];
 
 
