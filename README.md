@@ -14,7 +14,7 @@ Its built on concepts like dependency injection and testability to provide the a
 
 Install nervecenter:
 
-    npm install https://github.com/rollen/nerve -g
+		npm install git://github.com/rollen/nerve.git -g
 
 Create the application:
 
